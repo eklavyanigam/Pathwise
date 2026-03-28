@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pathwise — Career Readiness Analyzer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0a0c10;
+    --surface: #111318;
+    --surface2: #181c24;
+    --surface3: #1e2330;
+    --border: #2a2f3d;
+    --border2: #343b4f;
+    --text: #e8eaf0;
+    --text2: #9ba3b8;
+    --text3: #5c6480;
+    --accent: #5b8def;
+    --green: #4ecca3;
+    --yellow: #f5c842;
+    --red: #f06060;
+    --purple: #a78bfa;
+    --orange: #fb923c;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; overflow-x: hidden; }
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background-image: linear-gradient(rgba(91,141,239,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(91,141,239,0.04) 1px, transparent 1px);
+    background-size: 40px 40px; pointer-events: none; z-index: 0;
+  }
+  #app { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 0 24px 80px; }
+
+  /* Header */
+  .header { display: flex; align-items: center; justify-content: space-between; padding: 28px 0; border-bottom: 1px solid var(--border); margin-bottom: 36px; flex-wrap: wrap; gap: 16px; }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-mark { width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent), var(--purple)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; color: white; }
+  .logo-text { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; letter-spacing: -0.5px; }
+  .logo-sub { font-size: 11px; color: var(--text3); font-family: 'DM Mono', monospace; letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
+
+  /* Page Tab Nav */
+  .page-nav { display: flex; align-items: center; gap: 4px; background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 4px; }
+  .page-tab { display: flex; align-items: center; gap: 7px; padding: 8px 18px; border-radius: 9px; font-family: 'Syne', sans-serif; font-weight: 600; font-size: 13px; color: var(--text3); cursor: pointer; border: none; background: transparent; transition: all 0.2s; white-space: nowrap; }
+  .page-tab:hover:not(:disabled) { color: var(--text2); }
+  .page-tab:disabled { opacity: 0.4; cursor: not-allowed; }
+  .page-tab.active { background: var(--surface3); color: var(--text); border: 1px solid var(--border2); }
+  .tab-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text3); flex-shrink: 0; transition: background 0.2s; }
+  .page-tab.active .tab-dot { background: var(--accent); }
+  .page-tab.tab-results.active .tab-dot { background: var(--green); }
+  .tab-badge { font-family: 'DM Mono', monospace; font-size: 10px; background: rgba(91,141,239,0.15); color: var(--accent); border-radius: 20px; padding: 1px 7px; border: 1px solid rgba(91,141,239,0.25); }
+
+  /* Pages */
+  .page { display: none; }
+  .page.active { display: block; animation: fadeUp 0.3s ease; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Main grid (page 1) */
+  .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+  @media (max-width: 860px) { .main-grid { grid-template-columns: 1fr; } }
+
+  /* Card */
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(91,141,239,0.4), transparent); }
+  .card-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text3); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+  .card-title .icon { color: var(--accent); font-size: 15px; }
+
+  /* Role grid */
+  .role-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  @media (max-width: 480px) { .role-grid { grid-template-columns: 1fr; } }
+  .role-btn { background: var(--surface2); border: 1.5px solid var(--border); border-radius: 12px; padding: 12px 14px; cursor: pointer; transition: all 0.2s; text-align: left; color: var(--text); }
+  .role-btn:hover { border-color: var(--border2); background: var(--surface3); transform: translateY(-1px); }
+  .role-btn.active { border-color: var(--accent); background: rgba(91,141,239,0.08); }
+  .role-icon { font-size: 20px; margin-bottom: 6px; }
+  .role-name { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 12px; color: var(--text); line-height: 1.3; }
+  .role-count { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text3); margin-top: 3px; }
+
+  /* Skill form */
+  .skill-form { display: grid; grid-template-columns: 1fr auto auto; gap: 10px; margin-bottom: 16px; align-items: end; }
+  @media (max-width: 540px) { .skill-form { grid-template-columns: 1fr 1fr; } .skill-form .btn-add-wrap { grid-column: span 2; } }
+  .form-group label { display: block; font-size: 11px; font-family: 'DM Mono', monospace; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px; }
+  .form-input { width: 100%; background: var(--surface2); border: 1.5px solid var(--border); border-radius: 10px; padding: 10px 14px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; transition: border-color 0.2s; }
+  .form-input:focus { border-color: var(--accent); }
+  .form-input::placeholder { color: var(--text3); }
+  .level-select { background: var(--surface2); border: 1.5px solid var(--border); border-radius: 10px; padding: 10px; color: var(--text); font-family: 'DM Mono', monospace; font-size: 14px; outline: none; cursor: pointer; min-width: 56px; text-align: center; }
+  .level-select:focus { border-color: var(--accent); }
+
+  /* Buttons */
+  .btn { border: none; border-radius: 10px; padding: 10px 18px; font-family: 'Syne', sans-serif; font-weight: 600; font-size: 13px; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+  .btn-add { background: var(--surface3); color: var(--text); border: 1.5px solid var(--border2); height: 40px; }
+  .btn-add:hover { background: var(--accent); color: white; border-color: var(--accent); }
+  .btn-sm { padding: 5px 10px; font-size: 11px; border-radius: 7px; }
+  .btn-ghost { background: transparent; color: var(--text3); border: 1.5px solid var(--border); }
+  .btn-ghost:hover { color: var(--red); border-color: var(--red); }
+
+  /* Skill list */
+  .skill-list { display: flex; flex-direction: column; gap: 8px; max-height: 300px; overflow-y: auto; padding-right: 2px; }
+  .skill-list::-webkit-scrollbar { width: 4px; }
+  .skill-list::-webkit-scrollbar-track { background: var(--surface2); border-radius: 4px; }
+  .skill-list::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+  .skill-item { display: flex; align-items: center; gap: 10px; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; transition: border-color 0.2s; animation: slideIn 0.2s ease; }
+  @keyframes slideIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+  .skill-item:hover { border-color: var(--border2); }
+  .skill-name-text { flex: 1; font-size: 14px; color: var(--text); font-weight: 500; }
+  .skill-level-badge { font-family: 'DM Mono', monospace; font-size: 11px; padding: 3px 8px; border-radius: 20px; background: var(--surface3); color: var(--text2); border: 1px solid var(--border2); white-space: nowrap; }
+  .empty-state { text-align: center; padding: 36px 20px; color: var(--text3); font-size: 13px; }
+  .empty-icon { font-size: 32px; margin-bottom: 10px; opacity: 0.5; }
+
+  /* Analyze section */
+  .analyze-section { margin-top: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .skill-counter { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text3); }
+  .btn-analyze { background: linear-gradient(135deg, var(--accent), var(--purple)); color: white; border: none; border-radius: 12px; padding: 13px 28px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; cursor: pointer; transition: all 0.25s; display: flex; align-items: center; gap: 8px; }
+  .btn-analyze:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(91,141,239,0.35); }
+  .btn-analyze:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
+
+  /* Tags */
+  .tag { display: inline-flex; align-items: center; background: var(--surface3); border: 1px solid var(--border2); border-radius: 20px; padding: 3px 10px; font-size: 11px; font-family: 'DM Mono', monospace; color: var(--text2); white-space: nowrap; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; margin-right: 6px; flex-shrink: 0; }
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+  .level-legend { display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+  .level-legend span { font-size: 11px; font-family: 'DM Mono', monospace; color: var(--text3); }
+
+  /* ═══ RESULTS PAGE ═══ */
+  .results-page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; flex-wrap: wrap; gap: 12px; }
+  .results-page-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .results-role-badge { background: rgba(91,141,239,0.12); border: 1px solid rgba(91,141,239,0.3); color: var(--accent); border-radius: 20px; padding: 4px 14px; font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 400; }
+  .btn-back { display: flex; align-items: center; gap: 7px; background: var(--surface2); border: 1px solid var(--border2); border-radius: 10px; padding: 9px 18px; color: var(--text2); font-family: 'Syne', sans-serif; font-weight: 600; font-size: 13px; cursor: pointer; transition: all 0.2s; }
+  .btn-back:hover { background: var(--surface3); color: var(--text); }
+
+  .score-hero { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 36px; margin-bottom: 20px; position: relative; overflow: hidden; display: grid; grid-template-columns: auto 1fr; gap: 40px; align-items: center; }
+  .score-hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(91,141,239,0.5), transparent); }
+  @media (max-width: 600px) { .score-hero { grid-template-columns: 1fr; text-align: center; } }
+  .score-circle { position: relative; width: 150px; height: 150px; flex-shrink: 0; margin: 0 auto; }
+  .score-svg { transform: rotate(-90deg); }
+  .score-track { fill: none; stroke: var(--surface3); stroke-width: 10; }
+  .score-fill { fill: none; stroke-width: 10; stroke-linecap: round; }
+  .score-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .score-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 36px; line-height: 1; }
+  .score-pct { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); margin-top: 2px; }
+  .score-label { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 26px; margin-bottom: 8px; }
+  .score-desc { font-size: 14px; color: var(--text2); margin-bottom: 22px; line-height: 1.65; max-width: 460px; }
+  .progress-bar-wrap { background: var(--surface3); border-radius: 100px; height: 8px; overflow: hidden; margin-bottom: 8px; }
+  .progress-bar-fill { height: 100%; border-radius: 100px; width: 0%; transition: width 1.2s cubic-bezier(0.4,0,0.2,1); }
+  .progress-label { display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); }
+
+  .stat-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 20px; }
+  @media (max-width: 600px) { .stat-row { grid-template-columns: 1fr; } }
+  .stat-box { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px 22px; }
+  .stat-label { font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text3); margin-bottom: 6px; }
+  .stat-value { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 30px; }
+
+  .results-bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+  @media (max-width: 700px) { .results-bottom { grid-template-columns: 1fr; } }
+
+  .section-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px; }
+  .section-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text3); margin-bottom: 16px; display: flex; align-items: center; gap: 6px; }
+  .s-icon { color: var(--accent); }
+
+  .cat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  @media (max-width: 500px) { .cat-grid { grid-template-columns: 1fr; } }
+  .cat-item { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
+  .cat-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .cat-name { font-size: 13px; font-weight: 500; color: var(--text); }
+  .cat-pct { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text2); }
+  .cat-bar-wrap { background: var(--surface3); border-radius: 100px; height: 5px; overflow: hidden; }
+  .cat-bar-fill { height: 100%; border-radius: 100px; transition: width 1s ease; width: 0%; }
+
+  .missing-list { display: flex; flex-direction: column; gap: 6px; }
+  .missing-item { display: flex; align-items: center; justify-content: space-between; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 9px 12px; font-size: 13px; }
+  .missing-item-name { color: var(--text2); }
+  .weight-badge { font-family: 'DM Mono', monospace; font-size: 11px; padding: 2px 8px; border-radius: 20px; background: rgba(240,96,96,0.12); color: var(--red); border: 1px solid rgba(240,96,96,0.25); }
+
+  .priority-list { display: flex; flex-direction: column; gap: 8px; }
+  .priority-item { display: flex; align-items: center; gap: 12px; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+  .priority-num { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 12px; flex-shrink: 0; }
+  .priority-info { flex: 1; }
+  .priority-name { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
+  .priority-cat { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); }
+  .good-msg { font-size: 13px; color: var(--green); font-style: italic; padding: 8px 0; }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <div class="logo-mark">P</div>
+      <div>
+        <div class="logo-text">Pathwise</div>
+        <div class="logo-sub">Career Readiness Analyzer</div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-tab active" id="tab-setup" onclick="switchPage('setup')">
+        <span class="tab-dot"></span> Setup
+      </button>
+      <button class="page-tab tab-results" id="tab-results" onclick="switchPage('results')" disabled>
+        <span class="tab-dot"></span> Results
+        <span class="tab-badge" id="score-badge" style="display:none">—</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- PAGE 1: SETUP -->
+  <div class="page active" id="page-setup">
+    <div class="main-grid">
+
+      <!-- Role selection -->
+      <div class="card">
+        <div class="card-title"><span class="icon">◈</span> Select Career Role</div>
+        <div class="role-grid" id="role-grid"></div>
+        <div class="divider"></div>
+        <div class="card-title"><span class="icon">◎</span> Required Skills</div>
+        <div id="required-skills" style="display:flex;flex-wrap:wrap;gap:6px;"></div>
+      </div>
+
+      <!-- Skills input -->
+      <div class="card">
+        <div class="card-title" id="skill-card-title"><span class="icon">✦</span> Your Skills</div>
+        <div class="skill-form">
+          <div class="form-group">
+            <label>Skill Name</label>
+            <input id="skill-input" class="form-input" placeholder="e.g. Python, Figma, Excel…" />
+          </div>
+          <div class="form-group">
+            <label>Level</label>
+            <select id="skill-level" class="level-select">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3" selected>3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+          <div class="form-group btn-add-wrap" style="display:flex;align-items:flex-end;">
+            <button id="add-btn" class="btn btn-add btn-sm">+ Add</button>
+          </div>
+        </div>
+        <div class="level-legend">
+          <span>1=Beginner</span><span>2=Basic</span><span>3=Intermediate</span><span>4=Advanced</span><span>5=Expert</span>
+        </div>
+        <div id="skill-list-container">
+          <div class="empty-state">
+            <div class="empty-icon">📝</div>
+            <div>Add your skills above to get started</div>
+          </div>
+        </div>
+        <div class="analyze-section">
+          <span class="skill-counter" id="skill-counter">0 skills added</span>
+          <button class="btn-analyze" id="analyze-btn" disabled>
+            <span>⚡</span> Analyze Readiness
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PAGE 2: RESULTS -->
+  <div class="page" id="page-results">
+
+    <div class="results-page-header">
+      <div class="results-page-title">
+        Readiness Report
+        <span class="results-role-badge" id="results-role-badge">—</span>
+      </div>
+      <button class="btn-back" onclick="switchPage('setup')">← Back to Setup</button>
+    </div>
+
+    <!-- Score hero -->
+    <div class="score-hero">
+      <div class="score-circle">
+        <svg width="150" height="150" class="score-svg" viewBox="0 0 150 150">
+          <circle class="score-track" cx="75" cy="75" r="60"/>
+          <circle class="score-fill" id="score-arc" cx="75" cy="75" r="60"
+            stroke="#5b8def" stroke-dasharray="376.99" stroke-dashoffset="376.99"/>
+        </svg>
+        <div class="score-center">
+          <span class="score-num" id="score-num">0</span>
+          <span class="score-pct">SCORE</span>
+        </div>
+      </div>
+      <div>
+        <div class="score-label" id="score-label">—</div>
+        <p class="score-desc" id="score-desc"></p>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+        <div class="progress-label"><span>0%</span><span>Readiness Score</span><span>100%</span></div>
+      </div>
+    </div>
+
+    <!-- Stat row -->
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="stat-label">Skills Matched</div>
+        <div class="stat-value" id="stat-matched" style="color:var(--green)">—</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Missing Skills</div>
+        <div class="stat-value" id="stat-missing" style="color:var(--red)">—</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Readiness Score</div>
+        <div class="stat-value" id="stat-score">—</div>
+      </div>
+    </div>
+
+    <!-- Category breakdown -->
+    <div class="section-card" style="margin-bottom:0;">
+      <div class="section-title"><span class="s-icon">▤</span> Category Breakdown</div>
+      <div class="cat-grid" id="cat-grid"></div>
+    </div>
+
+    <!-- Bottom 2-col -->
+    <div class="results-bottom">
+      <div class="section-card">
+        <div class="section-title"><span class="s-icon" style="color:var(--red)">✗</span> Missing Skills</div>
+        <div class="missing-list" id="missing-list"></div>
+      </div>
+      <div class="section-card">
+        <div class="section-title"><span class="s-icon" style="color:var(--yellow)">★</span> Top 3 to Learn Next</div>
+        <div class="priority-list" id="priority-list"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const ROLES = {
+  "Data Analyst": {
+    icon: "📊",
+    skills: [
+      { name: "SQL", weight: 5, category: "Databases" },
+      { name: "Python", weight: 4, category: "Programming" },
+      { name: "Excel / Sheets", weight: 4, category: "Tools" },
+      { name: "Data Visualization", weight: 4, category: "Analytics" },
+      { name: "Statistics", weight: 5, category: "Analytics" },
+      { name: "Tableau / Power BI", weight: 3, category: "Tools" },
+      { name: "Data Cleaning", weight: 4, category: "Analytics" },
+      { name: "Business Intelligence", weight: 3, category: "Analytics" },
+      { name: "Communication", weight: 3, category: "Soft Skills" },
+    ]
+  },
+  "Frontend Developer": {
+    icon: "🎨",
+    skills: [
+      { name: "HTML & CSS", weight: 5, category: "Core Web" },
+      { name: "JavaScript", weight: 5, category: "Programming" },
+      { name: "React", weight: 4, category: "Frameworks" },
+      { name: "TypeScript", weight: 4, category: "Programming" },
+      { name: "Responsive Design", weight: 4, category: "Core Web" },
+      { name: "Git / Version Control", weight: 3, category: "Tools" },
+      { name: "Testing (Jest/RTL)", weight: 3, category: "Testing" },
+      { name: "Performance Optimization", weight: 3, category: "Core Web" },
+      { name: "Accessibility", weight: 3, category: "Core Web" },
+    ]
+  },
+  "Software Developer": {
+    icon: "💻",
+    skills: [
+      { name: "Data Structures & Algorithms", weight: 5, category: "CS Fundamentals" },
+      { name: "Object-Oriented Programming", weight: 5, category: "CS Fundamentals" },
+      { name: "Python / Java / C++", weight: 5, category: "Programming" },
+      { name: "Git / Version Control", weight: 4, category: "Tools" },
+      { name: "REST APIs", weight: 4, category: "Architecture" },
+      { name: "Unit Testing", weight: 4, category: "Quality" },
+      { name: "SQL / Databases", weight: 3, category: "Databases" },
+      { name: "CI/CD Pipelines", weight: 3, category: "DevOps" },
+      { name: "System Design", weight: 4, category: "Architecture" },
+      { name: "Code Review", weight: 3, category: "Collaboration" },
+    ]
+  },
+  "Backend Developer": {
+    icon: "⚙️",
+    skills: [
+      { name: "Python / Node.js / Java", weight: 5, category: "Programming" },
+      { name: "REST APIs", weight: 5, category: "Architecture" },
+      { name: "SQL Databases", weight: 4, category: "Databases" },
+      { name: "Authentication & Security", weight: 4, category: "Security" },
+      { name: "Git / Version Control", weight: 3, category: "Tools" },
+      { name: "Docker / Containers", weight: 3, category: "DevOps" },
+      { name: "NoSQL Databases", weight: 3, category: "Databases" },
+      { name: "Cloud Platforms", weight: 3, category: "DevOps" },
+      { name: "System Design", weight: 4, category: "Architecture" },
+    ]
+  },
+  "Machine Learning Engineer": {
+    icon: "🤖",
+    skills: [
+      { name: "Python", weight: 5, category: "Programming" },
+      { name: "Statistics & Probability", weight: 5, category: "Mathematics" },
+      { name: "Linear Algebra", weight: 4, category: "Mathematics" },
+      { name: "Scikit-learn", weight: 4, category: "ML Libraries" },
+      { name: "Deep Learning (PyTorch/TF)", weight: 4, category: "ML Libraries" },
+      { name: "Feature Engineering", weight: 4, category: "ML Concepts" },
+      { name: "Model Evaluation", weight: 4, category: "ML Concepts" },
+      { name: "SQL / Data Processing", weight: 3, category: "Data" },
+      { name: "MLOps / Deployment", weight: 3, category: "DevOps" },
+    ]
+  },
+  "UI/UX Designer": {
+    icon: "✏️",
+    skills: [
+      { name: "Figma", weight: 5, category: "Design Tools" },
+      { name: "User Research", weight: 5, category: "Research" },
+      { name: "Wireframing & Prototyping", weight: 4, category: "Design Process" },
+      { name: "Visual Design", weight: 4, category: "Design Process" },
+      { name: "Usability Testing", weight: 4, category: "Research" },
+      { name: "Interaction Design", weight: 4, category: "Design Process" },
+      { name: "Design Systems", weight: 3, category: "Design Tools" },
+      { name: "HTML & CSS Basics", weight: 3, category: "Technical" },
+      { name: "Information Architecture", weight: 3, category: "Research" },
+    ]
+  },
+  "Product Manager": {
+    icon: "🗂️",
+    skills: [
+      { name: "Product Strategy", weight: 5, category: "Strategy" },
+      { name: "User Story Writing", weight: 5, category: "Execution" },
+      { name: "Roadmapping", weight: 4, category: "Strategy" },
+      { name: "Stakeholder Management", weight: 4, category: "Soft Skills" },
+      { name: "Data Analysis / Metrics", weight: 4, category: "Analytics" },
+      { name: "Agile / Scrum", weight: 4, category: "Process" },
+      { name: "A/B Testing", weight: 3, category: "Analytics" },
+      { name: "Competitive Research", weight: 3, category: "Strategy" },
+      { name: "Communication", weight: 5, category: "Soft Skills" },
+    ]
+  },
+  "Management Consultant": {
+    icon: "📋",
+    skills: [
+      { name: "Structured Problem Solving", weight: 5, category: "Analytical" },
+      { name: "Financial Modelling", weight: 5, category: "Finance" },
+      { name: "Excel / Sheets (Advanced)", weight: 4, category: "Tools" },
+      { name: "PowerPoint / Slide Decks", weight: 4, category: "Communication" },
+      { name: "Client Communication", weight: 5, category: "Soft Skills" },
+      { name: "Market Research", weight: 4, category: "Research" },
+      { name: "Data Analysis", weight: 4, category: "Analytical" },
+      { name: "Project Management", weight: 3, category: "Execution" },
+      { name: "Business Strategy", weight: 5, category: "Strategy" },
+      { name: "Storytelling / Presentation", weight: 4, category: "Communication" },
+    ]
+  },
+  "DevOps Engineer": {
+    icon: "🔧",
+    skills: [
+      { name: "Linux / Shell Scripting", weight: 5, category: "Systems" },
+      { name: "Docker / Kubernetes", weight: 5, category: "Containers" },
+      { name: "CI/CD (Jenkins/GitHub Actions)", weight: 5, category: "Automation" },
+      { name: "Cloud Platforms (AWS/GCP/Azure)", weight: 4, category: "Cloud" },
+      { name: "Infrastructure as Code (Terraform)", weight: 4, category: "Automation" },
+      { name: "Monitoring (Prometheus/Grafana)", weight: 4, category: "Observability" },
+      { name: "Git / Version Control", weight: 3, category: "Tools" },
+      { name: "Networking Basics", weight: 3, category: "Systems" },
+      { name: "Security Best Practices", weight: 3, category: "Security" },
+    ]
+  },
+  "Cybersecurity Analyst": {
+    icon: "🛡️",
+    skills: [
+      { name: "Network Security", weight: 5, category: "Security" },
+      { name: "Threat Detection & Analysis", weight: 5, category: "Security" },
+      { name: "SIEM Tools (Splunk/QRadar)", weight: 4, category: "Tools" },
+      { name: "Vulnerability Assessment", weight: 4, category: "Security" },
+      { name: "Incident Response", weight: 4, category: "Operations" },
+      { name: "Linux / Windows Administration", weight: 4, category: "Systems" },
+      { name: "Python / Scripting", weight: 3, category: "Programming" },
+      { name: "Cryptography Basics", weight: 3, category: "Security" },
+      { name: "Compliance & Frameworks (NIST/ISO)", weight: 3, category: "Governance" },
+    ]
+  },
+};
+
+const SCORE_COLORS = [
+  { max: 30,  color: "#f06060", label: "Just Starting Out" },
+  { max: 55,  color: "#fb923c", label: "Building Foundations" },
+  { max: 75,  color: "#f5c842", label: "Developing Skills" },
+  { max: 90,  color: "#4ecca3", label: "Strong Candidate" },
+  { max: 101, color: "#5b8def", label: "Job-Ready Expert" },
+];
+const LEVEL_LABELS = ["","Beginner","Basic","Intermediate","Advanced","Expert"];
+
+let selectedRole = "Data Analyst";
+let skills = [];
+let editId = null;
+let lastResults = null;
+
+function getScoreInfo(s) { return SCORE_COLORS.find(x => s < x.max) || SCORE_COLORS[SCORE_COLORS.length-1]; }
+function getLevelLabel(l) { return LEVEL_LABELS[l] || l; }
+
+/* ── Page switching ── */
+function switchPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.page-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+  if (name === 'results' && lastResults) animateResults(lastResults.score);
+}
+
+/* ── Roles ── */
+function renderRoles() {
+  const grid = document.getElementById('role-grid');
+  grid.innerHTML = '';
+  Object.entries(ROLES).forEach(([name, data]) => {
+    const btn = document.createElement('button');
+    btn.className = 'role-btn' + (selectedRole === name ? ' active' : '');
+    btn.innerHTML = `<div class="role-icon">${data.icon}</div><div class="role-name">${name}</div><div class="role-count">${data.skills.length} required skills</div>`;
+    btn.onclick = () => { selectedRole = name; renderRoles(); renderRequiredSkills(); resetResults(); };
+    grid.appendChild(btn);
+  });
+}
+
+function renderRequiredSkills() {
+  const c = document.getElementById('required-skills');
+  c.innerHTML = '';
+  ROLES[selectedRole].skills.forEach(s => {
+    const color = s.weight >= 4 ? '#f06060' : s.weight === 3 ? '#f5c842' : '#4ecca3';
+    const t = document.createElement('span');
+    t.className = 'tag';
+    t.innerHTML = `<span class="dot" style="background:${color}"></span>${s.name}`;
+    c.appendChild(t);
+  });
+}
+
+/* ── Skills ── */
+function renderSkillList() {
+  const c = document.getElementById('skill-list-container');
+  document.getElementById('skill-counter').textContent = skills.length + ' skill' + (skills.length !== 1 ? 's' : '') + ' added';
+  document.getElementById('analyze-btn').disabled = skills.length === 0;
+  document.getElementById('skill-card-title').innerHTML = `<span class="icon">✦</span> ${editId !== null ? 'Edit Skill' : 'Your Skills'}`;
+
+  if (skills.length === 0) {
+    c.innerHTML = `<div class="empty-state"><div class="empty-icon">📝</div><div>Add your skills above to get started</div></div>`;
+    return;
+  }
+  const list = document.createElement('div');
+  list.className = 'skill-list';
+  skills.forEach(s => {
+    const item = document.createElement('div');
+    item.className = 'skill-item';
+    item.innerHTML = `<span class="skill-name-text">${s.name}</span><span class="skill-level-badge">${getLevelLabel(s.level)}</span><button class="btn btn-sm btn-ghost eb" data-id="${s.id}">✎</button><button class="btn btn-sm btn-ghost rb" data-id="${s.id}">✕</button>`;
+    list.appendChild(item);
+  });
+  c.innerHTML = '';
+  c.appendChild(list);
+  c.querySelectorAll('.eb').forEach(b => b.onclick = () => startEdit(+b.dataset.id));
+  c.querySelectorAll('.rb').forEach(b => b.onclick = () => removeSkill(+b.dataset.id));
+}
+
+function addSkill() {
+  const inp = document.getElementById('skill-input');
+  const lvl = document.getElementById('skill-level');
+  const name = inp.value.trim();
+  if (!name) return;
+  const level = parseInt(lvl.value);
+  if (editId !== null) {
+    skills = skills.map(s => s.id === editId ? {...s, name, level} : s);
+    editId = null;
+    document.getElementById('add-btn').textContent = '+ Add';
+  } else {
+    if (skills.find(s => s.name.toLowerCase() === name.toLowerCase())) return;
+    skills.push({ id: Date.now(), name, level });
+  }
+  inp.value = ''; lvl.value = '3';
+  resetResults();
+  renderSkillList();
+  inp.focus();
+}
+
+function removeSkill(id) { skills = skills.filter(s => s.id !== id); resetResults(); renderSkillList(); }
+
+function startEdit(id) {
+  const s = skills.find(x => x.id === id);
+  if (!s) return;
+  editId = id;
+  document.getElementById('skill-input').value = s.name;
+  document.getElementById('skill-level').value = s.level;
+  document.getElementById('add-btn').textContent = '✓ Save';
+  document.getElementById('skill-input').focus();
+  renderSkillList();
+}
+
+function resetResults() {
+  lastResults = null;
+  const tab = document.getElementById('tab-results');
+  tab.disabled = true;
+  document.getElementById('score-badge').style.display = 'none';
+}
+
+/* ── Analyze ── */
+function analyze() {
+  const role = ROLES[selectedRole];
+  const totalWeight = role.skills.reduce((a, s) => a + s.weight, 0);
+  let matchedWeight = 0;
+  const matched = [], missing = [];
+
+  role.skills.forEach(rs => {
+    const us = skills.find(u =>
+      u.name.toLowerCase().includes(rs.name.toLowerCase()) ||
+      rs.name.toLowerCase().includes(u.name.toLowerCase())
+    );
+    if (us) {
+      const c = rs.weight * (us.level / 5);
+      matchedWeight += c;
+      matched.push({...rs, userLevel: us.level, contribution: c});
+    } else { missing.push(rs); }
+  });
+
+  const score = Math.min(100, Math.round((matchedWeight / totalWeight) * 100));
+
+  const cats = {};
+  role.skills.forEach(rs => {
+    if (!cats[rs.category]) cats[rs.category] = { total: 0, achieved: 0 };
+    cats[rs.category].total += rs.weight;
+  });
+  matched.forEach(rs => { cats[rs.category].achieved += rs.contribution; });
+  const catResults = Object.entries(cats).map(([name, { total, achieved }]) => ({
+    name, score: Math.min(100, Math.round((achieved / total) * 100))
+  })).sort((a, b) => a.score - b.score);
+
+  const priorities = [...missing].sort((a, b) => b.weight - a.weight).slice(0, 3);
+  lastResults = { score, missing, matched, catResults, priorities };
+
+  // Unlock results tab + badge
+  const tab = document.getElementById('tab-results');
+  tab.disabled = false;
+  const badge = document.getElementById('score-badge');
+  badge.textContent = score + '%';
+  badge.style.display = '';
+
+  buildResultsHTML({ score, missing, matched, catResults, priorities });
+  switchPage('results');
+}
+
+function buildResultsHTML({ score, missing, matched, catResults, priorities }) {
+  const si = getScoreInfo(score);
+  const circ = 2 * Math.PI * 60;
+
+  document.getElementById('results-role-badge').textContent = ROLES[selectedRole].icon + '  ' + selectedRole;
+
+  // Reset circle
+  const arc = document.getElementById('score-arc');
+  arc.setAttribute('stroke', si.color);
+  arc.setAttribute('stroke-dasharray', circ);
+  arc.setAttribute('stroke-dashoffset', circ);
+  document.getElementById('score-num').style.color = si.color;
+  document.getElementById('score-num').textContent = '0';
+  document.getElementById('score-label').style.color = si.color;
+  document.getElementById('score-label').textContent = si.label;
+
+  const desc = score < 40 ? "You're at the beginning of your journey. Focus on building core fundamentals first."
+    : score < 65 ? "Good progress! You have a solid base but there are key skills to develop further."
+    : score < 85 ? "You're a strong candidate! Polish your remaining skills to stand out."
+    : "Excellent! You're highly prepared for this role. Keep growing and staying current.";
+  document.getElementById('score-desc').textContent = desc;
+  document.getElementById('progress-fill').style.cssText = `width:0%;background:linear-gradient(90deg,${si.color},${si.color}99)`;
+
+  document.getElementById('stat-matched').textContent = matched.length + '/' + ROLES[selectedRole].skills.length;
+  document.getElementById('stat-missing').textContent = missing.length;
+  document.getElementById('stat-score').textContent = score + '%';
+  document.getElementById('stat-score').style.color = si.color;
+
+  document.getElementById('cat-grid').innerHTML = catResults.map(c => {
+    const col = c.score < 40 ? '#f06060' : c.score < 70 ? '#f5c842' : '#4ecca3';
+    return `<div class="cat-item"><div class="cat-header"><span class="cat-name">${c.name}</span><span class="cat-pct">${c.score}%</span></div><div class="cat-bar-wrap"><div class="cat-bar-fill" data-target="${c.score}" style="background:${col}"></div></div></div>`;
+  }).join('');
+
+  document.getElementById('missing-list').innerHTML = missing.length === 0
+    ? `<div class="good-msg">🎉 You have all required skills!</div>`
+    : missing.map(s => `<div class="missing-item"><span class="missing-item-name">${s.name}</span><span class="weight-badge">W:${s.weight}</span></div>`).join('');
+
+  const pc = ['#f5c842','#fb923c','#a78bfa'];
+  document.getElementById('priority-list').innerHTML = priorities.length === 0
+    ? `<div class="good-msg">✓ No gaps to fill!</div>`
+    : priorities.map((s,i) => `<div class="priority-item"><div class="priority-num" style="background:${pc[i]}20;color:${pc[i]}">#${i+1}</div><div class="priority-info"><div class="priority-name">${s.name}</div><div class="priority-cat">${s.category}</div></div><span style="font-size:11px;font-family:'DM Mono',monospace;color:var(--text3)">wt ${s.weight}</span></div>`).join('');
+}
+
+function animateResults(score) {
+  const circ = 2 * Math.PI * 60;
+  const arc = document.getElementById('score-arc');
+  const numEl = document.getElementById('score-num');
+  const pf = document.getElementById('progress-fill');
+  let start = null;
+  function step(ts) {
+    if (!start) start = ts;
+    const p = Math.min((ts - start) / 1200, 1);
+    const e = 1 - Math.pow(1 - p, 3);
+    const cur = Math.round(score * e);
+    numEl.textContent = cur;
+    arc.setAttribute('stroke-dashoffset', circ - (cur / 100) * circ);
+    pf.style.width = cur + '%';
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+  setTimeout(() => {
+    document.querySelectorAll('.cat-bar-fill').forEach(b => { b.style.width = b.dataset.target + '%'; });
+  }, 150);
+}
+
+// Init
+document.getElementById('add-btn').onclick = addSkill;
+document.getElementById('skill-input').addEventListener('keydown', e => { if (e.key === 'Enter') addSkill(); });
+document.getElementById('analyze-btn').onclick = analyze;
+renderRoles();
+renderRequiredSkills();
+renderSkillList();
+</script>
+</body>
+</html>
