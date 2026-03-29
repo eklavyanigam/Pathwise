@@ -247,39 +247,29 @@
     background: rgba(78,204,163,0.1); border-color: rgba(78,204,163,0.3); color: var(--green);
   }
 
-  /* Resume upload */
-  .resume-section { margin-bottom: 16px; }
-  .resume-label { font-size: 12px; color: var(--text3); font-family: 'DM Mono', monospace; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
-  .resume-dropzone {
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 6px; padding: 20px 16px;
-    border: 1.5px dashed var(--border2); border-radius: 12px;
-    cursor: pointer; transition: all 0.2s; text-align: center;
-    background: var(--surface2);
+  /* Why These Skills Matter */
+  .why-section { margin-top: 20px; }
+  .why-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+  .why-item {
+    background: var(--surface2); border: 1px solid var(--border); border-radius: 12px;
+    padding: 16px 18px; transition: border-color 0.2s;
   }
-  .resume-dropzone:hover, .resume-dropzone.drag-over { border-color: var(--accent); background: rgba(91,141,239,0.06); }
-  .resume-drop-icon { font-size: 22px; opacity: 0.5; }
-  .resume-drop-text { font-size: 13px; color: var(--text2); }
-  .resume-browse { color: var(--accent); text-decoration: underline; }
-  .resume-drop-sub { font-size: 11px; color: var(--text3); font-family: 'DM Mono', monospace; }
-  .resume-status-box {
-    margin-top: 10px; border-radius: 10px; padding: 12px 14px;
-    font-size: 13px; display: flex; align-items: flex-start; gap: 10px;
-  }
-  .resume-status-box.loading { background: rgba(91,141,239,0.08); border: 1px solid rgba(91,141,239,0.2); color: var(--text2); }
-  .resume-status-box.error   { background: rgba(240,96,96,0.08); border: 1px solid rgba(240,96,96,0.2); color: var(--red); }
-  .resume-status-box.done    { background: rgba(78,204,163,0.08); border: 1px solid rgba(78,204,163,0.2); color: var(--green); }
-  .spinner { width: 16px; height: 16px; border: 2px solid rgba(91,141,239,0.3); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; margin-top: 1px; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .extracted-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
-  .extracted-tag {
+  .why-item:hover { border-color: var(--border2); }
+  .why-skill-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; color: var(--text); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+  .why-skill-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .why-skill-reason { font-size: 12px; color: var(--text2); line-height: 1.6; }
+  .why-weight-pill { font-family: 'DM Mono', monospace; font-size: 10px; padding: 2px 7px; border-radius: 20px; background: var(--surface3); color: var(--text3); border: 1px solid var(--border2); margin-left: auto; }
+
+  /* localStorage badge */
+  .persist-badge {
     display: inline-flex; align-items: center; gap: 5px;
-    background: rgba(78,204,163,0.1); border: 1px solid rgba(78,204,163,0.25);
-    color: var(--green); border-radius: 20px; padding: 3px 10px;
-    font-size: 11px; font-family: 'DM Mono', monospace; cursor: pointer; transition: all 0.15s;
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    color: var(--text3); background: var(--surface2);
+    border: 1px solid var(--border); border-radius: 20px;
+    padding: 3px 10px;
   }
-  .extracted-tag:hover { background: rgba(78,204,163,0.2); }
-  .extracted-tag.added { background: var(--surface3); border-color: var(--border2); color: var(--text3); cursor: default; text-decoration: line-through; }
+  .persist-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); flex-shrink: 0; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
 </style>
 </head>
 <body>
@@ -293,6 +283,7 @@
         <div class="logo-sub">Career Readiness Analyzer</div>
       </div>
     </div>
+    <div class="persist-badge"><span class="persist-dot"></span> Auto-saved</div>
     <div class="page-nav">
       <button class="page-tab active" id="tab-setup" onclick="switchPage('setup')">
         <span class="tab-dot"></span> Setup
@@ -350,19 +341,6 @@
 
         <!-- Toast notification -->
         <div id="skill-toast" class="skill-toast" style="display:none;"></div>
-
-        <!-- Resume Upload -->
-        <div class="resume-section">
-          <div class="resume-label"><span>📄</span> Or upload your resume to auto-extract skills</div>
-          <label class="resume-dropzone" id="resume-dropzone">
-            <input type="file" id="resume-file" accept=".pdf,.txt,.doc,.docx" style="display:none;" />
-            <div id="resume-drop-icon" class="resume-drop-icon">⬆</div>
-            <div id="resume-drop-text" class="resume-drop-text">Drop your resume here or <span class="resume-browse">browse</span></div>
-            <div class="resume-drop-sub">Supports PDF, TXT, DOC, DOCX</div>
-          </label>
-          <div id="resume-status"></div>
-        </div>
-
         <div id="skill-list-container">
           <div class="empty-state">
             <div class="empty-icon">📝</div>
@@ -579,32 +557,34 @@ const ROLES = {
       { name: "MLOps / Deployment", weight: 3, category: "DevOps" },
     ]
   },
-  "UI/UX Designer": {
-    icon: "✏️",
+  "QA Engineer": {
+    icon: "🧪",
     skills: [
-      { name: "Figma", weight: 5, category: "Design Tools" },
-      { name: "User Research", weight: 5, category: "Research" },
-      { name: "Wireframing & Prototyping", weight: 4, category: "Design Process" },
-      { name: "Visual Design", weight: 4, category: "Design Process" },
-      { name: "Usability Testing", weight: 4, category: "Research" },
-      { name: "Interaction Design", weight: 4, category: "Design Process" },
-      { name: "Design Systems", weight: 3, category: "Design Tools" },
-      { name: "HTML & CSS Basics", weight: 3, category: "Technical" },
-      { name: "Information Architecture", weight: 3, category: "Research" },
+      { name: "Manual Testing", weight: 5, category: "Testing" },
+      { name: "Test Case Writing", weight: 5, category: "Testing" },
+      { name: "Selenium / Playwright", weight: 4, category: "Automation" },
+      { name: "API Testing (Postman)", weight: 4, category: "Testing" },
+      { name: "Bug Reporting & Tracking (Jira)", weight: 4, category: "Tools" },
+      { name: "SQL / Database Testing", weight: 3, category: "Databases" },
+      { name: "Performance Testing (JMeter)", weight: 3, category: "Automation" },
+      { name: "Agile / Scrum", weight: 4, category: "Process" },
+      { name: "Python / Java (Scripting)", weight: 3, category: "Programming" },
+      { name: "CI/CD Pipelines", weight: 3, category: "DevOps" },
     ]
   },
-  "Product Manager": {
-    icon: "🗂️",
+  "Full Stack Developer": {
+    icon: "🔀",
     skills: [
-      { name: "Product Strategy", weight: 5, category: "Strategy" },
-      { name: "User Story Writing", weight: 5, category: "Execution" },
-      { name: "Roadmapping", weight: 4, category: "Strategy" },
-      { name: "Stakeholder Management", weight: 4, category: "Soft Skills" },
-      { name: "Data Analysis / Metrics", weight: 4, category: "Analytics" },
-      { name: "Agile / Scrum", weight: 4, category: "Process" },
-      { name: "A/B Testing", weight: 3, category: "Analytics" },
-      { name: "Competitive Research", weight: 3, category: "Strategy" },
-      { name: "Communication", weight: 5, category: "Soft Skills" },
+      { name: "HTML & CSS", weight: 5, category: "Frontend" },
+      { name: "JavaScript", weight: 5, category: "Frontend" },
+      { name: "React / Vue / Angular", weight: 4, category: "Frontend" },
+      { name: "Node.js / Python / Java", weight: 5, category: "Backend" },
+      { name: "REST APIs", weight: 5, category: "Backend" },
+      { name: "SQL Databases", weight: 4, category: "Databases" },
+      { name: "NoSQL Databases", weight: 3, category: "Databases" },
+      { name: "Git / Version Control", weight: 4, category: "Tools" },
+      { name: "Docker / Containers", weight: 3, category: "DevOps" },
+      { name: "Authentication & Security", weight: 4, category: "Security" },
     ]
   },
   "Financial Analyst": {
@@ -665,19 +645,19 @@ const ROLES = {
       { name: "DevOps / CI/CD Integration", weight: 3, category: "Automation" },
     ]
   },
-  "SAP Consultant": {
-    icon: "🏢",
+  "Gen AI Developer": {
+    icon: "🧠",
     skills: [
-      { name: "SAP ERP Modules (FI/CO/MM/SD)", weight: 5, category: "SAP Core" },
-      { name: "SAP S/4HANA", weight: 5, category: "SAP Core" },
-      { name: "SAP Configuration & Customising", weight: 5, category: "SAP Core" },
-      { name: "Business Process Analysis", weight: 4, category: "Consulting" },
-      { name: "SAP ABAP (Basics)", weight: 3, category: "Technical" },
-      { name: "SAP Fiori / UI5", weight: 3, category: "Technical" },
-      { name: "Data Migration (LSMW/BAPI)", weight: 4, category: "Technical" },
-      { name: "Integration (SAP PI/PO / BTP)", weight: 4, category: "Integration" },
-      { name: "Project Management", weight: 3, category: "Consulting" },
-      { name: "Stakeholder Communication", weight: 4, category: "Soft Skills" },
+      { name: "Python", weight: 5, category: "Programming" },
+      { name: "LLM APIs (OpenAI / Anthropic / Gemini)", weight: 5, category: "AI Tools" },
+      { name: "Prompt Engineering", weight: 5, category: "AI Concepts" },
+      { name: "RAG (Retrieval-Augmented Generation)", weight: 4, category: "AI Concepts" },
+      { name: "LangChain / LlamaIndex", weight: 4, category: "Frameworks" },
+      { name: "Vector Databases (Pinecone / Chroma)", weight: 4, category: "Databases" },
+      { name: "Fine-tuning & Model Adaptation", weight: 3, category: "AI Concepts" },
+      { name: "REST APIs / FastAPI", weight: 4, category: "Backend" },
+      { name: "Git / Version Control", weight: 3, category: "Tools" },
+      { name: "Evaluation & Testing of LLMs", weight: 4, category: "AI Concepts" },
     ]
   },
 };
@@ -806,7 +786,7 @@ function renderRoles() {
     const btn = document.createElement('button');
     btn.className = 'role-btn' + (selectedRole === name ? ' active' : '');
     btn.innerHTML = `<div class="role-icon">${data.icon}</div><div class="role-name">${name}</div><div class="role-count">${data.skills.length} required skills</div>`;
-    btn.onclick = () => { selectedRole = name; renderRoles(); renderRequiredSkills(); resetResults(); };
+    btn.onclick = () => { selectedRole = name; renderRoles(); renderRequiredSkills(); resetResults(); saveState(); };
     grid.appendChild(btn);
   });
 }
@@ -873,6 +853,7 @@ function addSkill() {
   skillInput.value = '';
   document.getElementById('skill-level').value = '2';
   resetResults();
+  saveState();
   renderSkillList();
   skillInput.focus();
 }
@@ -883,10 +864,11 @@ function clearAllSkills() {
   editId = null;
   document.getElementById('add-btn').textContent = '+ Add Skill';
   resetResults();
+  saveState();
   renderSkillList();
 }
 
-function removeSkill(id) { skills = skills.filter(s => s.id !== id); resetResults(); renderSkillList(); }
+function removeSkill(id) { skills = skills.filter(s => s.id !== id); resetResults(); saveState(); renderSkillList(); }
 
 function startEdit(id) {
   const s = skills.find(x => x.id === id);
@@ -903,6 +885,23 @@ function resetResults() {
   lastResults = null;
   document.getElementById('tab-results').disabled = true;
   document.getElementById('score-badge').style.display = 'none';
+}
+
+/* ═══ LOCALSTORAGE PERSIST ═══ */
+function saveState() {
+  try {
+    localStorage.setItem('pathwise_skills', JSON.stringify(skills));
+    localStorage.setItem('pathwise_role', selectedRole);
+  } catch(e) {}
+}
+
+function loadState() {
+  try {
+    const savedSkills = localStorage.getItem('pathwise_skills');
+    const savedRole = localStorage.getItem('pathwise_role');
+    if (savedSkills) skills = JSON.parse(savedSkills);
+    if (savedRole && ROLES[savedRole]) selectedRole = savedRole;
+  } catch(e) {}
 }
 
 /* ═══ ANALYZE ═══ */
@@ -987,6 +986,8 @@ function buildResultsHTML({ score, missing, matched, catResults, priorities }) {
     ? `<div class="good-msg">🎉 You have all required skills!</div>`
     : missing.map(s => `<div class="missing-item"><span class="missing-item-name">${s.name}</span><span class="weight-badge">W:${s.weight}</span></div>`).join('');
 
+  buildWhySection(matched, missing, selectedRole);
+
   const pc = ['#f5c842','#fb923c','#a78bfa'];
   document.getElementById('priority-list').innerHTML = priorities.length === 0
     ? `<div class="good-msg">✓ No gaps to fill!</div>`
@@ -1016,12 +1017,181 @@ function animateResults(score) {
 }
 
 /* ═══ INIT ═══ */
+loadState();
 document.getElementById('add-btn').onclick = addSkill;
 document.getElementById('analyze-btn').onclick = analyze;
+
+// Enter on skill input: add skill; Ctrl/Cmd+Enter anywhere on page: analyze
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+    e.preventDefault();
+    if (skills.length > 0) analyze();
+  }
+});
+
 renderRoles();
 renderRequiredSkills();
 renderSkillList();
 
+
+
+/* ═══ WHY THESE SKILLS MATTER ═══ */
+const SKILL_REASONS = {
+  "SQL": "The lingua franca of data. Every database, BI tool, and analytics platform requires SQL to query and manipulate data.",
+  "Python": "The most versatile language in tech. Used for scripting, automation, data analysis, machine learning, and backend development.",
+  "Excel / Google Sheets": "Used daily in almost every office role. Essential for data wrangling, reporting, and quick analysis without code.",
+  "Data Visualization": "Turning raw numbers into insights. Employers need people who can communicate data through charts and dashboards.",
+  "Statistics": "The foundation of data analysis and ML. Without statistics, you can't interpret results or validate models.",
+  "Tableau / Power BI": "Industry-standard BI tools used by analysts worldwide to build dashboards and self-serve reports.",
+  "Data Cleaning": "80% of a data analyst's job is cleaning messy data. This skill is non-negotiable in practice.",
+  "Business Intelligence": "Connects data to business decisions — exactly what employers want from a data analyst.",
+  "Communication": "Technical skills only create value if you can explain findings clearly to non-technical stakeholders.",
+  "HTML & CSS": "The building blocks of every webpage. Without them, you can't lay out or style any web interface.",
+  "JavaScript": "The language of the web. Every interactive element on any website runs on JavaScript.",
+  "React": "The dominant frontend framework used by thousands of companies. Expected in almost every frontend job description.",
+  "TypeScript": "Adds type safety to JavaScript, reducing bugs and improving team scalability. Widely adopted in modern frontends.",
+  "Responsive Design": "Over 50% of web traffic is mobile. Building sites that work on all screen sizes is a core requirement.",
+  "Git / Version Control": "The standard tool for collaborating on code. You cannot work in a real dev team without knowing Git.",
+  "Testing (Jest/RTL)": "Writing tests proves your code works and prevents regressions. Companies expect at least basic testing knowledge.",
+  "Performance Optimization": "Slow websites lose users. Optimising load times and rendering is a valued and increasingly essential skill.",
+  "Accessibility": "Legal requirement in many countries and a mark of quality. Inclusive design makes products usable by everyone.",
+  "Data Structures & Algorithms": "The foundation of technical interviews at any serious company. Required to write efficient code at scale.",
+  "Object-Oriented Programming": "The dominant programming paradigm in enterprise software. Needed to read, write, and maintain most codebases.",
+  "Python / Java / C++": "Core programming languages used across industries. Proficiency in at least one is the minimum bar for any developer role.",
+  "REST APIs": "The standard way applications communicate over the internet. Building and consuming APIs is a daily developer task.",
+  "Unit Testing": "Employers expect developers to test their own code. Untested code is a liability in production systems.",
+  "SQL / Databases": "Almost every application stores data. Understanding databases is fundamental to building anything real.",
+  "CI/CD Pipelines": "Automating build and deployment saves time and reduces human error. Expected in modern engineering teams.",
+  "System Design": "At senior levels, you design systems, not just write code. Starting to think in systems early gives you a huge edge.",
+  "Code Review": "A core part of team-based development. Good code review skills show maturity and collaborative ability.",
+  "Python / Node.js / Java": "Server-side languages that power the business logic of applications. Fundamental to any backend role.",
+  "SQL Databases": "Relational databases store the majority of the world's structured data. Essential for any backend developer.",
+  "Authentication & Security": "Security breaches are costly. Every backend developer must understand auth flows and common vulnerabilities.",
+  "Docker / Containers": "Containers ensure consistent environments across dev and production. The default standard in modern deployment.",
+  "NoSQL Databases": "For high-scale or unstructured data problems, NoSQL databases like MongoDB are essential alternatives to SQL.",
+  "Cloud Platforms": "Most modern infrastructure runs on AWS, GCP, or Azure. Cloud skills are expected in nearly all backend roles.",
+  "Statistics & Probability": "ML is applied statistics. Without this foundation, you cannot design experiments or understand model behaviour.",
+  "Linear Algebra": "Neural networks and many ML algorithms are fundamentally matrix operations. Essential for deep learning.",
+  "Scikit-learn": "The go-to Python library for classical ML. Used in data science roles worldwide for rapid model prototyping.",
+  "Deep Learning (PyTorch/TF)": "Powers computer vision, NLP, and generative AI. Increasingly expected even for non-research ML roles.",
+  "Feature Engineering": "Often more impactful than the model itself. Transforming raw data into meaningful features is a core ML skill.",
+  "Model Evaluation": "Building a model is step one. Knowing if it actually works — and why — requires rigorous evaluation skills.",
+  "SQL / Data Processing": "ML engineers deal with large datasets daily. Efficient data querying and processing is a practical must-have.",
+  "MLOps / Deployment": "A model no one can use is worthless. Deploying, monitoring, and maintaining models in production is a growing skill gap.",
+  "Figma": "The industry-standard design tool. If you can't use Figma, you can't collaborate with modern design teams.",
+  "User Research": "Great design starts with understanding users. Research skills turn assumptions into evidence-backed decisions.",
+  "Wireframing & Prototyping": "Prototypes save months of engineering time by validating ideas before they're built. Core to any design process.",
+  "Visual Design": "The aesthetics of a product affect trust and usability. Strong visual design skills make your work stand out.",
+  "Usability Testing": "Testing with real users uncovers problems you'd never find on your own. It's the difference between guessing and knowing.",
+  "Interaction Design": "Defines how users move through a product. Poor interactions frustrate users; great ones feel invisible.",
+  "Design Systems": "Used by every major tech company to maintain consistency at scale. Shows you can work professionally in large teams.",
+  "HTML & CSS Basics": "Designers who understand code communicate better with developers and create more technically feasible designs.",
+  "Information Architecture": "How content is organised determines whether users can find what they need. Underrated but critical skill.",
+  "Product Strategy": "PMs without strategy just manage backlogs. Strategy connects product decisions to business outcomes.",
+  "User Story Writing": "How requirements get communicated to engineering. Clear stories prevent misunderstandings and wasted sprints.",
+  "Roadmapping": "A roadmap aligns the whole company on priorities. PMs who roadmap well earn trust from leadership and teams.",
+  "Stakeholder Management": "PMs serve many masters. Managing competing priorities and keeping stakeholders aligned is a daily challenge.",
+  "Data Analysis / Metrics": "You can't improve what you don't measure. Data-driven PMs make better decisions and earn more credibility.",
+  "Agile / Scrum": "The operating system of most software teams. Understanding it lets you run sprints and ship product efficiently.",
+  "A/B Testing": "The gold standard for validating product decisions. Running experiments shows you let data, not opinions, drive choices.",
+  "Competitive Research": "Understanding the market landscape helps you position your product and spot opportunities others miss.",
+  "Financial Modelling": "The core deliverable of a financial analyst. Models underpin investment decisions, forecasts, and valuations.",
+  "Excel / Google Sheets (Advanced)": "Finance runs on spreadsheets. Advanced Excel skills (pivot tables, VBA, complex formulas) are a baseline expectation.",
+  "Financial Statement Analysis": "Reading income statements, balance sheets, and cash flows is the fundamental literacy of any finance role.",
+  "Budgeting & Forecasting": "Companies hire financial analysts specifically to build and maintain forecasts. This is the job.",
+  "Valuation Techniques (DCF/Comps)": "DCF and comparable company analysis are the standard valuation frameworks used in investment banking and PE.",
+  "Accounting Fundamentals": "Finance and accounting are inseparable. Understanding debits, credits, and accruals prevents costly errors.",
+  "PowerPoint / Presentations": "Financial insights only matter if communicated clearly. Slide-building is a daily task in most finance roles.",
+  "Data Visualisation (Power BI/Tableau)": "Modern finance teams are moving beyond Excel charts. BI tools help analysts present data more clearly.",
+  "Attention to Detail": "A single wrong number in a financial model can mislead a multi-million-pound decision. Precision is everything.",
+  "Linux / Shell Scripting": "Servers run Linux. Scripting automates repetitive tasks. Every DevOps engineer must be fluent on the command line.",
+  "Docker / Kubernetes": "The container stack that powers modern cloud-native deployments. Essential for managing applications at scale.",
+  "CI/CD (Jenkins/GitHub Actions)": "Automating testing and deployment pipelines is the core function of DevOps. It's literally what the role exists to do.",
+  "Cloud Platforms (AWS/GCP/Azure)": "Infrastructure now lives in the cloud. Certifications and hands-on cloud skills are expected in every DevOps role.",
+  "Infrastructure as Code (Terraform)": "Managing infrastructure manually is error-prone and slow. IaC makes infrastructure reproducible and version-controlled.",
+  "Monitoring (Prometheus/Grafana)": "You can't fix what you can't see. Monitoring stacks are how teams detect incidents and maintain reliability.",
+  "Networking Basics": "Understanding DNS, VPCs, firewalls, and load balancers is essential for designing and debugging cloud infrastructure.",
+  "Security Best Practices": "DevOps engineers are often the last line of defence before deployment. Secure defaults and least privilege are critical.",
+  "Network Security": "Most attacks happen at the network level. Understanding protocols, firewalls, and traffic analysis is foundational.",
+  "Threat Detection & Analysis": "Identifying threats in real-time separates proactive security teams from reactive ones. Core to any SOC role.",
+  "SIEM Tools (Splunk/QRadar)": "SIEM platforms are where security analysts live. Proficiency in at least one is expected in every analyst role.",
+  "Vulnerability Assessment": "Finding weaknesses before attackers do is the entire premise of cybersecurity. Regular assessments are industry standard.",
+  "Incident Response": "When breaches happen, a clear, practiced response minimises damage. IR planning is a core professional competency.",
+  "Linux / Windows Administration": "Attackers target systems. Defenders must understand them. OS administration is a baseline skill for any security role.",
+  "Python / Scripting": "Automating log parsing, writing detection rules, and building security tools all require scripting ability.",
+  "Cryptography Basics": "Encryption underpins data security, authentication, and secure communications. Every security professional needs this foundation.",
+  "Compliance & Frameworks (NIST/ISO)": "Organisations must meet regulatory requirements. Knowledge of frameworks like NIST and ISO 27001 is increasingly expected.",
+  "AWS / Azure / GCP (Advanced)": "Cloud architects design the infrastructure that entire companies run on. Deep platform expertise is non-negotiable.",
+  "Cloud Architecture Design": "The primary output of this role. Designing scalable, resilient, cost-efficient architectures is what cloud architects are hired to do.",
+  "Infrastructure as Code (Terraform/CDK)": "Modern cloud infrastructure is defined in code. IaC enables repeatability, version control, and team collaboration.",
+  "Networking (VPC, DNS, Load Balancing)": "Cloud networks are complex. Misconfigurations cause outages and security breaches. Deep networking knowledge is essential.",
+  "Security & IAM": "Cloud breaches often come from misconfigured permissions. Identity and access management is a critical architectural concern.",
+  "Kubernetes / Container Orchestration": "Most cloud-native applications run in containers. Kubernetes expertise is expected at the architect level.",
+  "Cost Optimisation": "Cloud bills can spiral. Architects who design for cost efficiency create real, measurable business value.",
+  "Serverless Architecture": "Serverless reduces operational overhead significantly. Knowing when and how to use it is a mark of architectural maturity.",
+  "Multi-cloud Strategy": "Avoiding vendor lock-in and designing for resilience often requires multi-cloud thinking. Increasingly expected at senior levels.",
+  "DevOps / CI/CD Integration": "Architects must design systems that teams can actually deploy and maintain. DevOps integration is part of good architecture.",
+  "SAP ERP Modules (FI/CO/MM/SD)": "SAP modules are the functional heart of enterprise systems. Consultants must know at least one module deeply.",
+  "SAP S/4HANA": "SAP's latest ERP platform is what most large organisations are migrating to. S/4HANA expertise is increasingly required.",
+  "SAP Configuration & Customising": "SAP consulting is primarily configuration work. The ability to set up and tailor SAP to client needs is the core deliverable.",
+  "Business Process Analysis": "SAP implementations fail when the system doesn't match real business processes. Process analysis bridges IT and business.",
+  "SAP ABAP (Basics)": "ABAP is SAP's proprietary language. Even functional consultants need basics to work with developers and read code.",
+  "SAP Fiori / UI5": "Modern SAP interfaces run on Fiori. As clients modernise their UI, Fiori skills are becoming a differentiator.",
+  "Data Migration (LSMW/BAPI)": "Every SAP implementation involves moving data from legacy systems. Data migration is a critical and often underestimated workstream.",
+  "Integration (SAP PI/PO / BTP)": "SAP rarely stands alone. Integration with other enterprise systems via middleware is a key consulting skill.",
+  "Project Management": "SAP projects are complex, multi-year programmes. Consultants who can manage workstreams are far more valuable.",
+
+  "Manual Testing": "The baseline skill of QA. Before automating anything, you must know how to test software thoroughly by hand.",
+  "Test Case Writing": "Clear, repeatable test cases are how QA engineers communicate what was tested and what passed or failed.",
+  "Selenium / Playwright": "The leading browser automation frameworks. Automating regression tests saves hours of manual effort on every release.",
+  "API Testing (Postman)": "Most modern apps are API-driven. Testing APIs directly catches bugs before they reach the UI layer.",
+  "Bug Reporting & Tracking (Jira)": "A bug only gets fixed if it's reported clearly. Jira is the industry-standard tool for tracking issues through to resolution.",
+  "SQL / Database Testing": "Data integrity bugs are often invisible in the UI. Direct database testing catches them at the source.",
+  "Performance Testing (JMeter)": "Functional correctness isn't enough — systems must handle real-world load. Performance testing prevents production failures.",
+  "Python / Java (Scripting)": "Writing automation scripts requires programming ability. Even functional testers need scripting basics to work in modern teams.",
+  "React / Vue / Angular": "Full stack developers must own the frontend too. Proficiency in a modern framework is expected on both sides of the stack.",
+  "Node.js / Python / Java": "Server-side programming is half the job. Full stack developers write business logic, APIs, and database queries daily.",
+  "HTML & CSS": "The foundation of every web interface. Full stack developers build frontend as well as backend, so HTML and CSS are non-negotiable.",
+
+  "LLM APIs (OpenAI / Anthropic / Gemini)": "The core building block of Gen AI applications. Knowing how to call and configure LLM APIs is the entry point for this entire field.",
+  "Prompt Engineering": "How you instruct a model determines the quality of its output. Good prompt engineering is the difference between a demo and a production-ready product.",
+  "RAG (Retrieval-Augmented Generation)": "Most real-world AI apps need to work with custom data. RAG is the dominant pattern for grounding LLMs in your own knowledge base.",
+  "LangChain / LlamaIndex": "The most widely adopted frameworks for building LLM-powered applications. Knowing one significantly speeds up development.",
+  "Vector Databases (Pinecone / Chroma)": "RAG and semantic search require vector storage. These databases are fundamental infrastructure for modern AI apps.",
+  "Fine-tuning & Model Adaptation": "Off-the-shelf models don't always fit your use case. Fine-tuning lets you customise model behaviour for specific tasks.",
+  "REST APIs / FastAPI": "AI models need to be served via APIs to be useful. FastAPI is the go-to framework for wrapping Python AI code into production endpoints.",
+  "Evaluation & Testing of LLMs": "LLMs are non-deterministic. Systematic evaluation is how you know your AI product actually works reliably.",
+  "Stakeholder Communication": "SAP implementations affect entire organisations. Communicating clearly with business users and executives is essential.",
+  "Structured Problem Solving": "Consultants earn their fees by solving hard problems systematically. Frameworks like MECE thinking are fundamental.",
+  "Client Communication": "Your work only creates value if the client trusts and acts on it. Clear, confident communication is non-negotiable.",
+  "Market Research": "Understanding market dynamics, competitors, and industry trends is the foundation of strategic consulting advice.",
+  "Business Strategy": "Strategy consulting exists to help organisations make better decisions. Deep understanding of strategy frameworks is core.",
+  "Storytelling / Presentation": "Consultants present to senior executives regularly. The ability to tell a compelling story with data is a career-defining skill.",
+};
+
+function buildWhySection(matched, missing, role) {
+  const whyGrid = document.getElementById('why-grid');
+  if (!whyGrid) return;
+  const allRoleSkills = ROLES[role].skills;
+  // Show all role skills with reasons — matched first, then missing
+  const sorted = [...matched.map(s => ({...s, has: true})), ...missing.map(s => ({...s, has: false}))];
+  whyGrid.innerHTML = sorted.map(s => {
+    const reason = SKILL_REASONS[s.name] || `A core competency for the ${role} role, valued by employers across the industry.`;
+    const dotColor = s.weight >= 5 ? '#f06060' : s.weight === 4 ? '#fb923c' : '#f5c842';
+    const statusIcon = s.has ? '✓' : '✗';
+    const statusColor = s.has ? 'var(--green)' : 'var(--red)';
+    return `
+      <div class="why-item">
+        <div class="why-skill-name">
+          <span class="why-skill-dot" style="background:${dotColor}"></span>
+          ${s.name}
+          <span style="margin-left:auto;font-size:11px;color:${statusColor};font-family:'DM Mono',monospace;">${statusIcon}</span>
+          <span class="why-weight-pill">wt ${s.weight}</span>
+        </div>
+        <div class="why-skill-reason">${reason}</div>
+      </div>`;
+  }).join('');
+}
 
 /* ═══ TOAST ═══ */
 let toastTimer = null;
@@ -1032,172 +1202,6 @@ function showToast(msg, type = 'error') {
   t.style.display = 'flex';
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => { t.style.display = 'none'; }, 3000);
-}
-
-/* ═══ RESUME UPLOAD ═══ */
-const resumeFile = document.getElementById('resume-file');
-const resumeDropzone = document.getElementById('resume-dropzone');
-const resumeStatus = document.getElementById('resume-status');
-
-resumeFile.addEventListener('change', () => {
-  if (resumeFile.files[0]) handleResumeFile(resumeFile.files[0]);
-});
-
-resumeDropzone.addEventListener('dragover', e => { e.preventDefault(); resumeDropzone.classList.add('drag-over'); });
-resumeDropzone.addEventListener('dragleave', () => resumeDropzone.classList.remove('drag-over'));
-resumeDropzone.addEventListener('drop', e => {
-  e.preventDefault();
-  resumeDropzone.classList.remove('drag-over');
-  const file = e.dataTransfer.files[0];
-  if (file) handleResumeFile(file);
-});
-
-function setResumeStatus(type, html) {
-  resumeStatus.innerHTML = `<div class="resume-status-box ${type}">${html}</div>`;
-}
-
-async function handleResumeFile(file) {
-  const allowedTypes = ['text/plain', 'application/pdf', 'application/msword',
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
-  if (!allowedTypes.includes(file.type) && !file.name.match(/\.(pdf|txt|doc|docx)$/i)) {
-    setResumeStatus('error', '✕ Unsupported file type. Please upload a PDF, TXT, DOC or DOCX.');
-    return;
-  }
-
-  // Update dropzone to show filename
-  document.getElementById('resume-drop-icon').textContent = '📄';
-  document.getElementById('resume-drop-text').textContent = file.name;
-  setResumeStatus('loading', '<div class="spinner"></div><span>Reading resume and extracting skills…</span>');
-
-  try {
-    let text = '';
-
-    if (file.type === 'text/plain' || file.name.endsWith('.txt')) {
-      text = await file.text();
-    } else {
-      // For PDF/DOC, read as base64 and send to Claude
-      const base64 = await fileToBase64(file);
-      const isPDF = file.type === 'application/pdf' || file.name.endsWith('.pdf');
-      const extracted = await extractTextViaAPI(base64, isPDF, file.name);
-      text = extracted;
-    }
-
-    if (!text || text.length < 50) {
-      setResumeStatus('error', '✕ Could not read file content. Try a plain text (.txt) version of your resume.');
-      return;
-    }
-
-    await extractSkillsFromText(text);
-  } catch (err) {
-    console.error(err);
-    setResumeStatus('error', '✕ Something went wrong. Please try a .txt version of your resume.');
-  }
-}
-
-function fileToBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result.split(',')[1]);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
-
-async function extractTextViaAPI(base64, isPDF, filename) {
-  const mediaType = isPDF ? 'application/pdf' : 'application/octet-stream';
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 1000,
-      messages: [{
-        role: 'user',
-        content: [
-          isPDF
-            ? { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: base64 } }
-            : { type: 'text', text: '[Binary file - extract any readable text you can]' },
-          { type: 'text', text: 'Extract and return only the plain text content of this resume. No commentary.' }
-        ]
-      }]
-    })
-  });
-  const data = await response.json();
-  return data.content?.find(b => b.type === 'text')?.text || '';
-}
-
-async function extractSkillsFromText(resumeText) {
-  setResumeStatus('loading', '<div class="spinner"></div><span>Identifying skills from your resume…</span>');
-
-  const allKnownSkills = [...new Set(Object.values(ROLES).flatMap(r => r.skills.map(s => s.name)))];
-
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 1000,
-      messages: [{
-        role: 'user',
-        content: `You are a career skills extractor. From the resume text below, extract all technical and professional skills mentioned.
-
-Known skills to look for (match these if found, use exact names): ${allKnownSkills.join(', ')}
-
-Also extract any other skills not in the list above.
-
-Respond ONLY with a valid JSON array of skill name strings. No explanation, no markdown, no backticks.
-Example: ["Python", "SQL", "Communication", "React"]
-
-Resume text:
-${resumeText.slice(0, 6000)}`
-      }]
-    })
-  });
-
-  const data = await response.json();
-  const raw = data.content?.find(b => b.type === 'text')?.text || '[]';
-
-  let extracted = [];
-  try {
-    const clean = raw.replace(/\`\`\`json|\`\`\`/g, '').trim();
-    extracted = JSON.parse(clean);
-  } catch {
-    setResumeStatus('error', '✕ Could not parse skills from resume. Try again or add skills manually.');
-    return;
-  }
-
-  if (!extracted.length) {
-    setResumeStatus('error', '✕ No skills found in resume. Try a different file or add skills manually.');
-    return;
-  }
-
-  renderExtractedSkills(extracted);
-}
-
-function renderExtractedSkills(extractedNames) {
-  const added = [];
-  const skipped = [];
-
-  // Auto-add skills not already in list
-  extractedNames.forEach(name => {
-    const trimmed = name.trim();
-    if (!trimmed) return;
-    if (skills.find(s => s.name.toLowerCase() === trimmed.toLowerCase())) {
-      skipped.push(trimmed);
-    } else {
-      skills.push({ id: Date.now() + Math.random(), name: trimmed, level: 2 });
-      added.push(trimmed);
-    }
-  });
-
-  resetResults();
-  renderSkillList();
-
-  const summary = added.length > 0
-    ? `✓ <strong>${added.length} skill${added.length !== 1 ? 's' : ''} extracted</strong> from your resume${skipped.length > 0 ? ` (${skipped.length} already in your list)` : ''}. Review levels and click Analyze.`
-    : `All ${skipped.length} extracted skills were already in your list.`;
-
-  setResumeStatus('done', summary);
 }
 
 </script>
