@@ -9,24 +9,24 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --bg: #090c1a;
-    --surface: rgba(255,255,255,0.03);
-    --surface2: rgba(255,255,255,0.045);
-    --surface3: rgba(255,255,255,0.07);
-    --border: rgba(100,140,255,0.08);
-    --border2: rgba(100,140,255,0.14);
-    --text: #d0d8f5;
-    --text2: #6a7aaa;
-    --text3: #2e3660;
-    --accent: #2c5fd4;
-    --accent2: #4a7fff;
+    --bg: #0f1829;
+    --surface: rgba(255,255,255,0.055);
+    --surface2: rgba(255,255,255,0.075);
+    --surface3: rgba(255,255,255,0.10);
+    --border: rgba(100,140,255,0.16);
+    --border2: rgba(100,140,255,0.24);
+    --text: #eef1ff;
+    --text2: #a8b8e0;
+    --text3: #6070a8;
+    --accent: #3d6ee8;
+    --accent2: #6699ff;
     --green: #28c990;
     --yellow: #e8b84b;
     --red: #e05060;
     --purple: #4a6fd4;
     --orange: #d97a3e;
     --pink: #4a7fff;
-    --blue-soft: #3a5dbf;
+    --blue-soft: #4a6dcf;
     --glow-pink: rgba(44,95,212,0.20);
     --glow-purple: rgba(74,111,212,0.15);
   }
@@ -44,15 +44,15 @@
   body::before {
     content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
     background:
-      radial-gradient(ellipse 70% 55% at 15% 0%, rgba(30,60,160,0.18) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 45% at 85% 100%, rgba(44,95,212,0.10) 0%, transparent 55%),
-      radial-gradient(ellipse 80% 40% at 50% 50%, rgba(40,60,140,0.06) 0%, transparent 70%);
+      radial-gradient(ellipse 70% 55% at 15% 0%, rgba(30,70,180,0.28) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 45% at 85% 100%, rgba(44,95,212,0.18) 0%, transparent 55%),
+      radial-gradient(ellipse 80% 40% at 50% 50%, rgba(40,70,160,0.10) 0%, transparent 70%);
   }
   body::after {
     content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
     background-image:
-      linear-gradient(rgba(80,120,255,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(80,120,255,0.04) 1px, transparent 1px);
+      linear-gradient(rgba(80,120,255,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(80,120,255,0.06) 1px, transparent 1px);
     background-size: 44px 44px;
   }
 
@@ -85,7 +85,7 @@
   /* Page tabs */
   .page-nav {
     display: flex; align-items: center; gap: 3px;
-    background: rgba(255,255,255,0.04);
+    background: rgba(255,255,255,0.07);
     border: 1px solid var(--border);
     border-radius: 13px; padding: 4px;
     backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
@@ -110,26 +110,26 @@
 
   /* Glass Card */
   .card {
-    background: rgba(255,255,255,0.035);
-    border: 1px solid rgba(255,255,255,0.09);
+    background: rgba(16,30,70,0.65);
+    border: 1px solid rgba(100,150,255,0.18);
     border-radius: 20px; padding: 28px;
     position: relative; overflow: hidden;
     backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 4px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.07);
+    box-shadow: 0 4px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.13);
     transition: border-color 0.2s;
   }
   .card::before {
     content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
     background: linear-gradient(90deg, transparent, rgba(44,95,212,0.6), rgba(74,127,255,0.4), transparent);
   }
-  .card-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 1.8px; color: var(--text3); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+  .card-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 1.8px; color: var(--text2); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
   .card-title .icon { color: var(--accent); font-size: 14px; }
 
   /* Role grid */
   .role-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 9px; }
   @media (max-width: 480px) { .role-grid { grid-template-columns: 1fr; } }
   .role-btn {
-    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(20,40,90,0.55); border: 1px solid rgba(100,150,255,0.15);
     border-radius: 13px; padding: 13px 14px; cursor: pointer; transition: all 0.22s; text-align: left; color: var(--text);
   }
   .role-btn:hover { border-color: rgba(44,95,212,0.35); background: rgba(74,111,212,0.07); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(74,111,212,0.12); }
@@ -147,7 +147,7 @@
   /* Combobox */
   .combo-wrap { position: relative; }
   .form-input {
-    width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    width: 100%; background: rgba(255,255,255,0.08); border: 1px solid rgba(100,140,255,0.18);
     border-radius: 11px; padding: 10px 36px 10px 14px; color: var(--text);
     font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; transition: all 0.2s;
   }
@@ -156,7 +156,7 @@
   .combo-arrow { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--text3); font-size: 10px; pointer-events: none; }
   .combo-dropdown {
     position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 100;
-    background: rgba(22,20,38,0.95); border: 1px solid rgba(44,95,212,0.3); border-radius: 12px;
+    background: rgba(15,25,60,0.97); border: 1px solid rgba(44,95,212,0.3); border-radius: 12px;
     max-height: 220px; overflow-y: auto; display: none;
     box-shadow: 0 16px 48px rgba(0,0,0,0.6), 0 0 0 1px rgba(44,95,212,0.08);
     backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -174,12 +174,12 @@
   /* Level select */
   .level-select-wrap { position: relative; flex: 1; }
   .level-select {
-    width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    width: 100%; background: rgba(255,255,255,0.08); border: 1px solid rgba(100,140,255,0.18);
     border-radius: 11px; padding: 10px 14px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 14px;
     outline: none; cursor: pointer; appearance: none; -webkit-appearance: none; transition: all 0.2s;
   }
   .level-select:focus { border-color: rgba(44,95,212,0.5); box-shadow: 0 0 0 3px rgba(44,95,212,0.1); }
-  .level-select option { background: #12141e; }
+  .level-select option { background: #0e1a3a; }
 
   /* Buttons */
   .btn { border: none; border-radius: 11px; padding: 10px 18px; font-family: 'Syne', sans-serif; font-weight: 600; font-size: 13px; cursor: pointer; transition: all 0.22s; white-space: nowrap; }
@@ -196,7 +196,7 @@
   .skill-list::-webkit-scrollbar { width: 3px; }
   .skill-list::-webkit-scrollbar-track { background: transparent; }
   .skill-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
-  .skill-item { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); border-radius: 11px; padding: 10px 14px; transition: all 0.2s; animation: slideIn 0.2s ease; }
+  .skill-item { display: flex; align-items: center; gap: 10px; background: rgba(20,40,90,0.6); border: 1px solid rgba(100,150,255,0.2); border-radius: 11px; padding: 10px 14px; transition: all 0.2s; animation: slideIn 0.2s ease; }
   @keyframes slideIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
   .skill-item:hover { border-color: rgba(44,95,212,0.25); background: rgba(44,95,212,0.05); }
   .skill-name-text { flex: 1; font-size: 14px; color: var(--text); font-weight: 500; }
@@ -234,12 +234,12 @@
   .btn-back:hover { background: rgba(255,255,255,0.08); color: var(--text); }
 
   .score-hero {
-    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(20,36,80,0.6); border: 1px solid rgba(100,150,255,0.18);
     border-radius: 22px; padding: 36px; margin-bottom: 20px;
     position: relative; overflow: hidden;
     display: grid; grid-template-columns: auto 1fr; gap: 40px; align-items: center;
     backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 4px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.07);
+    box-shadow: 0 4px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.13);
   }
   .score-hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(44,95,212,0.7), rgba(155,143,212,0.6), transparent); }
   .score-hero::after { content: ''; position: absolute; top: -80px; right: -80px; width: 280px; height: 280px; background: radial-gradient(circle, rgba(44,95,212,0.1) 0%, transparent 70%); pointer-events: none; }
@@ -253,35 +253,35 @@
   .score-pct { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); margin-top: 2px; }
   .score-label { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 26px; margin-bottom: 8px; }
   .score-desc { font-size: 14px; color: var(--text2); margin-bottom: 22px; line-height: 1.65; max-width: 460px; }
-  .progress-bar-wrap { background: rgba(255,255,255,0.06); border-radius: 100px; height: 8px; overflow: hidden; margin-bottom: 8px; }
+  .progress-bar-wrap { background: rgba(255,255,255,0.10); border-radius: 100px; height: 8px; overflow: hidden; margin-bottom: 8px; }
   .progress-bar-fill { height: 100%; border-radius: 100px; width: 0%; transition: width 1.2s cubic-bezier(0.4,0,0.2,1); }
   .progress-label { display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); }
 
   .stat-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 20px; }
   @media (max-width: 600px) { .stat-row { grid-template-columns: 1fr; } }
   .stat-box {
-    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(20,36,80,0.55); border: 1px solid rgba(100,150,255,0.16);
     border-radius: 16px; padding: 20px 22px;
     backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.11);
   }
-  .stat-label { font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text3); margin-bottom: 6px; }
+  .stat-label { font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text3); margin-bottom: 6px; font-weight: 500; }
   .stat-value { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 30px; }
 
   .results-bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
   @media (max-width: 700px) { .results-bottom { grid-template-columns: 1fr; } }
   .section-card {
-    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(20,36,80,0.55); border: 1px solid rgba(100,150,255,0.16);
     border-radius: 18px; padding: 24px;
     backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.11);
   }
-  .section-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 1.8px; color: var(--text3); margin-bottom: 16px; display: flex; align-items: center; gap: 6px; }
+  .section-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 1.8px; color: var(--text2); margin-bottom: 16px; display: flex; align-items: center; gap: 6px; }
   .s-icon { color: var(--accent); }
 
   .cat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
   @media (max-width: 500px) { .cat-grid { grid-template-columns: 1fr; } }
-  .cat-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 14px 16px; transition: border-color 0.2s; }
+  .cat-item { background: rgba(20,40,90,0.55); border: 1px solid rgba(100,150,255,0.15); border-radius: 12px; padding: 14px 16px; transition: border-color 0.2s; }
   .cat-item:hover { border-color: rgba(74,111,212,0.25); }
   .cat-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
   .cat-name { font-size: 13px; font-weight: 500; color: var(--text); }
@@ -295,7 +295,7 @@
   .weight-badge { font-family: 'DM Mono', monospace; font-size: 11px; padding: 2px 8px; border-radius: 20px; background: rgba(255,107,122,0.1); color: var(--red); border: 1px solid rgba(255,107,122,0.25); }
 
   .priority-list { display: flex; flex-direction: column; gap: 8px; }
-  .priority-item { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 11px; padding: 12px 14px; transition: border-color 0.2s; }
+  .priority-item { display: flex; align-items: center; gap: 12px; background: rgba(20,40,90,0.55); border: 1px solid rgba(100,150,255,0.15); border-radius: 11px; padding: 12px 14px; transition: border-color 0.2s; }
   .priority-item:hover { border-color: rgba(44,95,212,0.2); }
   .priority-num { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 12px; flex-shrink: 0; }
   .priority-info { flex: 1; }
@@ -306,7 +306,7 @@
   /* Tier explanation */
   .tier-section { margin-top: 16px; }
   .tier-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 12px; }
-  .tier-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 18px 20px; transition: all 0.2s; }
+  .tier-item { background: rgba(20,40,90,0.5); border: 1px solid rgba(100,150,255,0.15); border-radius: 16px; padding: 18px 20px; transition: all 0.2s; }
   .tier-item:hover { border-color: rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); }
   .tier-header { margin-bottom: 10px; }
   .tier-badge { display: inline-flex; align-items: center; gap: 7px; border: 1px solid; border-radius: 20px; padding: 3px 10px; margin-bottom: 8px; }
@@ -334,7 +334,7 @@
   .why-section { margin-top: 16px; }
   .why-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; }
   .why-item {
-    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+    background: rgba(20,40,90,0.55); border: 1px solid rgba(100,150,255,0.15);
     border-radius: 13px; padding: 16px 18px; transition: all 0.2s;
   }
   .why-item:hover { border-color: rgba(44,95,212,0.2); background: rgba(44,95,212,0.04); }
@@ -382,7 +382,7 @@
   .insights-adjacent-label { font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text3); margin-bottom: 10px; }
   .insights-adjacent-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
   .insights-adj-item {
-    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.055); border: 1px solid rgba(255,255,255,0.08);
     border-radius: 13px; padding: 14px 16px; display: flex; align-items: center; gap: 12px;
     transition: all 0.2s; cursor: default;
   }
@@ -400,7 +400,7 @@
     position: fixed; inset: 0; z-index: 999;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     gap: 28px;
-    background: rgba(7,8,13,0.85);
+    background: rgba(10,18,45,0.90);
     backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
     opacity: 0; pointer-events: none;
     transition: opacity 0.3s ease;
@@ -497,7 +497,7 @@
   .roadmap-content { flex: 1; padding-top: 6px; }
   .roadmap-phase-label {
     font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 1.2px;
-    color: var(--text3); margin-bottom: 4px;
+    color: var(--text2); margin-bottom: 4px;
   }
   .roadmap-phase-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; color: var(--text); margin-bottom: 8px; }
   .roadmap-skills-list { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -513,6 +513,216 @@
     margin-top: 8px; font-size: 11px; font-family: 'DM Mono', monospace;
     color: var(--text3); display: flex; align-items: center; gap: 5px;
   }
+
+
+  /* ── Skill Simulator ── */
+  .simulator-wrap {
+    margin-top: 20px;
+    background: rgba(44,95,212,0.06);
+    border: 1px solid rgba(44,95,212,0.22);
+    border-radius: 22px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 4px 32px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.09);
+  }
+  .simulator-wrap::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(74,127,255,0.7), rgba(44,95,212,0.5), transparent);
+  }
+  .simulator-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 6px; flex-wrap: wrap; gap: 10px;
+  }
+  .simulator-title {
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px;
+    color: var(--text); display: flex; align-items: center; gap: 9px;
+  }
+  .simulator-title-icon {
+    width: 30px; height: 30px; border-radius: 9px;
+    background: linear-gradient(135deg, #1a4fc4, #2c6bea);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+    box-shadow: 0 0 12px rgba(44,95,212,0.45);
+  }
+  .simulator-subtitle {
+    font-size: 12px; color: var(--text2); margin-bottom: 20px;
+    font-family: 'DM Mono', monospace; letter-spacing: 0.3px;
+  }
+
+  /* Live score bar at top */
+  .sim-scorebar {
+    display: flex; align-items: center; gap: 16px;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px; padding: 14px 18px; margin-bottom: 20px;
+  }
+  .sim-score-ring {
+    position: relative; width: 56px; height: 56px; flex-shrink: 0;
+  }
+  .sim-score-ring svg { transform: rotate(-90deg); }
+  .sim-ring-track { fill: none; stroke: rgba(255,255,255,0.07); stroke-width: 5; }
+  .sim-ring-fill  { fill: none; stroke-width: 5; stroke-linecap: round; transition: stroke-dashoffset 0.5s cubic-bezier(0.4,0,0.2,1), stroke 0.4s; }
+  .sim-score-center {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 13px;
+  }
+  .sim-score-details { flex: 1; }
+  .sim-score-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px; }
+  .sim-score-num {
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 28px;
+    transition: color 0.4s;
+  }
+  .sim-score-label {
+    font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 1px;
+  }
+  .sim-score-delta {
+    font-family: 'DM Mono', monospace; font-size: 12px; padding: 2px 8px;
+    border-radius: 20px; opacity: 0; transition: opacity 0.3s;
+    margin-left: auto; flex-shrink: 0;
+  }
+  .sim-score-delta.visible { opacity: 1; }
+  .sim-score-delta.positive { background: rgba(40,201,144,0.15); color: var(--green); border: 1px solid rgba(40,201,144,0.3); }
+  .sim-score-delta.negative { background: rgba(224,80,96,0.12); color: var(--red);   border: 1px solid rgba(224,80,96,0.25); }
+  .sim-bar-wrap { background: rgba(255,255,255,0.07); border-radius: 100px; height: 6px; overflow: hidden; }
+  .sim-bar-fill  { height: 100%; border-radius: 100px; transition: width 0.5s cubic-bezier(0.4,0,0.2,1), background 0.4s; }
+  .sim-bar-label { display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text3); margin-top: 4px; }
+
+  /* Skill toggle grid */
+  .sim-section-label {
+    font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase;
+    letter-spacing: 1.4px; color: var(--text3); margin-bottom: 10px; margin-top: 4px;
+    display: flex; align-items: center; gap: 7px;
+  }
+  .sim-section-label::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.06); }
+  .sim-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; margin-bottom: 18px; }
+
+  .sim-skill-card {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 12px; padding: 11px 13px; cursor: pointer;
+    transition: all 0.22s; user-select: none; position: relative; overflow: hidden;
+  }
+  .sim-skill-card:hover { border-color: rgba(74,127,255,0.35); background: rgba(44,95,212,0.08); transform: translateY(-1px); }
+  .sim-skill-card.learned {
+    border-color: rgba(40,201,144,0.4); background: rgba(40,201,144,0.07);
+    box-shadow: 0 0 0 1px rgba(40,201,144,0.12) inset;
+  }
+  .sim-skill-card.learned:hover { border-color: rgba(40,201,144,0.6); }
+  .sim-skill-card::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(150deg, rgba(255,255,255,0.05) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .sim-toggle {
+    width: 20px; height: 20px; border-radius: 6px; flex-shrink: 0;
+    border: 1.5px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.05);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; transition: all 0.2s;
+  }
+  .sim-skill-card.learned .sim-toggle {
+    background: var(--green); border-color: var(--green);
+    box-shadow: 0 0 8px rgba(40,201,144,0.4);
+  }
+  .sim-skill-info { flex: 1; min-width: 0; }
+  .sim-skill-name { font-size: 12px; font-weight: 500; color: var(--text); line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sim-skill-meta { display: flex; align-items: center; gap: 5px; margin-top: 3px; }
+  .sim-weight-bar { display: flex; gap: 2px; }
+  .sim-weight-pip { width: 5px; height: 5px; border-radius: 2px; background: rgba(255,255,255,0.12); }
+  .sim-weight-pip.filled { background: var(--yellow); }
+  .sim-skill-card.learned .sim-weight-pip.filled { background: var(--green); }
+  .sim-gain-badge {
+    font-family: 'DM Mono', monospace; font-size: 9px;
+    color: var(--green); background: rgba(40,201,144,0.1);
+    border: 1px solid rgba(40,201,144,0.2); border-radius: 10px; padding: 1px 5px;
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .sim-skill-card.learned .sim-gain-badge { opacity: 1; }
+
+  /* Already owned skills section */
+  .sim-owned-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+  .sim-owned-tag {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 5px 11px; border-radius: 20px; font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    background: rgba(40,201,144,0.08); border: 1px solid rgba(40,201,144,0.2); color: var(--green);
+  }
+
+  /* Impact message */
+  .sim-impact {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 12px; padding: 12px 16px; font-size: 13px; color: var(--text2);
+    line-height: 1.6; text-align: center; transition: all 0.3s;
+    font-family: 'DM Sans', sans-serif; margin-top: 4px;
+  }
+  .sim-impact strong { color: var(--text); }
+  .sim-impact.boosted { border-color: rgba(40,201,144,0.3); background: rgba(40,201,144,0.06); color: var(--green); }
+
+  /* Reset button */
+  .sim-reset-btn {
+    background: transparent; border: 1px solid rgba(255,255,255,0.1); border-radius: 9px;
+    padding: 6px 14px; font-family: 'DM Mono', monospace; font-size: 11px;
+    color: var(--text3); cursor: pointer; transition: all 0.2s;
+  }
+  .sim-reset-btn:hover { border-color: rgba(224,80,96,0.4); color: var(--red); background: rgba(224,80,96,0.06); }
+
+
+  .sim-skill-card.high-impact {
+    border-color: rgba(61,110,232,0.35);
+    background: rgba(30,55,110,0.55);
+  }
+  .sim-skill-card.high-impact::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(61,110,232,0.7), transparent);
+  }
+  @media (max-width: 600px) { .sim-grid { grid-template-columns: 1fr; } }
+
+
+  /* ── Advisor ── */
+  .advisor-wrap {
+    margin-top: 20px; margin-bottom: 20px;
+    background: linear-gradient(135deg, rgba(16,32,80,0.8), rgba(20,45,95,0.7));
+    border: 1px solid rgba(100,150,255,0.25);
+    border-radius: 20px; padding: 26px 28px;
+    position: relative; overflow: hidden;
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 4px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  .advisor-wrap::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:2px;
+    background: linear-gradient(90deg, transparent, rgba(100,180,255,0.7), rgba(61,110,232,0.5), transparent);
+  }
+  .advisor-header {
+    display:flex; align-items:center; gap:12px; margin-bottom:16px;
+  }
+  .advisor-avatar {
+    width:42px; height:42px; border-radius:12px; flex-shrink:0;
+    background: linear-gradient(135deg, #1a4fc4, #2c6bea);
+    display:flex; align-items:center; justify-content:center;
+    font-size:20px; box-shadow: 0 0 16px rgba(44,95,212,0.4);
+  }
+  .advisor-label-wrap {}
+  .advisor-label {
+    font-family:'DM Mono',monospace; font-size:10px; text-transform:uppercase;
+    letter-spacing:1.4px; color:var(--accent2); margin-bottom:3px;
+  }
+  .advisor-name {
+    font-family:'Syne',sans-serif; font-weight:700; font-size:15px; color:var(--text);
+  }
+  .advisor-body {
+    font-size:14px; line-height:1.75; color:var(--text);
+  }
+  .advisor-sentence {
+    padding:10px 14px; border-radius:11px; margin-bottom:8px;
+    border-left:3px solid transparent; background:rgba(255,255,255,0.04);
+    transition:border-color 0.2s;
+  }
+  .advisor-sentence:last-child { margin-bottom:0; }
+  .advisor-sentence.summary  { border-color:var(--accent2); }
+  .advisor-sentence.weakness { border-color:var(--red); }
+  .advisor-sentence.nextstep { border-color:var(--green); }
+  .advisor-sentence.realistic{ border-color:var(--yellow); }
+  .advisor-sentence-icon { margin-right:6px; }
 
 </style>
 </head>
@@ -743,6 +953,70 @@
         </div>
 
       </div>
+    </div>
+
+
+
+    <!-- Advisor -->
+    <div class="advisor-wrap" id="advisor-wrap" style="display:none;">
+      <div class="advisor-header">
+        <div class="advisor-avatar">🎓</div>
+        <div class="advisor-label-wrap">
+          <div class="advisor-label">Career Advisor</div>
+          <div class="advisor-name">Your Personalised Assessment</div>
+        </div>
+      </div>
+      <div class="advisor-body" id="advisor-body"></div>
+    </div>
+
+    <!-- Skill Simulator -->
+    <div class="simulator-wrap" id="skill-simulator" style="display:none;">
+      <div class="simulator-header">
+        <div class="simulator-title">
+          <div class="simulator-title-icon">⚡</div>
+          What If I Learned…
+        </div>
+        <button class="sim-reset-btn" onclick="simReset()">↺ Reset</button>
+      </div>
+      <div class="simulator-subtitle">Toggle skills below and watch your score update in real time</div>
+
+      <!-- Live score bar -->
+      <div class="sim-scorebar">
+        <div class="sim-score-ring">
+          <svg width="56" height="56" viewBox="0 0 56 56">
+            <circle class="sim-ring-track" cx="28" cy="28" r="23"/>
+            <circle class="sim-ring-fill" id="sim-ring" cx="28" cy="28" r="23"
+              stroke="#3d6ee8" stroke-dasharray="144.51" stroke-dashoffset="144.51"/>
+          </svg>
+          <div class="sim-score-center" id="sim-ring-num" style="color:#3d6ee8">0%</div>
+        </div>
+        <div class="sim-score-details">
+          <div class="sim-score-row">
+            <span class="sim-score-num" id="sim-score-num">—</span>
+            <span class="sim-score-label">% readiness</span>
+            <span class="sim-score-delta" id="sim-delta"></span>
+          </div>
+          <div class="sim-bar-wrap">
+            <div class="sim-bar-fill" id="sim-bar"></div>
+          </div>
+          <div class="sim-bar-label"><span id="sim-bar-label-left">Current</span><span id="sim-bar-label-right"></span></div>
+        </div>
+      </div>
+
+      <!-- Already owned -->
+      <div class="sim-section-label">✓ Skills you already have</div>
+      <div class="sim-owned-grid" id="sim-owned-grid"></div>
+
+      <!-- Learning Order -->
+      <div class="sim-section-label" style="margin-top:4px;">📋 Recommended learning order</div>
+      <div id="sim-learning-order" style="margin-bottom:18px;padding:0 4px;"></div>
+
+      <!-- Skills ranked by impact -->
+      <div class="sim-section-label">⚡ Skills ranked by score impact — click to simulate</div>
+      <div class="sim-grid" id="sim-skills-grid"></div>
+
+      <!-- Impact message -->
+      <div class="sim-impact" id="sim-impact"><span style="color:var(--text2);">Select skills above — the engine ranks them by impact and shows your projected score.</span></div>
     </div>
 
     <!-- Skill Learning Roadmap -->
@@ -1197,18 +1471,45 @@ async function analyze() {
 
   // Do the actual computation
   const role = ROLES[selectedRole];
-  const totalWeight = role.skills.reduce((a, s) => a + s.weight, 0);
+  // ── NEW SCORING SYSTEM ──────────────────────────────────────
+  // Tiers:  Critical w≥4  |  Supporting w=3  |  Optional w≤2
+  //
+  // 1. Level multipliers with diminishing returns for beginner spam:
+  //    Beginner: 0.30  |  Intermediate: 0.65  |  Expert: 1.00
+  //    (Beginner is lower than 1/3 to penalise padding with beginner skills)
+  //
+  // 2. Critical skill penalty: each MISSING critical skill deducts
+  //    an extra 3 pts from the final score (beyond its normal absence).
+  //
+  // 3. Critical skill bonus: if ALL critical skills are owned (any level),
+  //    add +8 pts to final score.
+  //
+  // 4. Supporting skills: contribute at face value × level multiplier.
+  //
+  // 5. Optional skills: contribute at 60% of face value × level multiplier
+  //    (diminishing returns — they shouldn't inflate score much).
+  //
+  // Formula: rawScore = sum(weight × levelMult × tierFactor) / totalPossible × 100
+  //          finalScore = rawScore − criticalPenalty + criticalBonus
+  // ────────────────────────────────────────────────────────────
+  const LEVEL_MULT  = { 1: 0.30, 2: 0.65, 3: 1.00 };
+  const TIER_FACTOR = (w) => w >= 4 ? 1.0 : w === 3 ? 1.0 : 0.6;
+
+  let totalPossible = 0;
   let matchedWeight = 0;
   const matched = [], missing = [];
 
   role.skills.forEach(rs => {
+    const tierF = TIER_FACTOR(rs.weight);
+    totalPossible += rs.weight * tierF;
+
     const us = skills.find(u =>
       u.name.toLowerCase().includes(rs.name.toLowerCase()) ||
       rs.name.toLowerCase().includes(u.name.toLowerCase())
     );
     if (us) {
-      const lvlFactor = us.level / 3;
-      const contribution = rs.weight * lvlFactor;
+      const lm = LEVEL_MULT[us.level] || 0.30;
+      const contribution = rs.weight * lm * tierF;
       matchedWeight += contribution;
       matched.push({ ...rs, userLevel: us.level, contribution });
     } else {
@@ -1216,7 +1517,15 @@ async function analyze() {
     }
   });
 
-  const score = Math.min(100, Math.round((matchedWeight / totalWeight) * 100));
+  const criticalSkills = role.skills.filter(s => s.weight >= 4);
+  const missingCritical = missing.filter(s => s.weight >= 4);
+  const allCriticalOwned = missingCritical.length === 0 && criticalSkills.length > 0;
+
+  let rawScore = (matchedWeight / totalPossible) * 100;
+  const criticalPenalty = missingCritical.length * 3;
+  const criticalBonus   = allCriticalOwned ? 8 : 0;
+
+  const score = Math.min(100, Math.max(0, Math.round(rawScore - criticalPenalty + criticalBonus)));
   const cats = {};
   role.skills.forEach(rs => {
     if (!cats[rs.category]) cats[rs.category] = { total: 0, achieved: 0 };
@@ -1288,8 +1597,11 @@ function buildResultsHTML({ score, missing, matched, catResults, priorities }) {
     : missing.map(s => `<div class="missing-item"><span class="missing-item-name">${s.name}</span><span class="weight-badge">W:${s.weight}</span></div>`).join('');
 
   buildInsights(selectedRole, score);
+  renderPortfolioProjects(selectedRole, missing, matched);
   buildWhySection(matched, missing, selectedRole);
   buildRoadmap(matched, missing, selectedRole);
+  buildSimulator(matched, missing, selectedRole, score);
+  buildAdvisor(selectedRole, score, missing, matched);
 
   const pc = ['#f5c842','#fb923c','#a78bfa'];
   document.getElementById('priority-list').innerHTML = priorities.length === 0
@@ -1337,6 +1649,293 @@ renderRequiredSkills();
 renderSkillList();
 
 
+
+
+/* ═══ PORTFOLIO PROJECTS DATA ═══ */
+const PORTFOLIO_PROJECTS = {
+  "Data Analyst": [
+    {
+      title: "Sales Performance Dashboard",
+      skills: ["SQL", "Tableau / Power BI", "Data Visualization", "Data Cleaning"],
+      build: "Pull raw sales data from a public dataset (e.g. Kaggle Superstore), clean it with Python/Excel, then build an interactive Tableau or Power BI dashboard showing KPIs, regional breakdowns, and trend lines.",
+      why: "Dashboards are the #1 deliverable hiring managers ask for in portfolio reviews. A clean, real-looking dashboard immediately signals you can do the actual job."
+    },
+    {
+      title: "Customer Churn Prediction Analysis",
+      skills: ["Python", "Statistics", "Data Cleaning", "Business Intelligence"],
+      build: "Use a public telecom or SaaS churn dataset. Clean the data, run exploratory analysis, build a logistic regression model, and present findings in a clear written report with visualisations.",
+      why: "Churn analysis demonstrates end-to-end data skills — querying, cleaning, modelling, and communicating. It appears in real analyst interviews at companies of every size."
+    },
+    {
+      title: "SQL Portfolio: Answering Business Questions",
+      skills: ["SQL", "Business Intelligence", "Communication"],
+      build: "Use a public database (e.g. the Northwind DB or a public e-commerce dataset). Write 10–15 progressively complex SQL queries that answer real business questions. Publish them on GitHub with explanations.",
+      why: "SQL proficiency is tested in virtually every data analyst interview. A public GitHub repo of well-commented SQL shows both technical and communication skills."
+    }
+  ],
+  "Frontend Developer": [
+    {
+      title: "Personal Finance Tracker App",
+      skills: ["React", "TypeScript", "HTML & CSS", "Responsive Design"],
+      build: "Build a single-page React app where users can log income/expenses by category, see a running balance, and view a monthly summary chart. Make it fully responsive and deploy it on Vercel.",
+      why: "A deployed, functional app with real CRUD operations shows you can build product — not just landing pages. Interviewers can actually click around and test it."
+    },
+    {
+      title: "Component Library with Storybook",
+      skills: ["React", "TypeScript", "Accessibility", "Testing (Jest/RTL)"],
+      build: "Build a small design system: 8–10 reusable components (Button, Card, Modal, Input, etc.) with TypeScript props, accessibility attributes, and stories in Storybook. Write Jest tests for each.",
+      why: "Every serious frontend team uses a component library. Building one proves you understand abstraction, testing, and accessibility — three things juniors typically skip."
+    },
+    {
+      title: "Real-Time Collaborative Whiteboard",
+      skills: ["JavaScript", "React", "Performance Optimization", "TypeScript"],
+      build: "Build a shared canvas using HTML5 Canvas and WebSockets (or a service like Pusher). Users on the same room link can draw simultaneously. Focus on smooth performance and real-time sync.",
+      why: "Demonstrates advanced JavaScript, state management, and performance thinking — all in one. It stands out in portfolios because most juniors stick to CRUD apps."
+    }
+  ],
+  "Software Developer": [
+    {
+      title: "CLI Task Manager with Persistent Storage",
+      skills: ["Python / Java / C++", "Data Structures & Algorithms", "Unit Testing"],
+      build: "Build a command-line task manager in Python or Java. Support add/list/complete/delete commands, store tasks in a JSON file, and write unit tests for all operations. Publish on GitHub.",
+      why: "A well-tested CLI tool shows algorithmic thinking, file I/O, and software craftsmanship — all skills that come up in technical interviews at every level."
+    },
+    {
+      title: "REST API with Full Test Coverage",
+      skills: ["REST APIs", "Unit Testing", "SQL / Databases", "CI/CD Pipelines"],
+      build: "Build a REST API (e.g. a book tracking or recipe API) with CRUD endpoints, a SQL database, input validation, and 80%+ test coverage. Add a GitHub Actions CI pipeline that runs tests on every push.",
+      why: "APIs with tests and CI are how professional developers actually work. This project proves you understand the full development lifecycle — not just writing code."
+    },
+    {
+      title: "Algorithm Visualiser",
+      skills: ["Data Structures & Algorithms", "JavaScript", "System Design"],
+      build: "Build a web page that animates sorting algorithms (bubble, merge, quicksort) and path-finding (BFS, Dijkstra) with speed controls. Implement each algorithm from scratch in JavaScript.",
+      why: "Forces deep understanding of the algorithms that come up in every technical interview. Interviewers love seeing this — it shows you can both implement and explain your work."
+    }
+  ],
+  "Backend Developer": [
+    {
+      title: "URL Shortener with Analytics API",
+      skills: ["Python / Node.js / Java", "REST APIs", "SQL Databases", "Authentication & Security"],
+      build: "Build a URL shortener service with JWT auth, rate limiting, click tracking per link, and a dashboard endpoint showing analytics. Deploy on Railway or Render with a proper README.",
+      why: "URL shorteners are a classic system design interview question. Building a real one — with auth, rate limiting, and analytics — shows backend depth in a compact project."
+    },
+    {
+      title: "Real-Time Chat API with WebSockets",
+      skills: ["Python / Node.js / Java", "NoSQL Databases", "Docker / Containers", "Authentication & Security"],
+      build: "Build a multi-room chat backend with WebSocket connections, JWT-based auth, and MongoDB for message persistence. Containerise with Docker and document the API with Swagger/OpenAPI.",
+      why: "Chat APIs demonstrate concurrent connections, database design, auth, and containerisation in one project — covering the most commonly tested backend concepts."
+    },
+    {
+      title: "Event-Driven Notification Service",
+      skills: ["REST APIs", "Cloud Platforms", "CI/CD Pipelines", "System Design"],
+      build: "Build a microservice that accepts webhook events (e.g. from Stripe) and dispatches email/SMS notifications. Use a message queue (Redis or SQS), deploy on a cloud platform, and write a clear system design doc.",
+      why: "Event-driven architecture is how modern backends scale. Building and explaining this system positions you as someone who thinks beyond simple request-response patterns."
+    }
+  ],
+  "Machine Learning Engineer": [
+    {
+      title: "End-to-End ML Pipeline with Deployment",
+      skills: ["Python", "Scikit-learn", "MLOps / Deployment", "Feature Engineering"],
+      build: "Train a classification model (e.g. spam detection or heart disease prediction) with full preprocessing, feature engineering, cross-validation, and model selection. Deploy as a REST API using FastAPI and host on Hugging Face Spaces or Railway.",
+      why: "Most ML portfolios stop at a Jupyter notebook. Deploying an actual endpoint shows you understand the full pipeline — and that's exactly what ML engineer roles demand."
+    },
+    {
+      title: "Deep Learning Image Classifier",
+      skills: ["Deep Learning (PyTorch/TF)", "Python", "Model Evaluation", "Feature Engineering"],
+      build: "Train a CNN (or fine-tune ResNet/EfficientNet) on a custom image dataset. Write a full evaluation report with confusion matrix, per-class metrics, and error analysis. Document training decisions and tradeoffs.",
+      why: "Deep learning projects are expected in any ML portfolio. Writing a serious evaluation report — not just accuracy — shows the rigour that separates candidates at interview."
+    },
+    {
+      title: "Recommendation System",
+      skills: ["Python", "Statistics & Probability", "SQL / Data Processing", "Model Evaluation"],
+      build: "Build a collaborative filtering recommender using the MovieLens or similar public dataset. Implement user-based and item-based approaches, evaluate with RMSE and precision@k, and write a blog-style writeup.",
+      why: "Recommendation systems appear in interviews at e-commerce, streaming, and marketplace companies. Understanding the maths behind them — and being able to explain it — is a major differentiator."
+    }
+  ],
+  "QA Engineer": [
+    {
+      title: "Automated Test Suite for a Public App",
+      skills: ["Selenium / Playwright", "Test Case Writing", "Bug Reporting & Tracking (Jira)", "CI/CD Pipelines"],
+      build: "Write a full automated regression suite using Playwright for a public web app (e.g. a demo e-commerce site). Include page object models, parallel test execution, and a GitHub Actions CI job that runs tests on every push.",
+      why: "A working Playwright suite in a public repo is the single most convincing QA portfolio item. It shows test design, automation skills, and CI in one real artefact."
+    },
+    {
+      title: "API Test Framework from Scratch",
+      skills: ["API Testing (Postman)", "Python / Java (Scripting)", "SQL / Database Testing"],
+      build: "Build a REST API test framework using Python (pytest + requests) or Postman/Newman. Cover auth flows, CRUD operations, edge cases, and data validation against the database. Generate HTML reports.",
+      why: "API testing is where most QA roles spend their time. A custom framework — not just Postman collections — proves you can code, which is required for most senior QA positions."
+    },
+    {
+      title: "Bug Report Portfolio with Root Cause Analysis",
+      skills: ["Manual Testing", "Test Case Writing", "Bug Reporting & Tracking (Jira)"],
+      build: "Manually test 2–3 real open-source apps or staging environments. Write 10+ detailed Jira-style bug reports with steps to reproduce, expected vs actual behaviour, severity ratings, and root cause hypotheses. Publish as a PDF or Notion doc.",
+      why: "Clear bug reports are the core QA skill. A portfolio of well-written reports — with root cause analysis — shows thinking ability that automation alone cannot demonstrate."
+    }
+  ],
+  "Full Stack Developer": [
+    {
+      title: "Full-Stack SaaS Starter",
+      skills: ["React / Vue / Angular", "Node.js / Python / Java", "Authentication & Security", "SQL Databases"],
+      build: "Build a minimal SaaS app with auth (signup/login/logout), a user dashboard, a database-backed feature (e.g. saved notes or tasks), and a subscription-gated area. Use React + Node/Express + PostgreSQL. Deploy on Vercel/Railway.",
+      why: "Most companies build SaaS products. A deployed full-stack app with auth and a database proves you can build and ship real software end to end."
+    },
+    {
+      title: "Real-Time Collaborative Document Editor",
+      skills: ["HTML & CSS", "JavaScript", "REST APIs", "NoSQL Databases"],
+      build: "Build a Google Docs-style editor where multiple users can type simultaneously (using CRDTs or OT with WebSockets). Persist documents to MongoDB. Add basic formatting toolbar.",
+      why: "Real-time collaboration is technically demanding — it touches frontend state, WebSockets, data consistency, and backend persistence all at once. It immediately stands out."
+    },
+    {
+      title: "Developer Portfolio with CMS",
+      skills: ["React / Vue / Angular", "REST APIs", "Docker / Containers", "Git / Version Control"],
+      build: "Build your own portfolio site with a headless CMS (Contentful or Sanity) for blog posts and project entries. Containerise with Docker, set up automated deployments via GitHub Actions, and achieve 90+ Lighthouse score.",
+      why: "A technically excellent portfolio site is your live CV. Showing performance optimisation, CI/CD, and containerisation tells employers you ship production-quality work."
+    }
+  ],
+  "Game Developer": [
+    {
+      title: "2D Platformer in Unity",
+      skills: ["C++ / C#", "Unity / Unreal Engine", "Game Design Principles", "Version Control (Git)"],
+      build: "Build a 2D platformer with at least 3 levels, a character controller, enemies with basic AI (patrol + attack), collectables, and a score system. Publish on itch.io and source on GitHub.",
+      why: "A published itch.io game is the game dev equivalent of a live website. It shows you can take a project from concept to shipped — the most important signal for any game studio."
+    },
+    {
+      title: "3D Physics Sandbox",
+      skills: ["C++ / C#", "Physics Simulation", "Linear Algebra & Maths", "Performance Optimisation"],
+      build: "Build an Unreal or Unity scene with custom physics interactions: destructible objects, fluid-like particle behaviour, and a player character that can push/stack/throw rigidbodies. Profile and document your performance optimisations.",
+      why: "Physics programming is one of the most technically tested areas in game dev interviews. A sandbox that shows custom physics work — and your optimisation process — is powerful evidence."
+    },
+    {
+      title: "Custom Shader Showcase",
+      skills: ["Shader Programming (HLSL/GLSL)", "Unity / Unreal Engine", "3D Modelling Basics (Blender)"],
+      build: "Create a short Unity or Unreal scene using 5+ custom shaders you wrote: water, fire, cel-shading, a stylised sky, and one original effect. Write a technical breakdown for each shader explaining the maths.",
+      why: "Shader programming is a specialist skill that commands attention. A shader showcase with documented maths demonstrates graphics depth that few junior candidates can match."
+    }
+  ],
+  "DevOps Engineer": [
+    {
+      title: "Kubernetes-Deployed Microservices App",
+      skills: ["Docker / Kubernetes", "CI/CD (Jenkins/GitHub Actions)", "Cloud Platforms (AWS/GCP/Azure)", "Monitoring (Prometheus/Grafana)"],
+      build: "Deploy a 3-service application (frontend, backend, database) on a managed Kubernetes cluster (GKE or EKS free tier). Add Prometheus/Grafana monitoring, horizontal pod autoscaling, and a full CI/CD pipeline via GitHub Actions.",
+      why: "This project covers the entire modern DevOps stack. A working K8s deployment with monitoring and CI/CD in a GitHub repo is the gold standard DevOps portfolio item."
+    },
+    {
+      title: "Infrastructure as Code with Terraform",
+      skills: ["Infrastructure as Code (Terraform)", "Cloud Platforms (AWS/GCP/Azure)", "Security Best Practices", "Networking Basics"],
+      build: "Write Terraform modules to provision a full cloud environment: VPC, subnets, security groups, EC2/Cloud Run instances, and a managed database. Apply least-privilege IAM policies and document the architecture.",
+      why: "IaC is expected in every senior DevOps role. A well-structured Terraform project on GitHub — with modules, state management, and security — shows professional-level infrastructure thinking."
+    },
+    {
+      title: "Zero-Downtime Deployment Pipeline",
+      skills: ["CI/CD (Jenkins/GitHub Actions)", "Linux / Shell Scripting", "Docker / Kubernetes", "Monitoring (Prometheus/Grafana)"],
+      build: "Set up a blue/green or canary deployment pipeline for a containerised app. Automated tests gate each stage, with rollback triggered if error rate exceeds a threshold measured in Grafana.",
+      why: "Zero-downtime deployments are what separate DevOps engineers from sysadmins. Understanding blue/green strategies and automated rollback is asked about in almost every senior DevOps interview."
+    }
+  ],
+  "Cybersecurity Analyst": [
+    {
+      title: "Home Lab SIEM Setup with Real Alerts",
+      skills: ["SIEM Tools (Splunk/QRadar)", "Network Security", "Threat Detection & Analysis", "Linux / Windows Administration"],
+      build: "Set up a free Splunk or Elastic SIEM in a home lab (VMs). Generate log data from simulated attacks (using tools like Metasploit on an isolated network), write detection rules, and document 5+ real alerts you triggered and investigated.",
+      why: "Hands-on SIEM experience is the #1 thing SOC analyst hiring managers look for. Documenting real alerts you built and investigated proves practical skill that certifications alone cannot."
+    },
+    {
+      title: "Vulnerability Assessment Report",
+      skills: ["Vulnerability Assessment", "Network Security", "Python / Scripting", "Compliance & Frameworks (NIST/ISO)"],
+      build: "Run a full vulnerability scan on a deliberately vulnerable VM (Metasploitable or DVWA). Document findings in a professional pentest-style report: scope, methodology, findings with CVSS scores, and remediation recommendations mapped to NIST controls.",
+      why: "A professional-quality vulnerability report shows you can communicate risk to stakeholders — the core output of most cybersecurity analyst roles."
+    },
+    {
+      title: "Incident Response Playbook + Tabletop Simulation",
+      skills: ["Incident Response", "Threat Detection & Analysis", "SIEM Tools (Splunk/QRadar)", "Compliance & Frameworks (NIST/ISO)"],
+      build: "Write a detailed IR playbook for 3 scenarios (ransomware, phishing, insider threat). Run a self-directed tabletop exercise for each, documenting your detection, containment, and recovery decisions. Publish as a PDF portfolio piece.",
+      why: "IR planning is a core competency tested in every blue-team interview. A published playbook signals structured thinking and preparation — exactly what security teams want."
+    }
+  ],
+  "Cloud Architect": [
+    {
+      title: "Multi-Tier Cloud Architecture with Auto-Scaling",
+      skills: ["AWS / Azure / GCP (Advanced)", "Cloud Architecture Design", "Networking (VPC, DNS, Load Balancing)", "Cost Optimisation"],
+      build: "Design and deploy a three-tier application (web, app, data) on AWS or GCP with load balancers, auto-scaling groups, a managed database, CloudFront CDN, and Route53 DNS. Document the architecture with a proper diagram and cost estimate.",
+      why: "A real deployed multi-tier architecture with a cost analysis is what architecture interviews ask you to design. Having one already built and documented puts you ahead of most candidates."
+    },
+    {
+      title: "Serverless Event-Driven Data Pipeline",
+      skills: ["Serverless Architecture", "Infrastructure as Code (Terraform/CDK)", "Security & IAM", "Cloud Platforms (AWS/GCP/Azure)"],
+      build: "Build a serverless pipeline that ingests data via API Gateway, processes it with Lambda, stores in S3 and DynamoDB, and triggers downstream notifications via SNS. Deploy entirely with Terraform or CDK. Apply least-privilege IAM throughout.",
+      why: "Serverless architecture is how modern cloud-native apps are built. Understanding Lambda, event triggers, and IaC together is a combination that commands respect in architect-level interviews."
+    },
+    {
+      title: "FinOps Dashboard: Cloud Cost Analysis",
+      skills: ["Cost Optimisation", "Multi-cloud Strategy", "Cloud Architecture Design", "DevOps / CI/CD Integration"],
+      build: "Use AWS Cost Explorer or GCP Billing APIs to build a cost analysis dashboard. Identify waste (idle resources, oversized instances), implement tagging policies, and write a report estimating savings. Implement at least 2 cost optimisation changes.",
+      why: "Cloud cost overruns are a major pain point for every organisation. A candidate who can demonstrate real cost-saving analysis stands out immediately — especially for senior and architect-level roles."
+    }
+  ],
+  "Gen AI Developer": [
+    {
+      title: "RAG-Powered Document Q&A App",
+      skills: ["LLM APIs (OpenAI / Anthropic / Gemini)", "RAG (Retrieval-Augmented Generation)", "Vector Databases (Pinecone / Chroma)", "REST APIs / FastAPI"],
+      build: "Build an app that lets users upload PDFs and ask questions about them. Chunk and embed documents into a vector database, retrieve relevant chunks, and pass them to an LLM. Build a FastAPI backend and a simple frontend. Deploy it publicly.",
+      why: "RAG is the most in-demand Gen AI pattern in industry right now. A deployed, working RAG app immediately signals you understand the full stack — not just prompt engineering."
+    },
+    {
+      title: "LLM-Powered Coding Assistant",
+      skills: ["Prompt Engineering", "LangChain / LlamaIndex", "Evaluation & Testing of LLMs", "Python"],
+      build: "Build a coding assistant using LangChain that can explain code, suggest refactors, and answer programming questions. Implement conversation memory, tool use (e.g. run code), and a systematic evaluation suite comparing prompt variants.",
+      why: "This project combines prompt engineering, tool use, memory management, and evaluation — covering the four most tested Gen AI concepts in a single coherent product."
+    },
+    {
+      title: "Fine-Tuned Domain-Specific Chatbot",
+      skills: ["Fine-tuning & Model Adaptation", "Python", "LLM APIs (OpenAI / Anthropic / Gemini)", "Evaluation & Testing of LLMs"],
+      build: "Fine-tune a small open-source model (e.g. Mistral 7B via LoRA) on a domain-specific dataset (medical Q&A, legal terms, cooking). Build an evaluation harness comparing it to the base model on your test set. Document the process in a technical writeup.",
+      why: "Fine-tuning is the differentiator between Gen AI developers and AI API wrappers. Candidates who understand training dynamics and can run experiments are rare and highly valued."
+    }
+  ],
+  "QA Engineer": [
+    {
+      title: "Automated Test Suite for a Public App",
+      skills: ["Selenium / Playwright", "Test Case Writing", "CI/CD Pipelines"],
+      build: "Write a full automated regression suite using Playwright for a public web app. Include page object models, parallel test execution, and a GitHub Actions CI job.",
+      why: "A working Playwright suite in a public repo shows test design, automation skills, and CI in one real artefact."
+    },
+    {
+      title: "API Test Framework from Scratch",
+      skills: ["API Testing (Postman)", "Python / Java (Scripting)", "SQL / Database Testing"],
+      build: "Build a REST API test framework using pytest + requests. Cover auth flows, CRUD operations, and edge cases. Generate HTML reports.",
+      why: "API testing is where most QA roles spend their time. A custom framework proves you can code — required for most senior QA positions."
+    },
+    {
+      title: "Bug Report Portfolio",
+      skills: ["Manual Testing", "Test Case Writing", "Bug Reporting & Tracking (Jira)"],
+      build: "Manually test 2–3 real open-source apps. Write 10+ detailed Jira-style bug reports with steps, severity, and root cause analysis. Publish as a PDF.",
+      why: "Clear bug reports are the core QA skill. A portfolio of well-written reports demonstrates thinking ability that automation alone cannot."
+    }
+  ]
+};
+
+function getPortfolioProjects(role, missing, matched) {
+  // Base pool from role, fallback to generic
+  let pool = PORTFOLIO_PROJECTS[role] || [];
+  if (pool.length === 0) {
+    pool = [
+      {
+        title: "End-to-End Feature Project",
+        skills: missing.slice(0,3).map(s => s.name),
+        build: "Pick a real problem you care about and build a small application that exercises your most critical missing skills. Keep scope tight, ship it, and write a README explaining your decisions.",
+        why: "A shipped project that solves a real problem beats an unfinished ambitious one every time. Employers want to see that you can take something to completion."
+      }
+    ];
+  }
+  // Score each project by how many of its skills overlap with missing skills
+  const missingNames = missing.map(s => s.name.toLowerCase());
+  const scored = pool.map(p => {
+    const overlap = p.skills.filter(skill => missingNames.some(m => m.includes(skill.toLowerCase()) || skill.toLowerCase().includes(m))).length;
+    return { ...p, overlap };
+  }).sort((a, b) => b.overlap - a.overlap);
+  return scored.slice(0, 3);
+}
 
 /* ═══ WHY THESE SKILLS MATTER ═══ */
 const SKILL_REASONS = {
@@ -1513,16 +2112,27 @@ function buildWhySection(matched, missing, role) {
 
 function scoreRoleForSkills(roleName) {
   const role = ROLES[roleName];
-  const totalWeight = role.skills.reduce((a, s) => a + s.weight, 0);
-  let matchedWeight = 0;
+  const LEVEL_MULT2  = { 1: 0.30, 2: 0.65, 3: 1.00 };
+  const TIER_FACTOR2 = (w) => w >= 4 ? 1.0 : w === 3 ? 1.0 : 0.6;
+  let totalPossible = 0, matchedWeight = 0, missingCritical = 0, hasCritical = false;
   role.skills.forEach(rs => {
+    const tf = TIER_FACTOR2(rs.weight);
+    totalPossible += rs.weight * tf;
+    if (rs.weight >= 4) hasCritical = true;
     const us = skills.find(u =>
       u.name.toLowerCase().includes(rs.name.toLowerCase()) ||
       rs.name.toLowerCase().includes(u.name.toLowerCase())
     );
-    if (us) matchedWeight += rs.weight * (us.level / 3);
+    if (us) {
+      matchedWeight += rs.weight * (LEVEL_MULT2[us.level] || 0.30) * tf;
+    } else if (rs.weight >= 4) {
+      missingCritical++;
+    }
   });
-  return Math.min(100, Math.round((matchedWeight / totalWeight) * 100));
+  const raw = (matchedWeight / totalPossible) * 100;
+  const penalty = missingCritical * 3;
+  const bonus = (missingCritical === 0 && hasCritical) ? 8 : 0;
+  return Math.min(100, Math.max(0, Math.round(raw - penalty + bonus)));
 }
 
 function buildInsights(currentRole, currentScore) {
@@ -1564,16 +2174,8 @@ function buildInsights(currentRole, currentScore) {
       </div>
     </div>
 
-    <!-- Next role callout -->
-    <div style="background:rgba(44,95,212,0.07);border:1px solid rgba(44,95,212,0.2);border-radius:14px;padding:16px 20px;margin-bottom:14px;display:flex;align-items:center;gap:14px;">
-      <div style="font-size:24px;">${nextRole.icon}</div>
-      <div style="flex:1;">
-        <div style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:1.2px;color:var(--accent2);margin-bottom:4px;">Next Role You Can Target</div>
-        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:var(--text);margin-bottom:2px;">${nextRole.name}</div>
-        <div style="font-size:12px;color:var(--text2);">Your current skills already put you at <strong style="color:var(--accent2)">${nextRole.score}%</strong> readiness — ${nextRole.score >= 60 ? "you're in good shape to pursue this now." : "a few more skills would make you competitive."}</div>
-      </div>
-      <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:26px;color:var(--accent2);flex-shrink:0;">${nextRole.score}%</div>
-    </div>
+    <!-- Suggested Portfolio Projects -->
+    <div id="portfolio-projects-block" style="margin-bottom:14px;"></div>
 
     <!-- Adjacent roles -->
     <div class="insights-adjacent-label">Closest Adjacent Roles</div>
@@ -1598,6 +2200,37 @@ function buildInsights(currentRole, currentScore) {
       b.style.width = b.dataset.target + '%';
     });
   }, 120);
+}
+
+function renderPortfolioProjects(role, missing, matched) {
+  const el = document.getElementById('portfolio-projects-block');
+  if (!el) return;
+  const projects = getPortfolioProjects(role, missing, matched);
+  el.innerHTML = `
+    <div style="margin-bottom:10px;">
+      <div style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:1.4px;color:var(--text2);margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+        <span style="color:var(--accent2)">◈</span> Suggested Portfolio Projects
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;">
+        ${projects.map((p,i) => `
+          <div style="background:rgba(20,40,90,0.6);border:1px solid rgba(100,150,255,0.2);border-radius:16px;padding:18px 20px;position:relative;overflow:hidden;">
+            <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,${['rgba(61,110,232,0.8)','rgba(40,201,144,0.8)','rgba(232,184,75,0.8)'][i]},transparent);"></div>
+            <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;">
+              <div style="width:28px;height:28px;border-radius:8px;background:${['rgba(61,110,232,0.2)','rgba(40,201,144,0.15)','rgba(232,184,75,0.15)'][i]};border:1px solid ${['rgba(61,110,232,0.4)','rgba(40,201,144,0.35)','rgba(232,184,75,0.35)'][i]};display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;">${['🛠️','📦','⭐'][i]}</div>
+              <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:var(--text);line-height:1.3;">${p.title}</div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:11px;">
+              ${p.skills.slice(0,4).map(s => `<span style="font-family:'DM Mono',monospace;font-size:10px;padding:2px 8px;border-radius:20px;background:rgba(100,150,255,0.1);border:1px solid rgba(100,150,255,0.22);color:var(--accent2);">${s}</span>`).join('')}
+            </div>
+            <div style="font-size:12px;color:var(--text2);line-height:1.65;margin-bottom:10px;">${p.build}</div>
+            <div style="font-size:11px;color:var(--text2);background:rgba(40,201,144,0.07);border:1px solid rgba(40,201,144,0.2);border-radius:9px;padding:8px 11px;line-height:1.55;">
+              <span style="color:var(--green);font-weight:700;font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.8px;">Why it helps: </span>${p.why}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
 }
 
 /* ═══ TOAST ═══ */
@@ -1695,6 +2328,336 @@ function buildRoadmap(matched, missing, role) {
         </div>
       </div>`;
   }).join('');
+}
+
+
+/* ═══ SKILL DEPENDENCIES ═══ */
+const SKILL_DEPS = {
+  "React":                      ["JavaScript", "HTML & CSS"],
+  "TypeScript":                 ["JavaScript"],
+  "Testing (Jest/RTL)":         ["JavaScript", "React"],
+  "Redux / State Management":   ["React", "JavaScript"],
+  "React / Vue / Angular":      ["JavaScript", "HTML & CSS"],
+  "Deep Learning (PyTorch/TF)": ["Python", "Statistics & Probability", "Linear Algebra"],
+  "Scikit-learn":               ["Python", "Statistics & Probability"],
+  "Feature Engineering":        ["Python", "Statistics & Probability"],
+  "Model Evaluation":           ["Statistics & Probability"],
+  "MLOps / Deployment":         ["Python", "Docker / Containers"],
+  "RAG (Retrieval-Augmented Generation)": ["Python", "LLM APIs (OpenAI / Anthropic / Gemini)"],
+  "LangChain / LlamaIndex":     ["Python", "LLM APIs (OpenAI / Anthropic / Gemini)"],
+  "Vector Databases (Pinecone / Chroma)": ["RAG (Retrieval-Augmented Generation)"],
+  "Fine-tuning & Model Adaptation": ["Python", "Deep Learning (PyTorch/TF)"],
+  "Docker / Kubernetes":        ["Linux / Shell Scripting"],
+  "Kubernetes / Container Orchestration": ["Docker / Containers"],
+  "CI/CD (Jenkins/GitHub Actions)": ["Git / Version Control", "Linux / Shell Scripting"],
+  "CI/CD Pipelines":            ["Git / Version Control"],
+  "Infrastructure as Code (Terraform)": ["Cloud Platforms (AWS/GCP/Azure)", "Linux / Shell Scripting"],
+  "Infrastructure as Code (Terraform/CDK)": ["Cloud Platforms (AWS/GCP/Azure)"],
+  "Monitoring (Prometheus/Grafana)": ["Docker / Kubernetes"],
+  "Selenium / Playwright":      ["JavaScript"],
+  "Unit Testing":               ["Python / Java / C++"],
+  "System Design":              ["REST APIs", "SQL / Databases"],
+  "Shader Programming (HLSL/GLSL)": ["Unity / Unreal Engine", "Linear Algebra & Maths"],
+  "Physics Simulation":         ["Unity / Unreal Engine", "Linear Algebra & Maths"],
+  "Multiplayer / Networking Basics": ["C++ / C#"],
+  "Performance Optimisation":   ["Unity / Unreal Engine"],
+  "Authentication & Security":  ["REST APIs"],
+  "Cloud Architecture Design":  ["AWS / Azure / GCP (Advanced)", "Networking (VPC, DNS, Load Balancing)"],
+};
+
+/* ═══ DECISION ENGINE (Upgraded Simulator) ═══ */
+let simBaseScore = 0;
+let simBaseTotalWeight = 0;
+let simBaseMatchedWeight = 0;
+let simLearnedSkills = new Set();
+let simMissingSkills = [];
+let simMatchedSkills = [];
+let simCurrentRole   = '';
+
+/* Compute point gain for one skill at Intermediate level */
+function simSkillGain(s) {
+  const tf = s.weight >= 4 ? 1.0 : s.weight === 3 ? 1.0 : 0.6;
+  return s.weight * 0.65 * tf;
+}
+
+/* Compute how many "unblocked" deps a skill unlocks */
+function simUnlockScore(skillName, alreadyOwned) {
+  const ownedNames = new Set([...alreadyOwned.map(s => s.name), ...simLearnedSkills]);
+  let score = 0;
+  Object.entries(SKILL_DEPS).forEach(([skill, deps]) => {
+    if (ownedNames.has(skill)) return; // already have it
+    const missingDep = deps.find(d => d.toLowerCase().includes(skillName.toLowerCase()) || skillName.toLowerCase().includes(d.toLowerCase()));
+    if (!missingDep) return;
+    const otherDepsOk = deps.every(d => d === missingDep || ownedNames.has(d) || [...ownedNames].some(o => o.toLowerCase().includes(d.toLowerCase())));
+    if (otherDepsOk) score++;
+  });
+  return score;
+}
+
+function buildSimulator(matched, missing, role, baseScore) {
+  simBaseScore         = baseScore;
+  simLearnedSkills     = new Set();
+  simMissingSkills     = missing;
+  simMatchedSkills     = matched;
+  simCurrentRole       = role;
+
+  const roleData = ROLES[role];
+  const TIER_FACTOR_S = (w) => w >= 4 ? 1.0 : w === 3 ? 1.0 : 0.6;
+  simBaseTotalWeight   = roleData.skills.reduce((a, s) => a + s.weight * TIER_FACTOR_S(s.weight), 0);
+  simBaseMatchedWeight = matched.reduce((a, s) => a + s.contribution, 0);
+
+  const wrap = document.getElementById('skill-simulator');
+  wrap.style.display = '';
+
+  renderSimulator();
+  simUpdateDisplay(baseScore, baseScore);
+}
+
+function renderSimulator() {
+  /* Owned skills */
+  document.getElementById('sim-owned-grid').innerHTML = simMatchedSkills.length === 0
+    ? '<span style="font-size:12px;color:var(--text3);font-style:italic;">None yet — add your skills on the Setup page.</span>'
+    : simMatchedSkills.map(s => `
+        <span class="sim-owned-tag">
+          <span style="color:var(--green)">✓</span> ${s.name}
+          <span style="font-family:'DM Mono',monospace;font-size:9px;opacity:0.6;margin-left:2px;">Lv${s.userLevel}</span>
+        </span>`).join('');
+
+  /* Sort missing skills by IMPACT SCORE = gain × weight × (1 + unlockScore×0.4) */
+  const scored = simMissingSkills.map(s => {
+    const gain    = simSkillGain(s);
+    const unlock  = simUnlockScore(s.name, simMatchedSkills);
+    const impact  = gain * (1 + unlock * 0.4);
+    const deps    = SKILL_DEPS[s.name] || [];
+    const ownedNames = new Set(simMatchedSkills.map(m => m.name));
+    const missingDeps = deps.filter(d => !ownedNames.has(d) && !simLearnedSkills.has(d));
+    return { ...s, gain, unlock, impact, missingDeps };
+  }).sort((a, b) => b.impact - a.impact);
+
+  const grid = document.getElementById('sim-skills-grid');
+  grid.innerHTML = scored.map((s, rank) => {
+    const key = simIdKey(s.name);
+    const isLearned = simLearnedSkills.has(s.name);
+    const tierLabel = s.weight >= 4 ? { label:'Critical', color:'var(--red)' }
+                    : s.weight === 3 ? { label:'Supporting', color:'var(--yellow)' }
+                    :                  { label:'Optional', color:'var(--text2)' };
+    const gainPts = Math.round((s.gain / simBaseTotalWeight) * 100);
+    const reason  = SKILL_REASONS[s.name] || `Important for the ${simCurrentRole} role.`;
+    const depWarning = s.missingDeps.length > 0 && !isLearned
+      ? `<div style="font-size:10px;color:var(--yellow);font-family:'DM Mono',monospace;margin-top:4px;">⚠ Needs: ${s.missingDeps.slice(0,2).join(', ')}</div>`
+      : '';
+    const unlockNote = s.unlock > 0
+      ? `<span style="font-family:'DM Mono',monospace;font-size:9px;color:var(--accent2);background:rgba(44,95,212,0.12);padding:1px 5px;border-radius:8px;margin-left:4px;">unlocks ${s.unlock}</span>`
+      : '';
+
+    return `
+      <div class="sim-skill-card ${isLearned ? 'learned' : ''} ${rank < 3 ? 'high-impact' : ''}"
+           id="sim-card-${key}" onclick="simToggle('${s.name.replace(/'/g,"\'")}')">
+        <div class="sim-toggle" id="sim-toggle-${key}">${isLearned ? '✓' : ''}</div>
+        <div class="sim-skill-info" style="flex:1;min-width:0;">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;">
+            ${rank < 3 ? '<span style="font-family:DM Mono,monospace;font-size:9px;color:var(--accent2);background:rgba(44,95,212,0.15);padding:1px 5px;border-radius:8px;">Top Pick</span>' : ''}
+            <span class="sim-skill-name" style="flex:1;">${s.name}</span>
+            ${unlockNote}
+          </div>
+          <div class="sim-skill-meta">
+            <span style="font-family:'DM Mono',monospace;font-size:10px;color:${tierLabel.color};background:${tierLabel.color}18;padding:1px 7px;border-radius:10px;border:1px solid ${tierLabel.color}33;">${tierLabel.label}</span>
+            <span class="sim-gain-badge" style="opacity:1;">+${gainPts}pts</span>
+          </div>
+          <div style="font-size:11px;color:var(--text2);margin-top:5px;line-height:1.5;opacity:0.85;">${reason.length > 90 ? reason.slice(0,90)+'…' : reason}</div>
+          ${depWarning}
+        </div>
+      </div>`;
+  }).join('');
+
+  /* Learning order recommendation */
+  renderLearningOrder(scored);
+}
+
+function renderLearningOrder(scored) {
+  const el = document.getElementById('sim-learning-order');
+  if (!el) return;
+  // Top 5 by impact, noting deps
+  const top = scored.slice(0, 5);
+  el.innerHTML = top.map((s, i) => {
+    const gainPts = Math.round((s.gain / simBaseTotalWeight) * 100);
+    const isLearned = simLearnedSkills.has(s.name);
+    return `
+      <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+        <div style="width:22px;height:22px;border-radius:50%;background:${isLearned?'var(--green)':'rgba(44,95,212,0.25)'};border:1.5px solid ${isLearned?'var(--green)':'rgba(44,95,212,0.5)'};display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:11px;color:${isLearned?'white':'var(--accent2)'};flex-shrink:0;transition:all 0.3s;">${isLearned?'✓':(i+1)}</div>
+        <div style="flex:1;">
+          <div style="font-size:13px;font-weight:600;color:${isLearned?'var(--green)':'var(--text)'};text-decoration:${isLearned?'line-through':'none'};margin-bottom:2px;transition:all 0.3s;">${s.name}</div>
+          <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text2);">+${gainPts}pts to readiness${s.unlock>0?' · unlocks '+s.unlock+' more skill'+(s.unlock>1?'s':''):''}</div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function simIdKey(name) { return name.replace(/[^a-zA-Z0-9]/g,'_'); }
+
+function simToggle(name) {
+  if (simLearnedSkills.has(name)) {
+    simLearnedSkills.delete(name);
+  } else {
+    simLearnedSkills.add(name);
+  }
+  renderSimulator();
+  simRecalculate();
+}
+
+function simRecalculate() {
+  const TIER_FACTOR_SIM = (w) => w >= 4 ? 1.0 : w === 3 ? 1.0 : 0.6;
+  let bonusWeight = 0;
+  let newMissingCritical = simMissingSkills.filter(s => s.weight >= 4).length;
+  simLearnedSkills.forEach(name => {
+    const s = simMissingSkills.find(m => m.name === name);
+    if (s) {
+      bonusWeight += s.weight * 0.65 * TIER_FACTOR_SIM(s.weight);
+      if (s.weight >= 4) newMissingCritical--;
+    }
+  });
+  const hasCritical = simMissingSkills.some(s => s.weight >= 4) || simMatchedSkills.some(s => s.weight >= 4);
+  const critPenalty = newMissingCritical * 3;
+  const critBonus   = (newMissingCritical === 0 && hasCritical) ? 8 : 0;
+  const rawNew      = ((simBaseMatchedWeight + bonusWeight) / simBaseTotalWeight) * 100;
+  const newScore    = Math.min(100, Math.max(0, Math.round(rawNew - critPenalty + critBonus)));
+
+  simUpdateDisplay(newScore, simBaseScore);
+
+  const impact = document.getElementById('sim-impact');
+  const gained = newScore - simBaseScore;
+  if (simLearnedSkills.size === 0) {
+    impact.innerHTML = '<span style="color:var(--text2);">Select skills above — the engine ranks them by impact and shows your projected score.</span>';
+    impact.className = 'sim-impact';
+  } else {
+    const sw = simLearnedSkills.size === 1 ? 'skill' : 'skills';
+    if (gained >= 15) {
+      impact.innerHTML = `🚀 Learning ${simLearnedSkills.size} ${sw} pushes you to <strong>${newScore}%</strong> — a <strong>+${gained}pt</strong> jump. That moves you up a readiness tier.`;
+      impact.className = 'sim-impact boosted';
+    } else if (gained > 0) {
+      impact.innerHTML = `📈 ${simLearnedSkills.size} ${sw} selected → <strong>${newScore}% readiness</strong> <span style="color:var(--green);">(+${gained}pts)</span>. Add the top-ranked missing skills for the biggest gains.`;
+      impact.className = 'sim-impact';
+    } else {
+      impact.innerHTML = `These skills have minimal direct score impact here — focus on levelling up your existing skills instead.`;
+      impact.className = 'sim-impact';
+    }
+  }
+}
+
+function simUpdateDisplay(newScore, baseScore) {
+  const circ = 2 * Math.PI * 23;
+  const si   = getScoreInfo(newScore);
+
+  const ring = document.getElementById('sim-ring');
+  ring.setAttribute('stroke', si.color);
+  ring.setAttribute('stroke-dashoffset', circ - (newScore / 100) * circ);
+  document.getElementById('sim-ring-num').textContent = newScore + '%';
+  document.getElementById('sim-ring-num').style.color = si.color;
+
+  const numEl = document.getElementById('sim-score-num');
+  numEl.textContent = newScore + '%';
+  numEl.style.color = si.color;
+
+  const delta = document.getElementById('sim-delta');
+  const diff  = newScore - baseScore;
+  if (diff === 0) { delta.className = 'sim-score-delta'; delta.textContent = ''; }
+  else {
+    delta.className = 'sim-score-delta visible ' + (diff > 0 ? 'positive' : 'negative');
+    delta.textContent = (diff > 0 ? '+' : '') + diff + ' pts';
+  }
+
+  const bar = document.getElementById('sim-bar');
+  bar.style.width      = newScore + '%';
+  bar.style.background = `linear-gradient(90deg, ${si.color}, ${si.color}99)`;
+
+  document.getElementById('sim-bar-label-left').textContent  = 'Current: ' + baseScore + '%';
+  document.getElementById('sim-bar-label-right').textContent = newScore > baseScore ? 'Projected: ' + newScore + '%' : '';
+}
+
+function simReset() {
+  simLearnedSkills.clear();
+  renderSimulator();
+  simUpdateDisplay(simBaseScore, simBaseScore);
+  const impact = document.getElementById('sim-impact');
+  impact.innerHTML = '<span style="color:var(--text2);">Select skills above — the engine ranks them by impact and shows your projected score.</span>';
+  impact.className = 'sim-impact';
+}
+
+/* ═══ ADVISOR ═══ */
+function buildAdvisor(role, score, missing, matched) {
+  const wrap = document.getElementById('advisor-wrap');
+  const body = document.getElementById('advisor-body');
+  if (!wrap || !body) return;
+  wrap.style.display = '';
+
+  const si = getScoreInfo(score);
+  const criticalMissing = missing.filter(s => s.weight >= 4).sort((a,b) => b.weight - a.weight);
+  const topMissing = [...missing].sort((a,b) => b.weight - a.weight);
+  const topPriority = topMissing[0];
+  const expertSkills = matched.filter(s => s.userLevel === 3);
+  const beginnerSkills = matched.filter(s => s.userLevel === 1);
+
+  // ── Sentence 1: Summary ──
+  let summary = '';
+  if (score >= 85) {
+    summary = `With a ${score}% readiness score, you're a genuinely strong candidate for <strong>${role}</strong> — you've covered the majority of what hiring managers expect to see at this level.`;
+  } else if (score >= 65) {
+    summary = `At ${score}% readiness, you have a solid foundation for <strong>${role}</strong>, but there are still meaningful gaps that most interviewers will probe.`;
+  } else if (score >= 40) {
+    summary = `Your ${score}% readiness for <strong>${role}</strong> suggests you're building in the right direction — but you're not yet at the threshold where applying competitively makes sense.`;
+  } else {
+    summary = `A ${score}% readiness score for <strong>${role}</strong> indicates you're early in your learning journey. This is normal — it means there's a clear and achievable path forward.`;
+  }
+
+  // ── Sentence 2: Biggest Weakness ──
+  let weakness = '';
+  if (criticalMissing.length >= 3) {
+    weakness = `Your biggest gap is in critical fundamentals: you're missing <strong>${criticalMissing.slice(0,2).map(s=>s.name).join('</strong> and <strong>')}</strong>${criticalMissing.length > 2 ? ` (and ${criticalMissing.length-2} more)` : ''} — these are the skills interviewers test first and most heavily penalise if absent.`;
+  } else if (criticalMissing.length > 0) {
+    weakness = `Your most significant weakness is <strong>${criticalMissing[0].name}</strong>${criticalMissing.length > 1 ? ` and <strong>${criticalMissing[1].name}</strong>` : ''} — ${criticalMissing.length === 1 ? 'this is' : 'these are'} high-weight requirements that employers treat as near-mandatory.`;
+  } else if (beginnerSkills.length > matched.length / 2 && matched.length > 2) {
+    weakness = `You have most required skills, but ${beginnerSkills.length} of them are at Beginner level. Employers in this space expect at least Intermediate proficiency — depth matters more than breadth once you have coverage.`;
+  } else if (topPriority) {
+    weakness = `Your main gap is <strong>${topPriority.name}</strong>, which carries one of the highest weights in this role. Without it, your profile will be screened out at many companies before reaching interview stage.`;
+  } else {
+    weakness = `Your skill profile is well-rounded. The remaining gaps are optional or enhancement skills that won't block you from being hired but will help you stand out.`;
+  }
+
+  // ── Sentence 3: Most Important Next Step ──
+  let nextstep = '';
+  if (criticalMissing.length > 0) {
+    const pick = criticalMissing[0];
+    nextstep = `Your most important next step is to build a working, demonstrable project using <strong>${pick.name}</strong> — not just complete a course. Employers want proof of output, and a real project on GitHub or a live URL is worth more than any certificate.`;
+  } else if (beginnerSkills.length > 2) {
+    const upgradeTarget = beginnerSkills.find(s => s.weight >= 4) || beginnerSkills[0];
+    nextstep = `Focus on taking your <strong>${upgradeTarget.name}</strong> from Beginner to Intermediate. Pick one substantial project that stretches your current ability and complete it fully — half-finished projects don't count as evidence of skill.`;
+  } else if (topPriority) {
+    nextstep = `Prioritise learning <strong>${topPriority.name}</strong> this month. Set a specific goal — complete a project that uses it, not just tutorials — and put it somewhere visible on your CV or portfolio.`;
+  } else {
+    nextstep = `With your current coverage, focus on polishing your portfolio: make sure every project has a live demo, a clear README, and explains the decisions you made. That presentation layer is what converts readiness into offers.`;
+  }
+
+  // ── Sentence 4: Realistic Outlook ──
+  let realistic = '';
+  if (score >= 85) {
+    realistic = `Realistically, you should be applying to <strong>${role}</strong> roles now. Aim for 3–5 applications per week, prepare for technical screens on your weaker areas, and don't wait until you feel 100% ready — that moment rarely comes.`;
+  } else if (score >= 65) {
+    realistic = `Realistically, give yourself 6–10 weeks of focused effort on your top 2 missing skills before applying widely. Start networking and attending events now — opportunities often surface before you feel fully ready.`;
+  } else if (score >= 40) {
+    realistic = `Realistically, you're 3–5 months of consistent effort away from being competitive for entry-level <strong>${role}</strong> roles. Set a specific milestone — "I will apply when I've completed X project" — and stick to it.`;
+  } else {
+    realistic = `Realistically, treat the next 4–6 months as a structured learning phase. Don't apply to roles yet — use this time to build genuine skills, not just collect certificates. One solid project beats five online courses on any CV.`;
+  }
+
+  body.innerHTML = [
+    { cls:'summary',   icon:'📊', text: summary  },
+    { cls:'weakness',  icon:'⚠️', text: weakness },
+    { cls:'nextstep',  icon:'🎯', text: nextstep  },
+    { cls:'realistic', icon:'📅', text: realistic },
+  ].map(s => `
+    <div class="advisor-sentence ${s.cls}">
+      <span class="advisor-sentence-icon">${s.icon}</span>${s.text}
+    </div>`).join('');
 }
 
 </script>
