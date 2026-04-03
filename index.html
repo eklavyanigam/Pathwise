@@ -271,7 +271,7 @@
   .stat-label { font-family: 'Montserrat', sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text3); margin-bottom: 6px; font-weight: 500; }
   .stat-value { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 30px; }
 
-  .results-bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+  .results-bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; align-items: start; }
   @media (max-width: 700px) { .results-bottom { grid-template-columns: 1fr; } }
   .section-card {
     background: rgba(20,36,80,0.55); border: 1px solid rgba(100,150,255,0.16);
@@ -307,7 +307,7 @@
   .good-msg { font-size: 13px; color: var(--green); font-style: italic; padding: 8px 0; }
 
   /* Tier explanation */
-  .tier-section { margin-top: 16px; }
+  .tier-section { margin-top: 0; }
   .tier-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 12px; }
   .tier-item { background: rgba(20,40,90,0.5); border: 1px solid rgba(100,150,255,0.15); border-radius: 16px; padding: 18px 20px; transition: all 0.2s; }
   .tier-item:hover { border-color: rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); }
@@ -1021,6 +1021,7 @@
         <div class="section-title"><span class="s-icon" style="color:var(--yellow)">—</span> Top 3 to Learn Next</div>
         <div class="priority-list" id="priority-list"></div>
       </div>
+    </div>
 
     <!-- Tier Explanation -->
     <div class="section-card tier-section reveal">
@@ -1089,8 +1090,6 @@
 
       </div>
     </div>
-
-
 
     <!-- Advisor -->
     <div class="advisor-wrap reveal" id="advisor-wrap" style="display:none;">
@@ -1566,6 +1565,9 @@ function addSkill() {
   saveState();
   renderSkillList();
   skillInput.focus();
+  // Re-open dropdown immediately so user can pick next skill without extra click
+  const items = getFilteredSuggestions('');
+  renderDropdown(items);
 }
 
 function clearAllSkills() {
