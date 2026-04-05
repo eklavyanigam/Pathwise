@@ -955,7 +955,7 @@
   #page-action .section-card,
   #page-action .simulator-wrap,
   #page-action .roadmap-section { margin-top: 0; }
-  #page-action > * + * { margin-top: 32px; }
+  #page-action > * + * { margin-top: 48px; }
   #page-analysis > * + * { margin-top: 20px; }
   .action-cta-bar { display:flex; justify-content:flex-end; margin-top:24px; }
 
@@ -967,27 +967,8 @@
     80%      { transform: translateX(-2px); }
   }
 
-  /* Score animation glow */
-  @keyframes scoreGlow {
-    0%   { filter: drop-shadow(0 0 8px rgba(44,95,212,0.2)); }
-    50%  { filter: drop-shadow(0 0 28px currentColor) drop-shadow(0 0 8px currentColor); }
-    100% { filter: drop-shadow(0 0 14px rgba(44,95,212,0.35)); }
-  }
-  .score-circle.animating { animation: scoreGlow 1.4s ease-out forwards; }
-
-  /* Stat box count-up highlight */
-  @keyframes statPop {
-    0%   { transform: scale(1); }
-    40%  { transform: scale(1.08); }
-    100% { transform: scale(1); }
-  }
-  .stat-value.popping { animation: statPop 0.4s cubic-bezier(0.4,0,0.2,1); }
-
-  /* Progress bar glow while filling */
+  /* Progress bar smooth fill */
   .progress-bar-fill { transition: width 1.4s cubic-bezier(0.16,1,0.3,1); }
-  .progress-bar-fill.glowing {
-    box-shadow: 0 0 12px currentColor, 0 0 4px currentColor;
-  }
 
 </style>
 </head>
@@ -1188,7 +1169,7 @@
     </div>
 
     <!-- Career Advisor -->
-    <div class="advisor-wrap reveal" id="advisor-wrap" style="display:none;">
+    <div class="advisor-wrap reveal" id="advisor-wrap" style="visibility:hidden;min-height:0;max-height:0;overflow:hidden;padding:0;margin:0;">
       <div class="advisor-header">
         <div class="advisor-label-wrap">
           <div class="advisor-label">Career Advisor</div>
@@ -1273,7 +1254,7 @@
     </div>
 
     <!-- Action Plan CTA -->
-    <div class="reveal" id="action-cta" style="display:none;margin-top:24px;text-align:center;">
+    <div class="reveal" id="action-cta" style="visibility:hidden;min-height:0;max-height:0;overflow:hidden;margin:0;text-align:center;">
       <button class="btn-analyze" style="margin:0 auto;" onclick="goToStep('action')">
         View Action Plan
       </button>
@@ -1289,14 +1270,8 @@
       <button class="btn-back" onclick="goToStep('analysis')">Back to Analysis</button>
     </div>
 
-    <!-- 1. Skill Learning Roadmap -->
-    <div class="section-card roadmap-section reveal" style="margin-bottom:0;">
-      <div class="section-title"><span class="s-icon" style="color:var(--accent)">—</span> Skill Learning Roadmap</div>
-      <div class="roadmap-timeline" id="roadmap-timeline"></div>
-    </div>
-
-    <!-- 2. What If I Learned (Simulator) -->
-    <div class="simulator-wrap reveal" id="skill-simulator" style="display:none;margin-bottom:12px;">
+    <!-- 1. What If I Learned (Simulator) -->
+    <div class="simulator-wrap reveal" id="skill-simulator" style="visibility:hidden;min-height:0;max-height:0;overflow:hidden;margin:0 0 32px 0;">
       <div class="simulator-header">
         <div class="simulator-title">
           <div class="simulator-title-icon">+</div>
@@ -1345,14 +1320,20 @@
       <div class="sim-impact" id="sim-impact"><span style="color:var(--text2);">Select skills above — the engine ranks them by impact and shows your projected score.</span></div>
     </div>
 
-    <!-- 3. Where to Learn (appears after What If I Learned) -->
-    <div class="section-card reveal" id="learn-resources-section" style="display:none;">
+    <!-- 2. Skill Learning Roadmap -->
+    <div class="section-card roadmap-section reveal" style="margin-bottom:32px;">
+      <div class="section-title"><span class="s-icon" style="color:var(--accent)">—</span> Skill Learning Roadmap</div>
+      <div class="roadmap-timeline" id="roadmap-timeline"></div>
+    </div>
+
+    <!-- 3. Where to Learn -->
+    <div class="section-card reveal" id="learn-resources-section" style="visibility:hidden;min-height:0;max-height:0;overflow:hidden;padding:0;border:none;margin:0;">
       <div class="section-title"><span class="s-icon" style="color:var(--accent2)">—</span> Where to Learn — Critical Skills</div>
       <div id="learn-resources-list"></div>
     </div>
 
     <!-- 4. Suggested Portfolio Projects -->
-    <div id="portfolio-projects-block" class="reveal" style="display:none;margin-bottom:20px;"></div>
+    <div id="portfolio-projects-block" class="reveal" style="visibility:hidden;min-height:0;max-height:0;overflow:hidden;margin:0;"></div>
 
   </div><!-- end page-action -->
 
@@ -2074,7 +2055,16 @@ async function analyze() {
 
   // Show action CTA on analysis page
   const cta = document.getElementById('action-cta');
-  if (cta) cta.style.display = '';
+  if (cta) {
+    cta.style.visibility = '';
+    cta.style.maxHeight = '';
+    cta.style.overflow = '';
+    cta.style.margin = '';
+    requestAnimationFrame(() => {
+      cta.classList.remove('visible');
+      requestAnimationFrame(() => { cta.classList.add('visible'); });
+    });
+  }
 
   // Persist results explicitly (only after user-triggered analysis)
   saveResults({ score, missing, matched, catResults, priorities });
@@ -2145,7 +2135,6 @@ function animateResults(score) {
   const arc   = document.getElementById('score-arc');
   const numEl = document.getElementById('score-num');
   const pf    = document.getElementById('progress-fill');
-  const circle = document.querySelector('.score-circle');
   const si    = getScoreInfo(score);
 
   // Reset
@@ -2153,17 +2142,7 @@ function animateResults(score) {
   numEl.textContent = '0';
   pf.style.width = '0%';
 
-  // Glow class on circle
-  if (circle) {
-    circle.classList.remove('animating');
-    circle.style.setProperty('color', si.color);
-    void circle.offsetWidth; // reflow
-    circle.classList.add('animating');
-  }
-
-  // Progress bar glow
-  pf.classList.add('glowing');
-  pf.style.boxShadow = `0 0 12px ${si.color}, 0 0 4px ${si.color}`;
+  // No glow animation on circle — prevents jitter
 
   // Animate number, arc, and bar in sync — elastic easing
   const duration = 1400;
@@ -2181,24 +2160,12 @@ function animateResults(score) {
     if (p < 1) {
       requestAnimationFrame(step);
     } else {
-      // Remove glow after animation
-      setTimeout(() => {
-        pf.classList.remove('glowing');
-        pf.style.boxShadow = '';
-      }, 600);
+
     }
   }
   requestAnimationFrame(step);
 
-  // Staggered: stat boxes pop in after score reaches ~60%
-  setTimeout(() => {
-    ['stat-matched','stat-missing','stat-score'].forEach((id, i) => {
-      setTimeout(() => {
-        const el = document.getElementById(id);
-        if (el) { el.classList.remove('popping'); void el.offsetWidth; el.classList.add('popping'); }
-      }, i * 80);
-    });
-  }, duration * 0.6);
+
 
   // Category bars staggered
   setTimeout(() => {
@@ -2829,7 +2796,23 @@ function buildInsights(currentRole, currentScore) {
 function renderPortfolioProjects(role, missing, matched) {
   const el = document.getElementById('portfolio-projects-block');
   if (!el) return;
-  el.style.display = '';
+  el.style.visibility = '';
+  el.style.maxHeight = '';
+  el.style.overflow = '';
+  el.style.margin = '';
+  requestAnimationFrame(() => {
+    el.classList.remove('visible');
+    requestAnimationFrame(() => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight - 40) {
+        el.classList.add('visible');
+      } else if (revealObserver) {
+        revealObserver.observe(el);
+      } else {
+        el.classList.add('visible');
+      }
+    });
+  });
   const projects = getPortfolioProjects(role, missing, matched);
   el.innerHTML = `
     <div style="margin-bottom:10px;">
@@ -3032,9 +3015,14 @@ function buildSimulator(matched, missing, role, baseScore) {
   simBaseMatchedWeight = matched.reduce((a, s) => a + s.contribution, 0);
 
   const wrap = document.getElementById('skill-simulator');
-  wrap.style.display = '';
-  // Trigger reveal animation after display is set
-  requestAnimationFrame(() => { wrap.classList.remove('visible'); requestAnimationFrame(() => { wrap.classList.add('visible'); }); });
+  wrap.style.visibility = '';
+  wrap.style.maxHeight = '';
+  wrap.style.overflow = '';
+  // Trigger reveal animation
+  requestAnimationFrame(() => {
+    wrap.classList.remove('visible');
+    requestAnimationFrame(() => { wrap.classList.add('visible'); });
+  });
 
   renderSimulator();
   simUpdateDisplay(baseScore, baseScore);
@@ -3215,7 +3203,15 @@ function buildAdvisor(role, score, missing, matched) {
   const wrap = document.getElementById('advisor-wrap');
   const body = document.getElementById('advisor-body');
   if (!wrap || !body) return;
-  wrap.style.display = '';
+  wrap.style.visibility = '';
+  wrap.style.maxHeight = '';
+  wrap.style.overflow = '';
+  wrap.style.padding = '';
+  wrap.style.margin = '';
+  requestAnimationFrame(() => {
+    wrap.classList.remove('visible');
+    requestAnimationFrame(() => { wrap.classList.add('visible'); });
+  });
 
   const criticalMissing = missing.filter(s => s.weight >= 4).sort((a,b) => b.weight - a.weight);
   const topPriority = [...missing].sort((a,b) => b.weight - a.weight)[0];
@@ -4245,8 +4241,38 @@ function buildLearnResources(missing) {
   if (!section || !list) return;
 
   const critical = missing.filter(s => s.weight >= 4);
-  if (critical.length === 0) { section.style.display = 'none'; return; }
-  section.style.display = '';
+  if (critical.length === 0) {
+    section.style.visibility = 'hidden';
+    section.style.maxHeight = '0';
+    section.style.overflow = 'hidden';
+    section.style.padding = '0';
+    section.style.border = 'none';
+    section.style.margin = '0';
+    return;
+  }
+  // Show and trigger reveal animation
+  section.style.visibility = '';
+  section.style.maxHeight = '';
+  section.style.overflow = '';
+  section.style.padding = '';
+  section.style.border = '';
+  section.style.marginBottom = '32px';
+  section.style.marginTop = '0';
+  // Re-trigger scroll reveal for this element
+  requestAnimationFrame(() => {
+    section.classList.remove('visible');
+    requestAnimationFrame(() => {
+      const rect = section.getBoundingClientRect();
+      const inView = rect.top < window.innerHeight - 40;
+      if (inView) {
+        section.classList.add('visible');
+      } else if (revealObserver) {
+        revealObserver.observe(section);
+      } else {
+        section.classList.add('visible');
+      }
+    });
+  });
 
   // Badge style helpers
   const BADGE_STYLES = {
