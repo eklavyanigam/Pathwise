@@ -430,7 +430,7 @@
   .auth-actions .btn:disabled,
   .auth-email-row .btn:disabled {
     opacity: 0.55;
-    cursor: wait;
+    cursor: not-allowed;
     transform: none;
   }
   .auth-provider-btn {
