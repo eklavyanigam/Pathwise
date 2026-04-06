@@ -78,7 +78,7 @@
     const userLabel = document.getElementById('account-user-label');
     if (user) {
       state.guestMode = false;
-      if (accountMenu) accountMenu.style.display = '';
+      if (accountMenu) accountMenu.style.display = 'flex';
       if (profileBtn) profileBtn.setAttribute('title', user.email || 'Profile');
       if (signoutBtn) signoutBtn.setAttribute('title', 'Sign out');
       if (userLabel) userLabel.textContent = user.email || 'Signed in';
