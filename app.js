@@ -31,6 +31,10 @@
   function showIntro() {
     activatePage('intro');
     setShellVisible(false);
+    const context = document.querySelector('.header-context');
+    const statusWrap = document.querySelector('.header-status-wrap');
+    if (context) context.style.display = 'none';
+    if (statusWrap) statusWrap.style.display = 'none';
   }
 
   function enterAnalyzer(preferredStep) {
