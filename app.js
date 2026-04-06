@@ -629,16 +629,19 @@ const ROLES = {
       { name: "Security Best Practices", weight: 3, category: "Security" },
     ]
   },
-  "Cybersecurity Analyst": {
+  "Cybersecurity": {
     icon: "🛡️",
     skills: [
       { name: "Network Security", weight: 5, category: "Security" },
-      { name: "Threat Detection & Analysis", weight: 5, category: "Security" },
+      { name: "Threat Detection & Analysis", weight: 4, category: "Security" },
       { name: "SIEM Tools (Splunk/QRadar)", weight: 4, category: "Tools" },
       { name: "Vulnerability Assessment", weight: 4, category: "Security" },
       { name: "Incident Response", weight: 4, category: "Operations" },
       { name: "Linux / Windows Administration", weight: 4, category: "Systems" },
+      { name: "Identity & Access Management", weight: 4, category: "Security" },
+      { name: "Ethical Hacking Basics", weight: 3, category: "Security" },
       { name: "Python / Scripting", weight: 3, category: "Programming" },
+      { name: "Security Tools (Wireshark/Nmap)", weight: 3, category: "Tools" },
       { name: "Cryptography Basics", weight: 3, category: "Security" },
       { name: "Compliance & Frameworks (NIST/ISO)", weight: 3, category: "Governance" },
     ]
@@ -1781,18 +1784,18 @@ const PORTFOLIO_PROJECTS = {
       why: "Zero-downtime deployments are what separate DevOps engineers from sysadmins. Understanding blue/green strategies and automated rollback is asked about in almost every senior DevOps interview."
     }
   ],
-  "Cybersecurity Analyst": [
+  "Cybersecurity": [
     {
       title: "Home Lab SIEM Setup with Real Alerts",
       skills: ["SIEM Tools (Splunk/QRadar)", "Network Security", "Threat Detection & Analysis", "Linux / Windows Administration"],
       build: "Set up a free Splunk or Elastic SIEM in a home lab (VMs). Generate log data from simulated attacks (using tools like Metasploit on an isolated network), write detection rules, and document 5+ real alerts you triggered and investigated.",
-      why: "Hands-on SIEM experience is the #1 thing SOC analyst hiring managers look for. Documenting real alerts you built and investigated proves practical skill that certifications alone cannot."
+      why: "Hands-on SIEM experience is one of the clearest signals in cybersecurity hiring. Documenting real alerts you built and investigated proves practical skill that certifications alone cannot."
     },
     {
       title: "Vulnerability Assessment Report",
       skills: ["Vulnerability Assessment", "Network Security", "Python / Scripting", "Compliance & Frameworks (NIST/ISO)"],
       build: "Run a full vulnerability scan on a deliberately vulnerable VM (Metasploitable or DVWA). Document findings in a professional pentest-style report: scope, methodology, findings with CVSS scores, and remediation recommendations mapped to NIST controls.",
-      why: "A professional-quality vulnerability report shows you can communicate risk to stakeholders — the core output of most cybersecurity analyst roles."
+      why: "A professional-quality vulnerability report shows you can communicate risk to stakeholders — a core output across many cybersecurity roles."
     },
     {
       title: "Incident Response Playbook + Tabletop Simulation",
