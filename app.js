@@ -69,19 +69,6 @@
     if (accountUserLabel) accountUserLabel.textContent = 'Account';
     if (accountUserMeta) accountUserMeta.textContent = isGuest ? 'Guest mode active' : 'Cloud sync active';
   }
-
-  function formatSavedAt(value) {
-    if (!value) return '';
-    const date = new Date(value);
-    if (Number.isNaN(date.getTime())) return '';
-    return date.toLocaleString([], {
-      month: 'short',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: '2-digit'
-    });
-  }
-
   function renderSaveStatus(kind, message) {
     const badge = document.getElementById('header-sync-pill');
     const text = document.getElementById('header-sync-text');
@@ -136,50 +123,6 @@
     notice.classList.remove('visible');
   }
 
-  function renderProgressSnapshot(progress) {
-    const title = document.getElementById('snapshot-title');
-    const role = document.getElementById('snapshot-role');
-    const skillsCount = document.getElementById('snapshot-skills');
-    const score = document.getElementById('snapshot-score');
-    const note = document.getElementById('snapshot-note');
-    const source = document.getElementById('snapshot-source');
-    if (!title || !role || !skillsCount || !score || !note || !source) return;
-
-    const snapshot = progress || {
-      selected_role: selectedRole,
-      skills,
-      score: lastResults ? lastResults.score : null,
-      created_at: state.lastSavedAt
-    };
-
-    const roleName = snapshot.selected_role && ROLES[snapshot.selected_role]
-      ? snapshot.selected_role
-      : selectedRole;
-    const count = Array.isArray(snapshot.skills) ? snapshot.skills.length : skills.length;
-    const scoreValue = snapshot.score;
-    const snapshotSavedAt = snapshot.created_at || snapshot.saved_at || state.lastSavedAt;
-    if (snapshotSavedAt) state.lastSavedAt = snapshotSavedAt;
-    const savedAt = formatSavedAt(snapshotSavedAt);
-    const isCloud = !!state.session?.user;
-    const readinessLabel = scoreValue === null || scoreValue === undefined
-      ? 'Not analyzed'
-      : scoreValue >= 85
-        ? 'Strong'
-        : scoreValue >= 65
-          ? 'Growing'
-          : 'In progress';
-
-    title.textContent = count > 0 ? 'Your current readiness snapshot' : 'Start building your profile';
-    role.textContent = roleName;
-    skillsCount.textContent = count + ' added';
-    score.textContent = scoreValue === null || scoreValue === undefined ? 'Not analyzed' : scoreValue + '% · ' + readinessLabel;
-    source.textContent = isCloud ? 'Cloud' : 'Browser';
-    note.textContent = count > 0
-      ? (savedAt
-          ? ((isCloud ? 'Last updated ' : 'Saved ') + savedAt + '.')
-          : 'Keep building your skill set and run another analysis anytime.')
-      : 'Add your skills to generate a readiness snapshot you can come back to anytime.';
-  }
 
   function readGuestProgress() {
     try {
@@ -472,9 +415,7 @@ document.addEventListener('click', (event) => {
     mergeGuestProgressToDatabase,
     readGuestProgress,
     clearGuestProgress,
-    renderSaveStatus,
-    renderProgressSnapshot,
-    showTopNotice,
+    renderSaveStatus,    showTopNotice,
     hideTopNotice,
     getPendingStep: function () { return state.pendingStep; },
     getBootError: function () { return bootError; }
@@ -957,7 +898,6 @@ function renderRequiredSkills() {
     t.innerHTML = '<span class="dot" style="background:' + color + '"></span>' + s.name;
     c.appendChild(t);
   });
-  window.PathwiseSupabaseReady.then((api) => api.renderProgressSnapshot()).catch(() => {});
 }
 
 /* ═══ SKILLS ═══ */
@@ -967,7 +907,6 @@ function renderSkillList() {
   document.getElementById('analyze-btn').disabled = skills.length === 0;
   document.getElementById('clear-btn').style.display = skills.length > 0 ? '' : 'none';
   document.getElementById('skill-card-title').innerHTML = editId !== null ? 'Edit Skill' : 'Your Skills';
-  window.PathwiseSupabaseReady.then((api) => api.renderProgressSnapshot()).catch(() => {});
 
   if (skills.length === 0) {
     c.innerHTML = `<div class="empty-state"><div>Add your skills above to get started</div></div>`;
@@ -991,7 +930,6 @@ function renderSkillList() {
   c.appendChild(list);
   c.querySelectorAll('.eb').forEach(b => b.onclick = () => startEdit(+b.dataset.id));
   c.querySelectorAll('.rb').forEach(b => b.onclick = () => removeSkill(+b.dataset.id));
-  window.PathwiseSupabaseReady.then((api) => api.renderProgressSnapshot()).catch(() => {});
 }
 
 function addSkill() {
@@ -1166,8 +1104,6 @@ async function resetResults() {
   document.getElementById('step-analysis').disabled = true;
   document.getElementById('step-action').disabled   = true;
   document.getElementById('score-badge').style.display = 'none';
-  const api = await window.PathwiseSupabaseReady;
-  api.renderProgressSnapshot();
 }
 
 async function saveState() {
@@ -1176,12 +1112,6 @@ async function saveState() {
     api.renderSaveStatus('saving', 'Saving progress...');
     await api.saveProgress(getProgressPayload());
     api.renderSaveStatus('saved', api.getSession()?.user ? 'Progress synced to your account' : 'Progress saved in this browser');
-    api.renderProgressSnapshot({
-      selected_role: selectedRole,
-      skills,
-      score: lastResults ? lastResults.score : null,
-      created_at: new Date().toISOString()
-    });
   } catch (e) {
     console.error('saveState failed', e);
     const api = await window.PathwiseSupabaseReady;
@@ -1195,12 +1125,6 @@ async function saveResults(results) {
     api.renderSaveStatus('saving', 'Saving analysis...');
     await api.saveProgress(getProgressPayload(results.score));
     api.renderSaveStatus('saved', api.getSession()?.user ? 'Analysis saved to your account' : 'Analysis saved in this browser');
-    api.renderProgressSnapshot({
-      selected_role: selectedRole,
-      skills,
-      score: results.score,
-      created_at: new Date().toISOString()
-    });
   } catch (e) {
     console.error('saveResults failed', e);
     const api = await window.PathwiseSupabaseReady;
@@ -1215,13 +1139,11 @@ async function loadState() {
     const progress = await api.getProgress();
     if (!progress) {
       api.renderSaveStatus('saved', api.getSession()?.user ? 'Cloud sync active' : 'Ready to save in this browser');
-      api.renderProgressSnapshot();
       return;
     }
 
     if (progress.selected_role && ROLES[progress.selected_role]) selectedRole = progress.selected_role;
     if (Array.isArray(progress.skills)) skills = progress.skills;
-    api.renderProgressSnapshot(progress);
     api.renderSaveStatus('saved', api.getSession()?.user ? 'Progress restored from your account' : 'Progress restored from this browser');
 
     if (skills.length > 0) {
@@ -3685,6 +3607,8 @@ function buildLearnResources(missing) {
     </div>`;
   }).join('')}</div>`;
 }
+
+
 
 
 
