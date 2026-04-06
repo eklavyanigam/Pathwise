@@ -9,7 +9,8 @@
     currentProgressId: null,
     guestMode: false,
     session: null,
-    introDismissed: false
+    introDismissed: false,
+    lastSavedAt: null
   };
 
   function setShellVisible(isVisible) {
@@ -38,10 +39,14 @@
   function renderAuthState(user, isGuest) {
     const accountMenu = document.getElementById('account-menu');
     const accountTrigger = document.getElementById('account-trigger');
+    const accountUserLabel = document.getElementById('account-user-label');
+    const accountUserMeta = document.getElementById('account-user-meta');
     if (user) {
       state.guestMode = false;
       if (accountMenu) accountMenu.style.display = '';
       if (accountTrigger) accountTrigger.setAttribute('aria-expanded', 'false');
+      if (accountUserLabel) accountUserLabel.textContent = user.email || 'Signed-in account';
+      if (accountUserMeta) accountUserMeta.textContent = 'Cloud sync active';
       return;
     }
     if (accountMenu) {
@@ -49,6 +54,70 @@
       accountMenu.classList.remove('open');
     }
     if (accountTrigger) accountTrigger.setAttribute('aria-expanded', 'false');
+    if (accountUserLabel) accountUserLabel.textContent = 'Account';
+    if (accountUserMeta) accountUserMeta.textContent = isGuest ? 'Guest mode active' : 'Cloud sync active';
+  }
+
+  function formatSavedAt(value) {
+    if (!value) return '';
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return '';
+    return date.toLocaleString([], {
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit'
+    });
+  }
+
+  function renderSaveStatus(kind, message) {
+    const badge = document.getElementById('save-status-badge');
+    const text = document.getElementById('save-status-text');
+    if (!badge || !text) return;
+
+    badge.classList.remove('is-saving', 'is-saved', 'is-error');
+    if (kind === 'saving') badge.classList.add('is-saving');
+    if (kind === 'saved') badge.classList.add('is-saved');
+    if (kind === 'error') badge.classList.add('is-error');
+    text.textContent = message;
+  }
+
+  function renderProgressSnapshot(progress) {
+    const title = document.getElementById('snapshot-title');
+    const role = document.getElementById('snapshot-role');
+    const skillsCount = document.getElementById('snapshot-skills');
+    const score = document.getElementById('snapshot-score');
+    const note = document.getElementById('snapshot-note');
+    const source = document.getElementById('snapshot-source');
+    if (!title || !role || !skillsCount || !score || !note || !source) return;
+
+    const snapshot = progress || {
+      selected_role: selectedRole,
+      skills,
+      score: lastResults ? lastResults.score : null,
+      created_at: state.lastSavedAt
+    };
+
+    const roleName = snapshot.selected_role && ROLES[snapshot.selected_role]
+      ? snapshot.selected_role
+      : selectedRole;
+    const count = Array.isArray(snapshot.skills) ? snapshot.skills.length : skills.length;
+    const scoreValue = snapshot.score;
+    const snapshotSavedAt = snapshot.created_at || snapshot.saved_at || state.lastSavedAt;
+    if (snapshotSavedAt) state.lastSavedAt = snapshotSavedAt;
+    const savedAt = formatSavedAt(snapshotSavedAt);
+    const isCloud = !!state.session?.user;
+
+    title.textContent = count > 0 ? 'Your latest analyzer state' : 'Start building your profile';
+    role.textContent = roleName;
+    skillsCount.textContent = count + ' added';
+    score.textContent = scoreValue === null || scoreValue === undefined ? 'Not analyzed' : scoreValue + '% ready';
+    source.textContent = isCloud ? 'Cloud' : 'Browser';
+    note.textContent = count > 0
+      ? (savedAt
+          ? ((isCloud ? 'Last synced ' : 'Last saved ') + savedAt + '.')
+          : (isCloud ? 'Signed-in progress is synced to your account.' : 'Guest progress stays in this browser until you sign in.'))
+      : 'Add your skills to generate a readiness snapshot you can come back to anytime.';
   }
 
   function readGuestProgress() {
@@ -215,12 +284,14 @@
     }
 
     renderAuthState(null, true);
+    renderSaveStatus('saved', 'Guest mode active in this browser');
     showIntro();
   }
 
   function continueAsGuest() {
     state.guestMode = true;
     renderAuthState(null, true);
+    renderSaveStatus('saved', 'Guest progress saves in this browser');
     enterAnalyzer();
   }
 
@@ -294,6 +365,7 @@ document.addEventListener('click', (event) => {
       }
 
       renderAuthState(session?.user ?? null, !session?.user && state.guestMode);
+      renderSaveStatus('saved', session?.user ? 'Cloud sync active' : (state.guestMode ? 'Guest progress saves in this browser' : 'Ready to save in this browser'));
 
       if (window.PathwiseApp?.hydrateProgress) {
         await window.PathwiseApp.hydrateProgress();
@@ -304,12 +376,14 @@ document.addEventListener('click', (event) => {
   try {
     const session = await refreshSession();
     renderAuthState(session?.user ?? null, !session?.user);
+    renderSaveStatus('saved', session?.user ? 'Cloud sync active' : 'Ready to save in this browser');
     if (session?.user) {
       enterAnalyzer();
     }
   } catch (error) {
     console.error('Failed to restore session', error);
     renderAuthState(null, true);
+    renderSaveStatus('error', 'Could not restore session');
   }
 
   return {
@@ -329,6 +403,8 @@ document.addEventListener('click', (event) => {
     mergeGuestProgressToDatabase,
     readGuestProgress,
     clearGuestProgress,
+    renderSaveStatus,
+    renderProgressSnapshot,
     getBootError: function () { return bootError; }
   };
 })();
@@ -769,6 +845,7 @@ function renderRequiredSkills() {
     t.innerHTML = '<span class="dot" style="background:' + color + '"></span>' + s.name;
     c.appendChild(t);
   });
+  window.PathwiseSupabaseReady.then((api) => api.renderProgressSnapshot()).catch(() => {});
 }
 
 /* â•â•â• SKILLS â•â•â• */
@@ -778,6 +855,7 @@ function renderSkillList() {
   document.getElementById('analyze-btn').disabled = skills.length === 0;
   document.getElementById('clear-btn').style.display = skills.length > 0 ? '' : 'none';
   document.getElementById('skill-card-title').innerHTML = editId !== null ? 'Edit Skill' : 'Your Skills';
+  window.PathwiseSupabaseReady.then((api) => api.renderProgressSnapshot()).catch(() => {});
 
   if (skills.length === 0) {
     c.innerHTML = `<div class="empty-state"><div>Add your skills above to get started</div></div>`;
@@ -801,6 +879,7 @@ function renderSkillList() {
   c.appendChild(list);
   c.querySelectorAll('.eb').forEach(b => b.onclick = () => startEdit(+b.dataset.id));
   c.querySelectorAll('.rb').forEach(b => b.onclick = () => removeSkill(+b.dataset.id));
+  window.PathwiseSupabaseReady.then((api) => api.renderProgressSnapshot()).catch(() => {});
 }
 
 function addSkill() {
@@ -975,34 +1054,63 @@ async function resetResults() {
   document.getElementById('step-analysis').disabled = true;
   document.getElementById('step-action').disabled   = true;
   document.getElementById('score-badge').style.display = 'none';
+  const api = await window.PathwiseSupabaseReady;
+  api.renderProgressSnapshot();
 }
 
 async function saveState() {
   try {
     const api = await window.PathwiseSupabaseReady;
+    api.renderSaveStatus('saving', 'Saving progress...');
     await api.saveProgress(getProgressPayload());
+    api.renderSaveStatus('saved', api.getSession()?.user ? 'Progress synced to your account' : 'Progress saved in this browser');
+    api.renderProgressSnapshot({
+      selected_role: selectedRole,
+      skills,
+      score: lastResults ? lastResults.score : null,
+      created_at: new Date().toISOString()
+    });
   } catch (e) {
     console.error('saveState failed', e);
+    const api = await window.PathwiseSupabaseReady;
+    api.renderSaveStatus('error', 'Save failed. Try again.');
   }
 }
 
 async function saveResults(results) {
   try {
     const api = await window.PathwiseSupabaseReady;
+    api.renderSaveStatus('saving', 'Saving analysis...');
     await api.saveProgress(getProgressPayload(results.score));
+    api.renderSaveStatus('saved', api.getSession()?.user ? 'Analysis saved to your account' : 'Analysis saved in this browser');
+    api.renderProgressSnapshot({
+      selected_role: selectedRole,
+      skills,
+      score: results.score,
+      created_at: new Date().toISOString()
+    });
   } catch (e) {
     console.error('saveResults failed', e);
+    const api = await window.PathwiseSupabaseReady;
+    api.renderSaveStatus('error', 'Could not save analysis');
   }
 }
 
 async function loadState() {
   try {
     const api = await window.PathwiseSupabaseReady;
+    api.renderSaveStatus('saving', 'Loading progress...');
     const progress = await api.getProgress();
-    if (!progress) return;
+    if (!progress) {
+      api.renderSaveStatus('saved', api.getSession()?.user ? 'Cloud sync active' : 'Ready to save in this browser');
+      api.renderProgressSnapshot();
+      return;
+    }
 
     if (progress.selected_role && ROLES[progress.selected_role]) selectedRole = progress.selected_role;
     if (Array.isArray(progress.skills)) skills = progress.skills;
+    api.renderProgressSnapshot(progress);
+    api.renderSaveStatus('saved', api.getSession()?.user ? 'Progress restored from your account' : 'Progress restored from this browser');
 
     if (skills.length > 0) {
       lastResults = computeResults();
@@ -1020,6 +1128,8 @@ async function loadState() {
     }
   } catch (e) {
     console.error('loadState failed', e);
+    const api = await window.PathwiseSupabaseReady;
+    api.renderSaveStatus('error', 'Could not load saved progress');
   }
 }
 

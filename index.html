@@ -107,6 +107,12 @@
         </svg>
       </button>
       <div class="account-dropdown" id="account-dropdown">
+        <div class="account-dropdown-profile">
+          <div class="account-dropdown-label">Signed in</div>
+          <div class="account-dropdown-email" id="account-user-label">Account</div>
+          <div class="account-dropdown-meta" id="account-user-meta">Cloud sync active</div>
+        </div>
+        <div class="account-dropdown-divider"></div>
         <button class="account-dropdown-item" id="account-signout-btn" type="button">Sign Out</button>
       </div>
     </div>
@@ -138,6 +144,30 @@
         <div class="divider"></div>
         <div class="card-title"><span class="icon"></span> Required Skills</div>
         <div id="required-skills" style="display:flex;flex-wrap:wrap;gap:6px;"></div>
+        <div class="progress-snapshot" id="progress-snapshot">
+          <div class="progress-snapshot-header">
+            <div>
+              <div class="progress-snapshot-label">Progress Snapshot</div>
+              <div class="progress-snapshot-title" id="snapshot-title">Start building your profile</div>
+            </div>
+            <span class="persist-badge" id="snapshot-source">Browser</span>
+          </div>
+          <div class="progress-snapshot-grid">
+            <div class="progress-snapshot-stat">
+              <span class="progress-snapshot-stat-label">Role</span>
+              <strong id="snapshot-role">Data Analyst</strong>
+            </div>
+            <div class="progress-snapshot-stat">
+              <span class="progress-snapshot-stat-label">Skills</span>
+              <strong id="snapshot-skills">0 added</strong>
+            </div>
+            <div class="progress-snapshot-stat">
+              <span class="progress-snapshot-stat-label">Readiness</span>
+              <strong id="snapshot-score">Not analyzed</strong>
+            </div>
+          </div>
+          <div class="progress-snapshot-note" id="snapshot-note">Add your skills to generate a readiness snapshot you can come back to anytime.</div>
+        </div>
       </div>
 
       <div class="card">
@@ -194,6 +224,12 @@
         <div id="skill-list-container">
           <div class="empty-state">
             <div>Add your skills above to get started</div>
+          </div>
+        </div>
+        <div class="setup-status-row">
+          <div class="persist-badge persist-badge-live" id="save-status-badge">
+            <span class="persist-dot" id="save-status-dot"></span>
+            <span id="save-status-text">Ready to save</span>
           </div>
         </div>
         <div class="analyze-section">

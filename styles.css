@@ -197,6 +197,33 @@
     transform: translateY(0);
     pointer-events: auto;
   }
+  .account-dropdown-profile {
+    padding: 6px 8px 10px;
+  }
+  .account-dropdown-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.1px;
+    color: var(--text3);
+    margin-bottom: 6px;
+  }
+  .account-dropdown-email {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.35;
+    word-break: break-word;
+  }
+  .account-dropdown-meta {
+    font-size: 11px;
+    color: var(--text2);
+    margin-top: 4px;
+  }
+  .account-dropdown-divider {
+    height: 1px;
+    margin: 0 8px 8px;
+    background: rgba(255,255,255,0.08);
+  }
   .account-dropdown-item {
     width: 100%;
     border: 0;
@@ -481,6 +508,72 @@
   .auth-primary-btn:hover {
     box-shadow: none;
   }
+  .progress-snapshot {
+    margin-top: 18px;
+    padding: 18px;
+    border-radius: 16px;
+    background: rgba(20,40,90,0.5);
+    border: 1px solid rgba(100,150,255,0.14);
+  }
+  .progress-snapshot-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    align-items: flex-start;
+    margin-bottom: 14px;
+  }
+  .progress-snapshot-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--text3);
+    margin-bottom: 5px;
+  }
+  .progress-snapshot-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
+  }
+  .progress-snapshot-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .progress-snapshot-stat {
+    padding: 12px 13px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .progress-snapshot-stat-label {
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text3);
+    margin-bottom: 6px;
+  }
+  .progress-snapshot-stat strong {
+    display: block;
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.45;
+  }
+  .progress-snapshot-note {
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--text2);
+  }
+  .setup-status-row {
+    margin-top: 14px;
+  }
+  .persist-badge-live {
+    min-height: 32px;
+    padding: 6px 11px;
+    border-radius: 999px;
+  }
 
   @media (max-width: 980px) {
     .intro-hero {
@@ -654,8 +747,53 @@
     border: 1px solid rgba(255,255,255,0.08); border-radius: 20px;
     padding: 3px 10px; backdrop-filter: blur(8px);
   }
-  .persist-dot { display: none; }
+  .persist-dot {
+    display: inline-flex;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.18);
+    flex-shrink: 0;
+  }
+  .persist-badge.is-saving {
+    color: var(--yellow);
+    border-color: rgba(232,184,75,0.26);
+    background: rgba(232,184,75,0.08);
+  }
+  .persist-badge.is-saving .persist-dot {
+    background: var(--yellow);
+    box-shadow: 0 0 0 0 rgba(232,184,75,0.28);
+    animation: pulse 1.2s ease infinite;
+  }
+  .persist-badge.is-saved {
+    color: var(--green);
+    border-color: rgba(40,201,144,0.26);
+    background: rgba(40,201,144,0.08);
+  }
+  .persist-badge.is-saved .persist-dot {
+    background: var(--green);
+    box-shadow: 0 0 0 4px rgba(40,201,144,0.08);
+  }
+  .persist-badge.is-error {
+    color: var(--red);
+    border-color: rgba(224,80,96,0.28);
+    background: rgba(224,80,96,0.08);
+  }
+  .persist-badge.is-error .persist-dot {
+    background: var(--red);
+    box-shadow: 0 0 0 4px rgba(224,80,96,0.08);
+  }
   @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+
+  @media (max-width: 700px) {
+    .progress-snapshot-grid {
+      grid-template-columns: 1fr;
+    }
+    .progress-snapshot-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
 
   /* Career Path Insights */
   .insights-card { margin-bottom: 16px; }
