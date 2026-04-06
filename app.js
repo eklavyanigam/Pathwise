@@ -323,19 +323,18 @@
     const payload = await response.json();
     if (!response.ok) {
       return {
-        data: { session: null, user: null },
+        data: { session: null, user: null, tokens: null },
         error: new Error(payload.msg || payload.message || 'Email sign in failed.')
       };
     }
 
-    const session = {
-      access_token: payload.access_token,
-      refresh_token: payload.refresh_token
-    };
-    const { data, error } = await supabase.auth.setSession(session);
     return {
-      data,
-      error
+      data: {
+        session: null,
+        user: payload.user ?? null,
+        tokens: payload
+      },
+      error: null
     };
   }
 
@@ -368,29 +367,44 @@
     const payload = await response.json();
     if (!response.ok) {
       return {
-        data: { session: null, user: null },
+        data: { session: null, user: null, tokens: null },
         error: new Error(payload.msg || payload.message || 'Could not create your account.')
-      };
-    }
-
-    if (payload.access_token && payload.refresh_token) {
-      const { data, error } = await supabase.auth.setSession({
-        access_token: payload.access_token,
-        refresh_token: payload.refresh_token
-      });
-      return {
-        data,
-        error
       };
     }
 
     return {
       data: {
         session: null,
-        user: payload.user ?? null
+        user: payload.user ?? null,
+        tokens: payload.access_token && payload.refresh_token ? payload : null
       },
       error: null
     };
+  }
+
+  function redirectWithEmailTokens(payload, successTitle, successMessage) {
+    const tokens = payload?.data?.tokens;
+    if (!tokens?.access_token || !tokens?.refresh_token) {
+      return false;
+    }
+
+    setResumeMode('account');
+    setAuthButtonsBusy('');
+    showTopNotice('success', successTitle, successMessage, { autoClose: false });
+
+    const hash = new URLSearchParams({
+      access_token: tokens.access_token,
+      refresh_token: tokens.refresh_token,
+      expires_in: String(tokens.expires_in || 3600),
+      expires_at: String(tokens.expires_at || ''),
+      token_type: tokens.token_type || 'bearer',
+      type: 'email'
+    });
+
+    setTimeout(() => {
+      window.location.assign(`${window.location.pathname}#${hash.toString()}`);
+    }, 220);
+    return true;
   }
 
   async function sendPasswordReset(email) {
@@ -455,11 +469,9 @@
         'Email sign in is taking too long. Please try again.'
       );
       if (result.error) throw result.error;
-      showTopNotice('success', 'Signed In', 'Opening your analyzer...');
-      setAuthButtonsBusy('');
-      setTimeout(() => {
-        window.location.assign(window.location.pathname);
-      }, 280);
+      if (!redirectWithEmailTokens(result, 'Signed In', 'Opening your analyzer...')) {
+        throw new Error('Email sign in succeeded, but the session could not be started.');
+      }
     } catch (error) {
       setAuthButtonsBusy('');
       showTopNotice('error', 'Email Access Failed', error.message || 'Email sign in failed.');
@@ -481,12 +493,10 @@
       );
       if (result.error) throw result.error;
 
-      if (result.data?.session?.user) {
-        showTopNotice('success', 'Account Created', 'Opening your analyzer...');
-        setAuthButtonsBusy('');
-        setTimeout(() => {
-          window.location.assign(window.location.pathname);
-        }, 280);
+      if (result.data?.tokens?.access_token) {
+        if (!redirectWithEmailTokens(result, 'Account Created', 'Opening your analyzer...')) {
+          throw new Error('Account was created, but the session could not be started.');
+        }
       } else {
         setAuthButtonsBusy('');
         showTopNotice('success', 'Account Created', 'Check your email to confirm your account, then sign in.');
