@@ -53,9 +53,7 @@
     activatePage('intro');
     setShellVisible(false);
     const context = document.querySelector('.header-context');
-    const statusWrap = document.querySelector('.header-status-wrap');
     if (context) context.style.display = 'none';
-    if (statusWrap) statusWrap.style.display = 'none';
   }
 
   function enterAnalyzer(preferredStep) {
@@ -95,18 +93,7 @@
     if (accountUserMeta) accountUserMeta.textContent = isGuest ? 'Guest mode active' : 'Cloud sync active';
   }
   function renderSaveStatus(kind, message) {
-    const badge = document.getElementById('header-sync-pill');
-    const text = document.getElementById('header-sync-text');
-    if (!badge || !text) return;
-
-    const isCloud = !!state.session?.user;
-    badge.classList.remove('is-cloud', 'is-browser');
-    badge.classList.add(isCloud ? 'is-cloud' : 'is-browser');
-    if (kind === 'error') {
-      text.textContent = 'Sync issue';
-      return;
-    }
-    text.textContent = isCloud ? 'Cloud sync active' : 'Browser';
+    return;
   }
 
   let noticeTimer = null;
@@ -744,10 +731,8 @@ function renderHeaderPage(name) {
   const context = document.querySelector('.header-context');
   const brand = document.getElementById('header-brand-mini');
   const pageCopy = document.getElementById('header-page-copy');
-  const statusWrap = document.querySelector('.header-status-wrap');
   const el = document.getElementById('header-page-title');
   if (context) context.style.display = name === 'setup' ? '' : 'none';
-  if (statusWrap) statusWrap.style.display = name === 'setup' ? 'flex' : 'none';
   if (brand) brand.style.display = name === 'setup' ? 'flex' : 'none';
   if (pageCopy) pageCopy.style.display = name === 'setup' ? 'none' : 'flex';
   if (!el) return;
