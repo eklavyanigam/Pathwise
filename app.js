@@ -73,24 +73,14 @@
 
   function renderAuthState(user, isGuest) {
     const accountMenu = document.getElementById('account-menu');
-    const accountTrigger = document.getElementById('account-trigger');
-    const accountUserLabel = document.getElementById('account-user-label');
-    const accountUserMeta = document.getElementById('account-user-meta');
     if (user) {
       state.guestMode = false;
       if (accountMenu) accountMenu.style.display = '';
-      if (accountTrigger) accountTrigger.setAttribute('aria-expanded', 'false');
-      if (accountUserLabel) accountUserLabel.textContent = user.email || 'Signed-in account';
-      if (accountUserMeta) accountUserMeta.textContent = 'Cloud sync active';
       return;
     }
     if (accountMenu) {
       accountMenu.style.display = 'none';
-      accountMenu.classList.remove('open');
     }
-    if (accountTrigger) accountTrigger.setAttribute('aria-expanded', 'false');
-    if (accountUserLabel) accountUserLabel.textContent = 'Account';
-    if (accountUserMeta) accountUserMeta.textContent = isGuest ? 'Guest mode active' : 'Cloud sync active';
   }
   function renderSaveStatus(kind, message) {
     return;
@@ -549,15 +539,6 @@ document.getElementById('guest-btn')?.addEventListener('click', () => {
   setTimeout(() => setAuthButtonsBusy(''), 420);
 });
 
-document.getElementById('account-trigger')?.addEventListener('click', () => {
-  const menu = document.getElementById('account-menu');
-  const trigger = document.getElementById('account-trigger');
-  if (!menu || !trigger) return;
-  const willOpen = !menu.classList.contains('open');
-  menu.classList.toggle('open', willOpen);
-  trigger.setAttribute('aria-expanded', String(willOpen));
-});
-
   document.getElementById('account-signout-btn')?.addEventListener('click', async () => {
   try {
     await signOut();
@@ -567,16 +548,6 @@ document.getElementById('account-trigger')?.addEventListener('click', () => {
     showTopNotice('success', 'Signed Out', 'You are back in guest mode.');
   } catch (error) {
     showTopNotice('error', 'Sign Out Failed', error.message || 'Sign out failed.');
-  }
-});
-
-document.addEventListener('click', (event) => {
-  const menu = document.getElementById('account-menu');
-  const trigger = document.getElementById('account-trigger');
-  if (!menu || !trigger) return;
-  if (!menu.contains(event.target)) {
-    menu.classList.remove('open');
-    trigger.setAttribute('aria-expanded', 'false');
   }
 });
 
