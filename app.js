@@ -18,13 +18,6 @@ window.PathwiseSupabaseReady = (async function () {
     });
   }
 
-  function setAuthControlsEnabled(isEnabled) {
-    ['login-google-btn', 'email-login-btn', 'guest-btn'].forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) el.disabled = !isEnabled;
-    });
-  }
-
   function showIntro() {
     const current = document.querySelector('.page.active');
     const intro = document.getElementById('page-intro');
@@ -313,8 +306,6 @@ document.addEventListener('click', (event) => {
     console.error('Failed to restore session', error);
     renderAuthState(null, true);
   }
-
-  setAuthControlsEnabled(true);
 
   return {
     supabase,
