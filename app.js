@@ -38,24 +38,15 @@ window.PathwiseSupabaseReady = (async function () {
   function renderAuthState(user, isGuest) {
     const status = document.getElementById('auth-status');
     const logoutBtn = document.getElementById('logout-btn');
-    if (!status || !logoutBtn) return;
+    if (!logoutBtn) return;
 
     if (user) {
-      const email = user.email || user.user_metadata?.email || 'Signed-in user';
-      status.innerHTML = '<strong>Signed in:</strong> ' + email;
       logoutBtn.style.display = '';
       state.guestMode = false;
       return;
     }
 
     logoutBtn.style.display = 'none';
-
-    if (isGuest) {
-      status.innerHTML = '<strong>Guest mode:</strong> progress will stay in this browser until you log in.';
-      return;
-    }
-
-    status.textContent = 'Not signed in';
   }
 
   function readGuestProgress() {
