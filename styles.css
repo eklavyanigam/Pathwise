@@ -965,52 +965,6 @@
   .why-skill-reason { font-size: 12px; color: var(--text2); line-height: 1.6; }
   .why-weight-pill { font-family: 'Montserrat', sans-serif; font-size: 10px; padding: 2px 7px; border-radius: 20px; background: rgba(255,255,255,0.06); color: var(--text3); border: 1px solid rgba(255,255,255,0.1); margin-left: auto; }
 
-  /* localStorage badge */
-  .persist-badge {
-    display: inline-flex; align-items: center; gap: 5px;
-    font-family: 'Montserrat', sans-serif; font-size: 10px;
-    color: var(--text3); background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08); border-radius: 20px;
-    padding: 3px 10px; backdrop-filter: blur(8px);
-  }
-  .persist-dot {
-    display: inline-flex;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.18);
-    flex-shrink: 0;
-  }
-  .persist-badge.is-saving {
-    color: var(--yellow);
-    border-color: rgba(232,184,75,0.26);
-    background: rgba(232,184,75,0.08);
-  }
-  .persist-badge.is-saving .persist-dot {
-    background: var(--yellow);
-    box-shadow: 0 0 0 0 rgba(232,184,75,0.28);
-    animation: pulse 1.2s ease infinite;
-  }
-  .persist-badge.is-saved {
-    color: var(--green);
-    border-color: rgba(40,201,144,0.26);
-    background: rgba(40,201,144,0.08);
-  }
-  .persist-badge.is-saved .persist-dot {
-    background: var(--green);
-    box-shadow: 0 0 0 4px rgba(40,201,144,0.08);
-  }
-  .persist-badge.is-error {
-    color: var(--red);
-    border-color: rgba(224,80,96,0.28);
-    background: rgba(224,80,96,0.08);
-  }
-  .persist-badge.is-error .persist-dot {
-    background: var(--red);
-    box-shadow: 0 0 0 4px rgba(224,80,96,0.08);
-  }
-  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
-
   /* Career Path Insights */
   .insights-card { margin-bottom: 16px; }
   .insights-primary {

@@ -1850,10 +1850,6 @@ function animateResults(score) {
   }, duration * 0.7);
 }
 
-function kickResultSpotlight() {
-  return;
-}
-
 /* ═══ CUSTOM LEVEL DROPDOWN ═══ */
 (function() {
   const trigger   = document.getElementById('level-trigger');
