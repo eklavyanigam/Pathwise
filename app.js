@@ -269,11 +269,23 @@ window.PathwiseSupabaseReady = (async function () {
     }
   });
 
-  document.getElementById('guest-btn')?.addEventListener('click', () => {
-    continueAsGuest();
-  });
+document.getElementById('guest-btn')?.addEventListener('click', () => {
+  continueAsGuest();
+});
 
-  document.getElementById('logout-btn')?.addEventListener('click', async () => {
+document.getElementById('password-toggle-btn')?.addEventListener('click', () => {
+  const input = document.getElementById('password-input');
+  const toggle = document.getElementById('password-toggle-btn');
+  if (!input || !toggle) return;
+
+  const isVisible = input.type === 'text';
+  input.type = isVisible ? 'password' : 'text';
+  toggle.classList.toggle('is-visible', !isVisible);
+  toggle.setAttribute('aria-pressed', String(!isVisible));
+  toggle.setAttribute('aria-label', isVisible ? 'Show password' : 'Hide password');
+});
+
+document.getElementById('logout-btn')?.addEventListener('click', async () => {
     try {
       await signOut();
       if (window.PathwiseApp?.hydrateProgress) {
