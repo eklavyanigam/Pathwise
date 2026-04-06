@@ -2,7 +2,8 @@
   const CONFIG = {
     supabaseUrl: 'https://isrvcqvakkzecucyjngd.supabase.co',
     supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlzcnZjcXZha2t6ZWN1Y3lqbmdkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzODU3MjgsImV4cCI6MjA5MDk2MTcyOH0.S34nZVTlPD5yAK7g_IrNBl9jOW-JAz1KZLOk9byv4aU',
-    storageKey: 'pw_guest_progress'
+    storageKey: 'pw_guest_progress',
+    resumeModeKey: 'pw_resume_mode'
   };
 
   const state = {
@@ -18,6 +19,26 @@
     document.querySelectorAll('.shell-only').forEach((el) => {
       el.style.display = isVisible ? '' : 'none';
     });
+    const header = document.getElementById('app-header');
+    if (header) header.style.display = isVisible ? '' : 'none';
+  }
+
+  function setResumeMode(mode) {
+    try {
+      if (!mode) {
+        localStorage.removeItem(CONFIG.resumeModeKey);
+        return;
+      }
+      localStorage.setItem(CONFIG.resumeModeKey, mode);
+    } catch (error) {}
+  }
+
+  function getResumeMode() {
+    try {
+      return localStorage.getItem(CONFIG.resumeModeKey) || '';
+    } catch (error) {
+      return '';
+    }
   }
 
   function activatePage(name) {
@@ -283,23 +304,25 @@
   }
 
   async function signOut() {
-    state.guestMode = true;
+    state.guestMode = false;
     state.currentProgressId = null;
     state.introDismissed = false;
     state.pendingStep = 'setup';
     persistStep('setup');
+    setResumeMode('');
 
     if (supabase) {
       await supabase.auth.signOut();
     }
 
-    renderAuthState(null, true);
-    renderSaveStatus('saved', 'Guest mode active in this browser');
+    renderAuthState(null, false);
+    renderSaveStatus('saved', 'Signed out');
     showIntro();
   }
 
   function continueAsGuest() {
     state.guestMode = true;
+    setResumeMode('guest');
     renderAuthState(null, true);
     renderSaveStatus('saved', 'Guest progress saves in this browser');
     enterAnalyzer(getSavedStep());
@@ -374,10 +397,14 @@ document.addEventListener('click', (event) => {
       state.session = session ?? null;
 
       if ((event === 'SIGNED_IN' || event === 'INITIAL_SESSION') && session?.user) {
+        setResumeMode('account');
         if (event === 'SIGNED_IN') {
           await mergeGuestProgressToDatabase();
         }
         enterAnalyzer(getSavedStep());
+      } else if (event === 'SIGNED_OUT') {
+        setResumeMode('');
+        showIntro();
       }
 
       renderAuthState(session?.user ?? null, !session?.user && state.guestMode);
@@ -391,15 +418,29 @@ document.addEventListener('click', (event) => {
 
   try {
     const session = await refreshSession();
-    renderAuthState(session?.user ?? null, !session?.user);
-    renderSaveStatus('saved', session?.user ? 'Cloud sync active' : 'Ready to save in this browser');
+    const resumeMode = getResumeMode();
     if (session?.user) {
+      state.guestMode = false;
+      setResumeMode('account');
+      renderAuthState(session.user, false);
+      renderSaveStatus('saved', 'Cloud sync active');
       enterAnalyzer(getSavedStep());
+    } else if (resumeMode === 'guest') {
+      state.guestMode = true;
+      renderAuthState(null, true);
+      renderSaveStatus('saved', 'Guest progress saves in this browser');
+      enterAnalyzer(getSavedStep());
+    } else {
+      state.guestMode = false;
+      renderAuthState(null, false);
+      renderSaveStatus('saved', 'Ready to save in this browser');
+      showIntro();
     }
   } catch (error) {
     console.error('Failed to restore session', error);
-    renderAuthState(null, true);
+    renderAuthState(null, false);
     renderSaveStatus('error', 'Could not restore session');
+    showIntro();
   }
 
   return {
