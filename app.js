@@ -198,22 +198,6 @@ window.PathwiseSupabaseReady = (async function () {
     });
   }
 
-  async function signUpWithEmail(email, password) {
-    if (!supabase) throw bootError || new Error('Supabase is not configured.');
-    return supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: window.location.origin + window.location.pathname
-      }
-    });
-  }
-
-  async function signInWithEmail(email, password) {
-    if (!supabase) throw bootError || new Error('Supabase is not configured.');
-    return supabase.auth.signInWithPassword({ email, password });
-  }
-
   async function signOut() {
     state.guestMode = true;
     state.currentProgressId = null;
@@ -246,44 +230,9 @@ window.PathwiseSupabaseReady = (async function () {
     }
   });
 
-  document.getElementById('email-login-btn')?.addEventListener('click', async () => {
-    try {
-      const email = document.getElementById('email-input').value.trim();
-      const password = document.getElementById('password-input').value;
-      const { error } = await signInWithEmail(email, password);
-      if (error) throw error;
-    } catch (error) {
-      alert(error.message || 'Email login failed.');
-    }
+  document.getElementById('guest-btn')?.addEventListener('click', () => {
+    continueAsGuest();
   });
-
-  document.getElementById('email-signup-btn')?.addEventListener('click', async () => {
-    try {
-      const email = document.getElementById('email-input').value.trim();
-      const password = document.getElementById('password-input').value;
-      const { error } = await signUpWithEmail(email, password);
-      if (error) throw error;
-      alert('Check your email to confirm your account.');
-    } catch (error) {
-      alert(error.message || 'Signup failed.');
-    }
-  });
-
-document.getElementById('guest-btn')?.addEventListener('click', () => {
-  continueAsGuest();
-});
-
-document.getElementById('password-toggle-btn')?.addEventListener('click', () => {
-  const input = document.getElementById('password-input');
-  const toggle = document.getElementById('password-toggle-btn');
-  if (!input || !toggle) return;
-
-  const isVisible = input.type === 'text';
-  input.type = isVisible ? 'password' : 'text';
-  toggle.classList.toggle('is-visible', !isVisible);
-  toggle.setAttribute('aria-pressed', String(!isVisible));
-  toggle.setAttribute('aria-label', isVisible ? 'Show password' : 'Hide password');
-});
 
 document.getElementById('logout-btn')?.addEventListener('click', async () => {
     try {
@@ -330,8 +279,6 @@ document.getElementById('logout-btn')?.addEventListener('click', async () => {
     saveProgress,
     updateProgress,
     signInWithGoogle,
-    signInWithEmail,
-    signUpWithEmail,
     continueAsGuest,
     signOut,
     enterAnalyzer,
