@@ -1561,8 +1561,16 @@ function animateResults(score) {
 /* ═══ INIT ═══ */
 window.PathwiseSupabaseReady.then((api) => {
   const session = api.getSession();
-  if (session?.user) {
-    api.enterAnalyzer();
+  const resumeMode = (() => {
+    try {
+      return localStorage.getItem('pw_resume_mode') || '';
+    } catch (error) {
+      return '';
+    }
+  })();
+  if (session?.user || resumeMode === 'guest') {
+    const resumeStep = api.getPendingStep ? api.getPendingStep() : getSavedStep();
+    api.enterAnalyzer(resumeStep);
   }
 });
 
