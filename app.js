@@ -198,6 +198,11 @@ window.PathwiseSupabaseReady = (async function () {
     });
   }
 
+  async function signInWithEmail(email, password) {
+    if (!supabase) throw bootError || new Error('Supabase is not configured.');
+    return supabase.auth.signInWithPassword({ email, password });
+  }
+
   async function signOut() {
     state.guestMode = true;
     state.currentProgressId = null;
@@ -227,6 +232,17 @@ window.PathwiseSupabaseReady = (async function () {
       if (error) throw error;
     } catch (error) {
       alert(error.message || 'Google login failed.');
+    }
+  });
+
+  document.getElementById('email-login-btn')?.addEventListener('click', async () => {
+    try {
+      const email = document.getElementById('email-input').value.trim();
+      const password = document.getElementById('password-input').value;
+      const { error } = await signInWithEmail(email, password);
+      if (error) throw error;
+    } catch (error) {
+      alert(error.message || 'Email login failed.');
     }
   });
 
@@ -279,6 +295,7 @@ document.getElementById('logout-btn')?.addEventListener('click', async () => {
     saveProgress,
     updateProgress,
     signInWithGoogle,
+    signInWithEmail,
     continueAsGuest,
     signOut,
     enterAnalyzer,
