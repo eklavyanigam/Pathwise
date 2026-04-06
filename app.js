@@ -430,6 +430,7 @@ window.PathwiseApp = {
   hydrateProgress: async function () {
     await loadState();
     renderRoles();
+    renderRoleScope();
     renderRequiredSkills();
     renderSkillList();
   },
@@ -446,6 +447,8 @@ window.PathwiseApp = {
 const ROLES = {
   "Data Analyst": {
     icon: "📊",
+    scope: "Data analysts turn raw business data into clear answers. The role usually focuses on querying datasets, cleaning messy inputs, spotting trends, and presenting insights that help teams make better decisions.",
+    outlook: "Strong fit for reporting, operations, product, and business decision support roles.",
     skills: [
       { name: "SQL", weight: 5, category: "Databases" },
       { name: "Python", weight: 4, category: "Programming" },
@@ -454,12 +457,13 @@ const ROLES = {
       { name: "Statistics", weight: 5, category: "Analytics" },
       { name: "Tableau / Power BI", weight: 3, category: "Tools" },
       { name: "Data Cleaning", weight: 4, category: "Analytics" },
-      { name: "Business Intelligence", weight: 3, category: "Analytics" },
       { name: "Communication", weight: 3, category: "Soft Skills" },
     ]
   },
   "Frontend Developer": {
     icon: "🎨",
+    scope: "Frontend developers build the part of the product users see and interact with. The work centers on interface quality, responsiveness, accessibility, performance, and turning designs into polished web experiences.",
+    outlook: "Best suited for product UI, design-heavy web apps, and user-facing engineering teams.",
     skills: [
       { name: "HTML & CSS", weight: 5, category: "Core Web" },
       { name: "JavaScript", weight: 5, category: "Programming" },
@@ -474,6 +478,8 @@ const ROLES = {
   },
   "Software Developer": {
     icon: "💻",
+    scope: "Software developers solve broader engineering problems across features, systems, and internal tools. This path leans on programming fundamentals, clean code, testing, and the ability to build reliable software end to end.",
+    outlook: "Good general path for product engineering, application development, and broad SWE roles.",
     skills: [
       { name: "Data Structures & Algorithms", weight: 5, category: "CS Fundamentals" },
       { name: "Object-Oriented Programming", weight: 5, category: "CS Fundamentals" },
@@ -489,6 +495,8 @@ const ROLES = {
   },
   "Backend Developer": {
     icon: "⚙️",
+    scope: "Backend developers build the services, APIs, and data layers behind applications. The role focuses on server-side logic, security, database design, reliability, and how systems behave under real usage.",
+    outlook: "Strong path for API platforms, SaaS products, internal systems, and service-heavy apps.",
     skills: [
       { name: "Python / Node.js / Java", weight: 5, category: "Programming" },
       { name: "REST APIs", weight: 5, category: "Architecture" },
@@ -503,6 +511,8 @@ const ROLES = {
   },
   "Machine Learning Engineer": {
     icon: "🤖",
+    scope: "Machine learning engineers build models that solve prediction, classification, and recommendation problems in production. The role combines math, experimentation, data handling, and deployment discipline.",
+    outlook: "Best for data-driven product teams building predictive or intelligent features at scale.",
     skills: [
       { name: "Python", weight: 5, category: "Programming" },
       { name: "Statistics & Probability", weight: 5, category: "Mathematics" },
@@ -517,6 +527,8 @@ const ROLES = {
   },
   "QA Engineer": {
     icon: "🧪",
+    scope: "QA engineers protect product quality through structured testing, bug discovery, and release confidence. The role spans manual validation, automation, API checks, and clear defect communication.",
+    outlook: "Great fit for teams that ship fast and need strong quality gates across web and API releases.",
     skills: [
       { name: "Manual Testing", weight: 5, category: "Testing" },
       { name: "Test Case Writing", weight: 5, category: "Testing" },
@@ -526,12 +538,13 @@ const ROLES = {
       { name: "SQL / Database Testing", weight: 3, category: "Databases" },
       { name: "Performance Testing (JMeter)", weight: 3, category: "Automation" },
       { name: "Agile / Scrum", weight: 4, category: "Process" },
-      { name: "Python / Java (Scripting)", weight: 3, category: "Programming" },
-      { name: "CI/CD Pipelines", weight: 3, category: "DevOps" },
+      { name: "Test Automation Scripting", weight: 3, category: "Programming" },
     ]
   },
   "Full Stack Developer": {
     icon: "🔀",
+    scope: "Full stack developers work across both user interfaces and backend systems. This path is about building complete features, connecting frontend to APIs, and understanding the full request-to-database flow.",
+    outlook: "Ideal for startups, product teams, and builders who like owning features from UI to backend.",
     skills: [
       { name: "HTML & CSS", weight: 5, category: "Frontend" },
       { name: "JavaScript", weight: 5, category: "Frontend" },
@@ -547,6 +560,8 @@ const ROLES = {
   },
   "Game Developer": {
     icon: "🎮",
+    scope: "Game developers build interactive real-time experiences with gameplay systems, engines, and performance constraints. The work often mixes programming, math, iteration, and a strong sense of player experience.",
+    outlook: "Best suited for gameplay, tools, indie projects, and interactive media teams.",
     skills: [
       { name: "C++ / C#", weight: 5, category: "Programming" },
       { name: "Unity / Unreal Engine", weight: 5, category: "Game Engine" },
@@ -562,6 +577,8 @@ const ROLES = {
   },
   "DevOps Engineer": {
     icon: "🔧",
+    scope: "DevOps engineers improve how software is built, deployed, monitored, and maintained. The role is centered on automation, infrastructure, reliability, and helping engineering teams ship faster with less friction.",
+    outlook: "High-value path for platform teams, cloud-heavy products, and reliability-focused engineering orgs.",
     skills: [
       { name: "Linux / Shell Scripting", weight: 5, category: "Systems" },
       { name: "Docker / Kubernetes", weight: 5, category: "Containers" },
@@ -576,6 +593,8 @@ const ROLES = {
   },
   "Cybersecurity": {
     icon: "🛡️",
+    scope: "Cybersecurity roles focus on protecting systems, identities, networks, and data from misuse or attack. The work can span defense, monitoring, vulnerability management, incident response, and security operations.",
+    outlook: "Strong path for SOC, blue-team, risk, and infrastructure security roles across many industries.",
     skills: [
       { name: "Network Security", weight: 5, category: "Security" },
       { name: "Threat Detection & Analysis", weight: 4, category: "Security" },
@@ -593,6 +612,8 @@ const ROLES = {
   },
   "Cloud Architect": {
     icon: "☁️",
+    scope: "Cloud architects design scalable, secure, and cost-aware cloud systems. The role emphasizes high-level system design, platform choices, networking, identity, and infrastructure patterns for long-term growth.",
+    outlook: "Best fit for senior cloud design, platform strategy, and enterprise architecture tracks.",
     skills: [
       { name: "AWS / Azure / GCP (Advanced)", weight: 5, category: "Cloud Platforms" },
       { name: "Cloud Architecture Design", weight: 5, category: "Architecture" },
@@ -602,12 +623,13 @@ const ROLES = {
       { name: "Kubernetes / Container Orchestration", weight: 4, category: "Containers" },
       { name: "Cost Optimisation", weight: 4, category: "FinOps" },
       { name: "Serverless Architecture", weight: 3, category: "Architecture" },
-      { name: "Multi-cloud Strategy", weight: 3, category: "Architecture" },
       { name: "DevOps / CI/CD Integration", weight: 3, category: "Automation" },
     ]
   },
   "Gen AI Developer": {
     icon: "🧠",
+    scope: "Gen AI developers build applications powered by large language models and related tooling. The role blends prompting, model APIs, retrieval systems, backend integration, evaluation, and product thinking around AI behavior.",
+    outlook: "Great fit for AI product teams, internal copilots, knowledge tools, and AI-powered workflows.",
     skills: [
       { name: "Python", weight: 5, category: "Programming" },
       { name: "LLM APIs (OpenAI / Anthropic / Gemini)", weight: 5, category: "AI Tools" },
@@ -887,9 +909,20 @@ function renderRoles() {
     const btn = document.createElement('button');
     btn.className = 'role-btn' + (selectedRole === name ? ' active' : '');
     btn.innerHTML = '<div class="role-name">' + name + '</div><div class="role-count">' + data.skills.length + ' skills</div>';
-    btn.onclick = () => { selectedRole = name; renderRoles(); renderRequiredSkills(); resetResults(); saveState(); };
+    btn.onclick = () => { selectedRole = name; renderRoles(); renderRoleScope(); renderRequiredSkills(); resetResults(); saveState(); };
     grid.appendChild(btn);
   });
+}
+
+function renderRoleScope() {
+  const title = document.getElementById('role-scope-title');
+  const copy = document.getElementById('role-scope-copy');
+  const outlook = document.getElementById('role-scope-outlook');
+  const role = ROLES[selectedRole];
+  if (!title || !copy || !outlook || !role) return;
+  title.textContent = selectedRole;
+  copy.textContent = role.scope || '';
+  outlook.textContent = role.outlook || '';
 }
 
 function renderRequiredSkills() {
@@ -1522,6 +1555,7 @@ document.addEventListener('keydown', e => {
 });
 
 renderRoles();
+renderRoleScope();
 renderRequiredSkills();
 renderSkillList();
 
