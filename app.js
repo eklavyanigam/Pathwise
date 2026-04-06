@@ -311,12 +311,37 @@
     return supabase.auth.signInWithPassword({ email, password });
   }
 
+  async function ensureEmailSession(email, password) {
+    if (!supabase) throw bootError || new Error('Supabase is not configured.');
+
+    for (let attempt = 0; attempt < 4; attempt++) {
+      const sessionResult = await supabase.auth.getSession();
+      const activeSession = sessionResult.data?.session ?? null;
+      if (activeSession?.user) {
+        return { data: { session: activeSession }, error: null };
+      }
+
+      const retrySignIn = await supabase.auth.signInWithPassword({ email, password });
+      if (!retrySignIn.error && retrySignIn.data?.session?.user) {
+        return retrySignIn;
+      }
+
+      await new Promise((resolve) => setTimeout(resolve, 300));
+    }
+
+    return {
+      data: { session: null },
+      error: new Error('We could not finish the email session. Please try Sign In once more.')
+    };
+  }
+
   async function signInOrCreateWithEmail(email, password) {
     if (!supabase) throw bootError || new Error('Supabase is not configured.');
 
     const signInResult = await supabase.auth.signInWithPassword({ email, password });
     if (!signInResult.error) {
-      return { ...signInResult, mode: 'signin' };
+      const sessionResult = signInResult.data?.session?.user ? signInResult : await ensureEmailSession(email, password);
+      return { ...sessionResult, mode: 'signin' };
     }
 
     const signInMessage = (signInResult.error.message || '').toLowerCase();
@@ -333,7 +358,7 @@
     if (signUpResult.error) {
       const signUpMessage = (signUpResult.error.message || '').toLowerCase();
       if (signUpMessage.includes('user already registered')) {
-        const retrySignIn = await supabase.auth.signInWithPassword({ email, password });
+        const retrySignIn = await ensureEmailSession(email, password);
         if (!retrySignIn.error) {
           return { ...retrySignIn, mode: 'signin' };
         }
@@ -343,7 +368,7 @@
 
     const hasSession = !!signUpResult.data?.session;
     if (!hasSession) {
-      const retryAfterSignUp = await supabase.auth.signInWithPassword({ email, password });
+      const retryAfterSignUp = await ensureEmailSession(email, password);
       if (!retryAfterSignUp.error) {
         return { ...retryAfterSignUp, mode: 'signup_signed_in' };
       }
