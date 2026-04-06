@@ -643,9 +643,14 @@
     outline-offset: 2px;
   }
   .password-eye {
-    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
     line-height: 1;
   }
+  .password-eye path { fill: currentColor; }
   .password-eye-closed { display: none; }
   .password-toggle-btn.is-visible .password-eye-open { display: none; }
   .password-toggle-btn.is-visible .password-eye-closed { display: inline; }
@@ -668,6 +673,14 @@
   .auth-email-row .btn:hover,
   .form-input:hover {
     transform: translateY(-1px);
+  }
+  .auth-actions .btn:focus-visible,
+  .auth-email-actions .btn:focus-visible,
+  .auth-email-row .btn:focus-visible,
+  .auth-text-btn:focus-visible,
+  .form-input:focus-visible {
+    outline: 2px solid rgba(102,153,255,0.42);
+    outline-offset: 2px;
   }
   .auth-provider-btn {
     display: inline-flex;

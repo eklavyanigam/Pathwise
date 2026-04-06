@@ -583,6 +583,18 @@
     toggleButton.setAttribute('aria-label', isVisible ? 'Show password' : 'Hide password');
   });
 
+  ['email-input', 'password-input'].forEach((fieldId) => {
+    document.getElementById(fieldId)?.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter') return;
+      event.preventDefault();
+      if (event.ctrlKey || event.metaKey) {
+        document.getElementById('email-signup-btn')?.click();
+        return;
+      }
+      document.getElementById('email-login-btn')?.click();
+    });
+  });
+
   document.getElementById('top-notice-close')?.addEventListener('click', hideTopNotice);
 
 document.getElementById('guest-btn')?.addEventListener('click', () => {
@@ -610,6 +622,15 @@ document.addEventListener('click', (event) => {
     menu.classList.remove('open');
     trigger.setAttribute('aria-expanded', 'false');
   }
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key !== 'Escape') return;
+  hideTopNotice();
+  const menu = document.getElementById('account-menu');
+  const trigger = document.getElementById('account-profile-btn');
+  if (menu) menu.classList.remove('open');
+  if (trigger) trigger.setAttribute('aria-expanded', 'false');
 });
 
   if (supabase) {
