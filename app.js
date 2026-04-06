@@ -310,7 +310,33 @@
 
   async function signInWithEmail(email, password) {
     if (!supabase) throw bootError || new Error('Supabase is not configured.');
-    return supabase.auth.signInWithPassword({ email, password });
+    const response = await fetch(`${CONFIG.supabaseUrl}/auth/v1/token?grant_type=password`, {
+      method: 'POST',
+      headers: {
+        apikey: CONFIG.supabaseAnonKey,
+        Authorization: `Bearer ${CONFIG.supabaseAnonKey}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email, password })
+    });
+
+    const payload = await response.json();
+    if (!response.ok) {
+      return {
+        data: { session: null, user: null },
+        error: new Error(payload.msg || payload.message || 'Email sign in failed.')
+      };
+    }
+
+    const session = {
+      access_token: payload.access_token,
+      refresh_token: payload.refresh_token
+    };
+    const { data, error } = await supabase.auth.setSession(session);
+    return {
+      data,
+      error
+    };
   }
 
   async function withAuthTimeout(task, timeoutMessage) {
@@ -329,7 +355,42 @@
 
   async function signUpWithEmail(email, password) {
     if (!supabase) throw bootError || new Error('Supabase is not configured.');
-    return supabase.auth.signUp({ email, password });
+    const response = await fetch(`${CONFIG.supabaseUrl}/auth/v1/signup`, {
+      method: 'POST',
+      headers: {
+        apikey: CONFIG.supabaseAnonKey,
+        Authorization: `Bearer ${CONFIG.supabaseAnonKey}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email, password })
+    });
+
+    const payload = await response.json();
+    if (!response.ok) {
+      return {
+        data: { session: null, user: null },
+        error: new Error(payload.msg || payload.message || 'Could not create your account.')
+      };
+    }
+
+    if (payload.access_token && payload.refresh_token) {
+      const { data, error } = await supabase.auth.setSession({
+        access_token: payload.access_token,
+        refresh_token: payload.refresh_token
+      });
+      return {
+        data,
+        error
+      };
+    }
+
+    return {
+      data: {
+        session: null,
+        user: payload.user ?? null
+      },
+      error: null
+    };
   }
 
   async function sendPasswordReset(email) {
