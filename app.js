@@ -448,12 +448,12 @@
         setResumeMode('account');
         renderAuthState(result.data.session.user, false);
         setAuthButtonsBusy('');
-        await mergeGuestProgressToDatabase();
-        if (window.PathwiseApp?.hydrateProgress) {
-          await window.PathwiseApp.hydrateProgress();
-        }
         renderSaveStatus('saved', 'Cloud sync active');
-        enterAnalyzer(getSavedStep());
+        showTopNotice('success', 'Success', 'Opening your analyzer...');
+        setTimeout(() => {
+          window.location.assign(window.location.pathname);
+        }, 280);
+        return;
       }
     } catch (error) {
       setAuthButtonsBusy('');
