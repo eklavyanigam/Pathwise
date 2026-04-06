@@ -73,9 +73,13 @@
 
   function renderAuthState(user, isGuest) {
     const accountMenu = document.getElementById('account-menu');
+    const profileBtn = document.getElementById('account-profile-btn');
+    const signoutBtn = document.getElementById('account-signout-btn');
     if (user) {
       state.guestMode = false;
       if (accountMenu) accountMenu.style.display = '';
+      if (profileBtn) profileBtn.setAttribute('title', user.email || 'Profile');
+      if (signoutBtn) signoutBtn.setAttribute('title', 'Sign out');
       return;
     }
     if (accountMenu) {
@@ -518,6 +522,12 @@
     }
   });
 
+  document.getElementById('account-profile-btn')?.addEventListener('click', async () => {
+    const user = await getCurrentUser();
+    if (!user) return;
+    showTopNotice('info', 'Profile', user.email || 'Signed-in account');
+  });
+
   document.getElementById('password-toggle-btn')?.addEventListener('click', () => {
     const passwordInput = document.getElementById('password-input');
     const toggleButton = document.getElementById('password-toggle-btn');
@@ -591,6 +601,11 @@ document.getElementById('guest-btn')?.addEventListener('click', () => {
       renderAuthState(null, true);
       setAuthButtonsBusy('');
       renderSaveStatus('saved', 'Guest progress saves in this browser');
+      enterAnalyzer(getSavedStep());
+    } else if (resumeMode === 'account') {
+      state.guestMode = false;
+      setAuthButtonsBusy('');
+      renderSaveStatus('saved', 'Restoring your session...');
       enterAnalyzer(getSavedStep());
     } else {
       state.guestMode = false;
