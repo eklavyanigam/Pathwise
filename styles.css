@@ -370,12 +370,12 @@
     background: rgba(255,255,255,0.08);
     color: var(--text);
     border: 1px solid rgba(255,255,255,0.14);
-    box-shadow: 0 10px 24px rgba(0,0,0,0.14);
+    box-shadow: none;
   }
   .auth-provider-btn:hover {
     border-color: rgba(255,255,255,0.28);
     background: rgba(255,255,255,0.12);
-    box-shadow: 0 14px 30px rgba(0,0,0,0.18);
+    box-shadow: none;
   }
   .google-glyph {
     width: 20px;
@@ -401,17 +401,17 @@
     color: var(--text);
     border-color: rgba(100,140,255,0.34);
     background: rgba(44,95,212,0.12);
-    box-shadow: 0 12px 28px rgba(44,95,212,0.12);
+    box-shadow: none;
   }
   .auth-primary-btn {
     height: 44px;
     padding: 0 18px;
     background: linear-gradient(135deg, #1a4fc4, #2c6bea);
     color: white;
-    box-shadow: 0 12px 24px rgba(44,95,212,0.28);
+    box-shadow: none;
   }
   .auth-primary-btn:hover {
-    box-shadow: 0 16px 34px rgba(44,95,212,0.38);
+    box-shadow: none;
   }
 
   @media (max-width: 980px) {

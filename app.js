@@ -36,17 +36,10 @@ window.PathwiseSupabaseReady = (async function () {
   }
 
   function renderAuthState(user, isGuest) {
-    const status = document.getElementById('auth-status');
-    const logoutBtn = document.getElementById('logout-btn');
-    if (!logoutBtn) return;
-
     if (user) {
-      logoutBtn.style.display = '';
       state.guestMode = false;
       return;
     }
-
-    logoutBtn.style.display = 'none';
   }
 
   function readGuestProgress() {
@@ -248,17 +241,6 @@ window.PathwiseSupabaseReady = (async function () {
 
   document.getElementById('guest-btn')?.addEventListener('click', () => {
     continueAsGuest();
-  });
-
-document.getElementById('logout-btn')?.addEventListener('click', async () => {
-    try {
-      await signOut();
-      if (window.PathwiseApp?.hydrateProgress) {
-        await window.PathwiseApp.hydrateProgress();
-      }
-    } catch (error) {
-      alert(error.message || 'Logout failed.');
-    }
   });
 
   if (supabase) {
