@@ -99,7 +99,10 @@
       state.guestMode = false;
       if (accountMenu) accountMenu.style.display = 'flex';
       if (profileBtn) profileBtn.setAttribute('title', user.email || 'Profile');
-      if (signoutBtn) signoutBtn.setAttribute('title', 'Sign out');
+      if (signoutBtn) {
+        signoutBtn.setAttribute('title', 'Sign out');
+        signoutBtn.classList.remove('guest-login-trigger');
+      }
       if (userLabel) userLabel.textContent = user.email || 'Signed in';
       if (actionLabel) actionLabel.textContent = 'Logout';
       return;
@@ -108,7 +111,10 @@
       state.guestMode = true;
       if (accountMenu) accountMenu.style.display = 'flex';
       if (profileBtn) profileBtn.setAttribute('title', 'Profile');
-      if (signoutBtn) signoutBtn.setAttribute('title', 'Login');
+      if (signoutBtn) {
+        signoutBtn.setAttribute('title', 'Login');
+        signoutBtn.classList.add('guest-login-trigger');
+      }
       if (userLabel) userLabel.textContent = 'Guest mode';
       if (actionLabel) actionLabel.textContent = 'Login';
       return;
@@ -117,6 +123,7 @@
       accountMenu.style.display = 'none';
       accountMenu.classList.remove('open');
     }
+    if (signoutBtn) signoutBtn.classList.remove('guest-login-trigger');
   }
   function renderSaveStatus(kind, message) {
     return;
@@ -811,6 +818,23 @@ const ROLES = {
       { name: "Communication", weight: 3, category: "Soft Skills" },
     ]
   },
+  "Business Analyst": {
+    icon: "📈",
+    scope: "Business analysts connect business goals with product and process decisions. The role focuses on gathering requirements, mapping workflows, identifying inefficiencies, and turning business problems into clear solution plans for teams.",
+    outlook: "Great fit for consulting, enterprise systems, operations improvement, and strategy-heavy product roles.",
+    skills: [
+      { name: "Requirements Gathering", weight: 5, category: "Analysis" },
+      { name: "Business Process Mapping", weight: 5, category: "Analysis" },
+      { name: "Stakeholder Communication", weight: 5, category: "Communication" },
+      { name: "Excel / Google Sheets", weight: 4, category: "Tools" },
+      { name: "SQL", weight: 4, category: "Data" },
+      { name: "Data Analysis", weight: 4, category: "Data" },
+      { name: "Documentation & Reporting", weight: 4, category: "Documentation" },
+      { name: "User Stories / BRDs / FRDs", weight: 4, category: "Documentation" },
+      { name: "Process Improvement", weight: 3, category: "Strategy" },
+      { name: "Power BI / Tableau", weight: 3, category: "Tools" }
+    ]
+  },
   "Frontend Developer": {
     icon: "🎨",
     scope: "Frontend developers build the part of the product users see and interact with. The work centers on interface quality, responsiveness, accessibility, performance, and turning designs into polished web experiences.",
@@ -858,6 +882,23 @@ const ROLES = {
       { name: "NoSQL Databases", weight: 3, category: "Databases" },
       { name: "Cloud Platforms", weight: 3, category: "DevOps" },
       { name: "System Design", weight: 4, category: "Architecture" },
+    ]
+  },
+  "Data Engineer": {
+    icon: "🛠️",
+    scope: "Data engineers build the pipelines and infrastructure that move, transform, and serve reliable data. The role centers on ETL/ELT workflows, warehousing, orchestration, modeling, and keeping analytics systems trustworthy at scale.",
+    outlook: "Strong path for analytics engineering, data platform teams, BI infrastructure, and ML data pipelines.",
+    skills: [
+      { name: "SQL", weight: 5, category: "Databases" },
+      { name: "Python", weight: 5, category: "Programming" },
+      { name: "ETL / ELT Pipelines", weight: 5, category: "Data Pipelines" },
+      { name: "Data Warehousing", weight: 5, category: "Storage" },
+      { name: "Apache Spark", weight: 4, category: "Big Data" },
+      { name: "Airflow / Orchestration", weight: 4, category: "Workflow" },
+      { name: "Data Modeling", weight: 4, category: "Architecture" },
+      { name: "Cloud Data Platforms", weight: 4, category: "Cloud" },
+      { name: "DBT / Transformation Tools", weight: 3, category: "Transformation" },
+      { name: "Data Quality & Validation", weight: 3, category: "Reliability" }
     ]
   },
   "Machine Learning Engineer": {

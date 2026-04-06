@@ -311,6 +311,14 @@
     border-color: rgba(224,80,96,0.28);
     color: #ffe0e4;
   }
+  .account-signout-trigger.guest-login-trigger {
+    color: #e8eeff;
+  }
+  .account-signout-trigger.guest-login-trigger:hover {
+    background: rgba(61,110,232,0.12);
+    border-color: rgba(100,140,255,0.26);
+    color: #ffffff;
+  }
   .account-profile-trigger {
     color: #c8d7ff;
   }
