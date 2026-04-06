@@ -1506,7 +1506,33 @@ function buildResultsHTML({ score, missing, matched, catResults, priorities }) {
     ? `<div class="good-msg">No gaps to fill.</div>`
     : priorities.map((s, i) => `<div class="priority-item" style="animation-delay:${i*40}ms"><div class="priority-num" style="background:${pc[i]}20;color:${pc[i]};border-radius:6px;">#${i+1}</div><div class="priority-info"><div class="priority-name">${s.name}</div><div class="priority-cat">${s.category}</div></div><span class="skill-level-badge" style="font-size:10px;padding:2px 8px;">wt ${s.weight}</span></div>`).join('');
 
+  renderActionSummary({ score, missing, matched, catResults, priorities });
   kickResultSpotlight();
+}
+
+function renderActionSummary({ score, missing, matched, catResults, priorities }) {
+  const strongestCategory = catResults.length
+    ? [...catResults].sort((a, b) => b.score - a.score)[0]
+    : null;
+  const weakestCategory = catResults.length
+    ? [...catResults].sort((a, b) => a.score - b.score)[0]
+    : null;
+  const nextSkill = priorities.length ? priorities[0] : null;
+
+  document.getElementById('action-summary-score').textContent = `${score}%`;
+  document.getElementById('action-summary-role').textContent = `${selectedRole} readiness snapshot`;
+  document.getElementById('action-summary-strength').textContent = strongestCategory ? strongestCategory.name : 'Still building';
+  document.getElementById('action-summary-strength-note').textContent = strongestCategory
+    ? `${strongestCategory.score}% coverage in your best category.`
+    : 'Add skills to surface your strongest area.';
+  document.getElementById('action-summary-gap').textContent = nextSkill ? nextSkill.name : (weakestCategory ? weakestCategory.name : 'No major gap');
+  document.getElementById('action-summary-gap-note').textContent = nextSkill
+    ? `${nextSkill.weight >= 4 ? 'Critical' : nextSkill.weight === 3 ? 'Supporting' : 'Optional'} priority for this role.`
+    : (missing.length ? `${missing.length} skills still need attention.` : 'You have covered the key skills for this role.');
+  document.getElementById('action-summary-next').textContent = nextSkill ? `Learn ${nextSkill.name}` : 'Build projects';
+  document.getElementById('action-summary-next-note').textContent = nextSkill
+    ? `Start with ${nextSkill.name}, then move into ${priorities[1] ? priorities[1].name : 'portfolio practice'}.`
+    : `Turn your current skills into projects for ${selectedRole}.`;
 }
 
 function animateResults(score) {
