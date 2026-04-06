@@ -161,16 +161,23 @@
     if (snapshotSavedAt) state.lastSavedAt = snapshotSavedAt;
     const savedAt = formatSavedAt(snapshotSavedAt);
     const isCloud = !!state.session?.user;
+    const readinessLabel = scoreValue === null || scoreValue === undefined
+      ? 'Not analyzed'
+      : scoreValue >= 85
+        ? 'Strong'
+        : scoreValue >= 65
+          ? 'Growing'
+          : 'In progress';
 
-    title.textContent = count > 0 ? 'Your latest analyzer state' : 'Start building your profile';
+    title.textContent = count > 0 ? 'Your current readiness snapshot' : 'Start building your profile';
     role.textContent = roleName;
     skillsCount.textContent = count + ' added';
-    score.textContent = scoreValue === null || scoreValue === undefined ? 'Not analyzed' : scoreValue + '% ready';
+    score.textContent = scoreValue === null || scoreValue === undefined ? 'Not analyzed' : scoreValue + '% · ' + readinessLabel;
     source.textContent = isCloud ? 'Cloud' : 'Browser';
     note.textContent = count > 0
       ? (savedAt
-          ? ((isCloud ? 'Last synced ' : 'Last saved ') + savedAt + '.')
-          : (isCloud ? 'Signed-in progress is synced to your account.' : 'Guest progress stays in this browser until you sign in.'))
+          ? ((isCloud ? 'Last updated ' : 'Saved ') + savedAt + '.')
+          : 'Keep building your skill set and run another analysis anytime.')
       : 'Add your skills to generate a readiness snapshot you can come back to anytime.';
   }
 
@@ -723,7 +730,11 @@ function persistStep(step) {
 }
 
 function renderHeaderPage(name) {
+  const context = document.querySelector('.header-context');
+  const statusWrap = document.querySelector('.header-status-wrap');
   const el = document.getElementById('header-page-title');
+  if (context) context.style.display = name === 'setup' ? '' : 'none';
+  if (statusWrap) statusWrap.style.display = name === 'setup' ? 'flex' : 'none';
   if (!el) return;
   const labels = {
     setup: 'Setup',
