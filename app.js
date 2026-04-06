@@ -2633,10 +2633,12 @@ function initRevealObserver() {
 }
 
 function triggerRevealSequence() {
-  // Small stagger: score hero fires immediately, rest on scroll
+  const activePage = document.querySelector('.page.active');
   const allReveals = Array.from(document.querySelectorAll('.page.active .reveal'));
-  // First 2 elements (score hero + stats) reveal instantly on page show
-  allReveals.slice(0, 2).forEach((el, i) => {
+  const immediateCount = activePage?.id === 'page-analysis' ? 2 : 1;
+
+  // Small stagger: top section fires immediately, rest on scroll.
+  allReveals.slice(0, immediateCount).forEach((el, i) => {
     setTimeout(() => el.classList.add('visible'), i * 120);
   });
   // Rest observed on scroll
