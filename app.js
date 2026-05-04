@@ -884,7 +884,6 @@ document.addEventListener('keydown', (event) => {
 window.PathwiseApp = {
   hydrateProgress: async function () {
     await loadState();
-    renderIntroRoleShowcase();
     renderRoles();
     renderRoleScope();
     renderRequiredSkills();
@@ -1032,20 +1031,20 @@ const ROLES = {
     ]
   },
   "Software Developer": {
-    icon: "🌐",
-    scope: "Network administrators keep business systems connected, secure, and stable across LAN, WAN, servers, users, and remote access. The role centers on configuring infrastructure, maintaining core services, resolving incidents fast, and preventing outages before they spread.",
-    outlook: "Strong fit for IT operations, enterprise infrastructure, helpdesk escalation, NOC, and internal systems administration roles.",
+    icon: "💻",
+    scope: "Software developers solve broader engineering problems across features, systems, and internal tools. This path leans on programming fundamentals, clean code, testing, and the ability to build reliable software end to end.",
+    outlook: "Good general path for product engineering, application development, and broad software engineering roles.",
     skills: [
-      { name: "TCP/IP & Subnetting", weight: 5, category: "Networking Core" },
-      { name: "Routing & Switching", weight: 5, category: "Networking Core" },
-      { name: "DNS / DHCP", weight: 5, category: "Infrastructure Services" },
-      { name: "Windows Server Administration", weight: 4, category: "Systems" },
-      { name: "Linux Administration", weight: 4, category: "Systems" },
-      { name: "Active Directory & Group Policy", weight: 4, category: "Identity" },
-      { name: "Firewall Configuration", weight: 4, category: "Security" },
-      { name: "Network Monitoring & Troubleshooting", weight: 5, category: "Operations" },
-      { name: "VPN / Remote Access", weight: 3, category: "Connectivity" },
-      { name: "PowerShell / Bash Scripting", weight: 3, category: "Automation" },
+      { name: "Data Structures & Algorithms", weight: 5, category: "CS Fundamentals" },
+      { name: "Object-Oriented Programming", weight: 5, category: "CS Fundamentals" },
+      { name: "Python / Java / C++", weight: 5, category: "Programming" },
+      { name: "Git / Version Control", weight: 4, category: "Tools" },
+      { name: "REST APIs", weight: 4, category: "Architecture" },
+      { name: "Unit Testing", weight: 4, category: "Quality" },
+      { name: "SQL / Databases", weight: 3, category: "Databases" },
+      { name: "CI/CD Pipelines", weight: 3, category: "DevOps" },
+      { name: "System Design", weight: 4, category: "Architecture" },
+      { name: "Code Review", weight: 3, category: "Collaboration" },
     ]
   },
   "Backend Developer": {
@@ -1180,6 +1179,91 @@ const ROLES = {
       { name: "Security Tools (Wireshark/Nmap)", weight: 3, category: "Tools" },
       { name: "Cryptography Basics", weight: 3, category: "Security" },
       { name: "Compliance & Frameworks (NIST/ISO)", weight: 3, category: "Governance" },
+    ]
+  },
+  "Ethical Hacker": {
+    icon: "🕵️",
+    scope: "Ethical hackers simulate real attacks to uncover weaknesses before malicious actors do. The role focuses on reconnaissance, exploitation, web and network testing, reporting findings clearly, and recommending practical remediation.",
+    outlook: "Strong fit for penetration testing, red-team exercises, offensive security consulting, and application-security roles.",
+    skills: [
+      { name: "Network Security", weight: 5, category: "Security" },
+      { name: "Web Application Security", weight: 5, category: "Application Security" },
+      { name: "Vulnerability Assessment", weight: 4, category: "Security" },
+      { name: "Penetration Testing Methodology", weight: 5, category: "Testing" },
+      { name: "Security Tools (Wireshark/Nmap)", weight: 4, category: "Tools" },
+      { name: "Burp Suite / OWASP Testing", weight: 4, category: "Application Security" },
+      { name: "Linux Administration", weight: 3, category: "Systems" },
+      { name: "Python / Scripting", weight: 3, category: "Programming" },
+      { name: "Privilege Escalation Basics", weight: 3, category: "Offensive Security" },
+      { name: "Reporting & Remediation", weight: 4, category: "Communication" }
+    ]
+  },
+  "System Administrator": {
+    icon: "🖥️",
+    scope: "System administrators keep servers, user accounts, operating systems, and core business services healthy and reliable. The role is centered on uptime, troubleshooting, automation, access control, and day-to-day infrastructure maintenance.",
+    outlook: "Best fit for IT infrastructure, enterprise operations, support escalation, and on-prem or hybrid systems administration roles.",
+    skills: [
+      { name: "Windows Server Administration", weight: 5, category: "Systems" },
+      { name: "Linux Administration", weight: 5, category: "Systems" },
+      { name: "Active Directory & Group Policy", weight: 4, category: "Identity" },
+      { name: "PowerShell / Bash Scripting", weight: 4, category: "Automation" },
+      { name: "User & Access Management", weight: 4, category: "Operations" },
+      { name: "Backup & Recovery", weight: 4, category: "Reliability" },
+      { name: "Virtualization (VMware/Hyper-V)", weight: 3, category: "Infrastructure" },
+      { name: "Patch Management", weight: 3, category: "Operations" },
+      { name: "Monitoring & Troubleshooting", weight: 4, category: "Operations" },
+      { name: "Networking Basics", weight: 3, category: "Networking" }
+    ]
+  },
+  "Network Engineer": {
+    icon: "🌐",
+    scope: "Network engineers design, configure, and support the connectivity layer that keeps systems talking to each other. The work focuses on routing, switching, access, security, monitoring, and designing stable enterprise network environments.",
+    outlook: "Strong fit for NOC teams, infrastructure engineering, enterprise networking, telecom support, and cloud-connectivity roles.",
+    skills: [
+      { name: "TCP/IP & Subnetting", weight: 5, category: "Networking Core" },
+      { name: "Routing & Switching", weight: 5, category: "Networking Core" },
+      { name: "DNS / DHCP", weight: 4, category: "Infrastructure Services" },
+      { name: "Firewall Configuration", weight: 4, category: "Security" },
+      { name: "VPN / Remote Access", weight: 4, category: "Connectivity" },
+      { name: "Network Monitoring & Troubleshooting", weight: 5, category: "Operations" },
+      { name: "Wireless Networking", weight: 3, category: "Connectivity" },
+      { name: "Cisco / Juniper Basics", weight: 4, category: "Vendors" },
+      { name: "Network Automation Basics", weight: 3, category: "Automation" },
+      { name: "Security Best Practices", weight: 3, category: "Security" }
+    ]
+  },
+  "Database Administrator": {
+    icon: "🗄️",
+    scope: "Database administrators manage the performance, reliability, security, and recovery of critical data systems. The role centers on tuning queries, backups, user access, monitoring, and keeping databases fast and available.",
+    outlook: "Best suited for enterprise data operations, managed database teams, backend-heavy products, and business-critical systems support.",
+    skills: [
+      { name: "SQL", weight: 5, category: "Databases" },
+      { name: "Database Design", weight: 5, category: "Databases" },
+      { name: "Backup & Recovery", weight: 5, category: "Reliability" },
+      { name: "Performance Tuning", weight: 5, category: "Optimization" },
+      { name: "Indexing & Query Optimization", weight: 4, category: "Optimization" },
+      { name: "User Roles & Access Control", weight: 4, category: "Security" },
+      { name: "Replication / High Availability", weight: 4, category: "Reliability" },
+      { name: "Monitoring & Troubleshooting", weight: 4, category: "Operations" },
+      { name: "MySQL / PostgreSQL / SQL Server", weight: 4, category: "Platforms" },
+      { name: "Scripting for Automation", weight: 3, category: "Automation" }
+    ]
+  },
+  "Blockchain Developer": {
+    icon: "⛓️",
+    scope: "Blockchain developers build decentralized applications, smart contracts, and token-driven systems on distributed ledgers. The role combines programming, security awareness, protocol understanding, and careful contract design.",
+    outlook: "Good fit for Web3 product teams, smart-contract engineering, blockchain tooling, and distributed application development.",
+    skills: [
+      { name: "Solidity", weight: 5, category: "Smart Contracts" },
+      { name: "Ethereum / EVM Basics", weight: 5, category: "Blockchain Core" },
+      { name: "JavaScript / TypeScript", weight: 4, category: "Programming" },
+      { name: "Smart Contract Security", weight: 5, category: "Security" },
+      { name: "Web3 Libraries (ethers.js/web3.js)", weight: 4, category: "Tools" },
+      { name: "Testing & Deployment Frameworks", weight: 4, category: "Tooling" },
+      { name: "Token Standards (ERC-20/ERC-721)", weight: 4, category: "Blockchain Core" },
+      { name: "Cryptography Basics", weight: 3, category: "Security" },
+      { name: "DApp Frontend Integration", weight: 3, category: "Frontend" },
+      { name: "Gas Optimization", weight: 3, category: "Optimization" }
     ]
   },
   "Cloud Architect": {
@@ -1593,37 +1677,6 @@ function renderRoles() {
     btn.onclick = () => { selectedRole = name; renderRoles(); renderRoleScope(); renderRequiredSkills(); resetResults(); saveState(); };
     grid.appendChild(btn);
   });
-}
-
-function renderIntroRoleShowcase() {
-  const mount = document.getElementById('intro-role-showcase');
-  const count = document.getElementById('intro-role-count');
-  if (count) count.textContent = `${Object.keys(ROLES).length}+`;
-  if (!mount) return;
-
-  const featuredRoles = [
-    'Frontend Developer',
-    'Backend Developer',
-    'Cybersecurity',
-    'SAP Consultant'
-  ].filter((roleName) => ROLES[roleName]);
-
-  mount.innerHTML = featuredRoles.map((roleName) => {
-    const role = ROLES[roleName];
-    const copy = escapeHTML((role.scope || '').split('. ')[0] || '');
-    return `
-      <div class="intro-role-card">
-        <div class="intro-role-top">
-          <div class="role-btn-meta">
-            <span class="intro-role-badge">${escapeHTML(role.icon || '•')}</span>
-            <div class="intro-role-name">${escapeHTML(getDisplayRoleName(roleName))}</div>
-          </div>
-          <div class="intro-role-count">${role.skills.length} skills</div>
-        </div>
-        <div class="intro-role-copy">${copy}</div>
-      </div>
-    `;
-  }).join('');
 }
 
 function renderRoleScope() {
@@ -2361,7 +2414,6 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 renderRoles();
-renderIntroRoleShowcase();
 renderRoleScope();
 renderRequiredSkills();
 renderSkillList();
@@ -2433,22 +2485,22 @@ const PORTFOLIO_PROJECTS = {
   ],
   "Software Developer": [
     {
-      title: "Small Office Network Home Lab",
-      skills: ["TCP/IP & Subnetting", "Routing & Switching", "DNS / DHCP", "Firewall Configuration"],
-      build: "Design a small office network in Packet Tracer, GNS3, or EVE-NG with VLANs, DHCP scopes, DNS, routing between segments, and firewall rules. Document the topology, IP plan, and troubleshooting steps in a clear README.",
-      why: "A working network lab shows employers you understand real infrastructure, not just theory. It proves you can plan connectivity, segment traffic, and explain your design choices."
+      title: "CLI Task Manager with Persistent Storage",
+      skills: ["Python / Java / C++", "Data Structures & Algorithms", "Unit Testing"],
+      build: "Build a command-line task manager in Python or Java. Support add/list/complete/delete commands, store tasks in a JSON file, and write unit tests for all operations. Publish it on GitHub with a clear README.",
+      why: "A well-tested CLI tool shows algorithmic thinking, file I/O, and software craftsmanship — all skills that come up in software engineering interviews."
     },
     {
-      title: "Active Directory + Group Policy Admin Lab",
-      skills: ["Windows Server Administration", "Active Directory & Group Policy", "DNS / DHCP"],
-      build: "Set up a Windows Server lab with a domain controller, organizational units, users, group policies, shared folders, and DNS integration. Create a short admin guide covering onboarding, password policy, and access controls.",
-      why: "AD is still a core requirement in many infrastructure roles. A clean domain lab proves you can handle user management, policy enforcement, and day-to-day enterprise admin tasks."
+      title: "REST API with Full Test Coverage",
+      skills: ["REST APIs", "Unit Testing", "SQL / Databases", "CI/CD Pipelines"],
+      build: "Build a REST API such as a recipe, book, or issue-tracking service with CRUD endpoints, input validation, a SQL database, and automated tests. Add a GitHub Actions pipeline that runs the tests on every push.",
+      why: "APIs with tests and CI mirror real development workflows and prove you can build reliable software beyond just solving coding problems."
     },
     {
-      title: "Network Monitoring and Incident Dashboard",
-      skills: ["Network Monitoring & Troubleshooting", "Linux Administration", "PowerShell / Bash Scripting", "VPN / Remote Access"],
-      build: "Use tools like Zabbix, PRTG, LibreNMS, or Grafana to monitor a lab network. Add uptime checks, bandwidth alerts, interface status, and a small script for automated diagnostics or log collection. Document one incident simulation and how you resolved it.",
-      why: "Monitoring is where network admins prove their value. This project shows that you can spot failures early, investigate the root cause, and communicate remediation clearly."
+      title: "Algorithm Visualiser",
+      skills: ["Data Structures & Algorithms", "System Design", "Code Review"],
+      build: "Build a web page that animates classic algorithms like merge sort, quicksort, BFS, and Dijkstra. Add speed controls, complexity notes, and a concise writeup explaining your implementation decisions.",
+      why: "This project demonstrates both problem-solving depth and communication clarity, which is exactly what employers look for in general software engineering roles."
     }
   ],
   "Backend Developer": [
@@ -2609,6 +2661,106 @@ const PORTFOLIO_PROJECTS = {
       skills: ["Incident Response", "Threat Detection & Analysis", "SIEM Tools (Splunk/QRadar)", "Compliance & Frameworks (NIST/ISO)"],
       build: "Write a detailed IR playbook for 3 scenarios (ransomware, phishing, insider threat). Run a self-directed tabletop exercise for each, documenting your detection, containment, and recovery decisions. Publish as a PDF portfolio piece.",
       why: "IR planning is a core competency tested in every blue-team interview. A published playbook signals structured thinking and preparation — exactly what security teams want."
+    }
+  ],
+  "Ethical Hacker": [
+    {
+      title: "Web App Pentest Report",
+      skills: ["Web Application Security", "Burp Suite / OWASP Testing", "Reporting & Remediation"],
+      build: "Test a deliberately vulnerable web app such as DVWA or OWASP Juice Shop. Document attack paths, findings, severity, proof of concept, and remediation steps in a professional pentest-style report.",
+      why: "Ethical hacking roles value evidence of structured testing and communication. A clean report proves you can do both the technical and consulting side of the work."
+    },
+    {
+      title: "Internal Network Recon Lab",
+      skills: ["Network Security", "Security Tools (Wireshark/Nmap)", "Penetration Testing Methodology"],
+      build: "Set up a small virtual lab and perform internal reconnaissance, service enumeration, attack-path mapping, and vulnerability validation. Record methodology, commands used, and lessons learned.",
+      why: "A home lab shows practical offensive security ability, not just certification knowledge. It also gives you concrete examples to discuss in interviews."
+    },
+    {
+      title: "Privilege Escalation Practice Journal",
+      skills: ["Linux Administration", "Privilege Escalation Basics", "Python / Scripting"],
+      build: "Work through Linux and Windows privilege escalation scenarios in a lab environment, automate repeatable checks with scripts, and maintain a journal of techniques, detection signs, and mitigations.",
+      why: "Privilege escalation is a common interview topic in offensive security. Showing repeated practice makes you look much more prepared than listing tools alone."
+    }
+  ],
+  "System Administrator": [
+    {
+      title: "Windows and Linux Admin Lab",
+      skills: ["Windows Server Administration", "Linux Administration", "User & Access Management"],
+      build: "Set up a mixed lab with Windows Server and Linux VMs. Configure users, services, scheduled tasks, permissions, file shares, and admin documentation for routine operations.",
+      why: "System administration roles reward candidates who can handle real maintenance work. A mixed lab proves you can support day-to-day infrastructure reliably."
+    },
+    {
+      title: "Automation for Routine Admin Tasks",
+      skills: ["PowerShell / Bash Scripting", "Patch Management", "Monitoring & Troubleshooting"],
+      build: "Build a small automation toolkit for common admin jobs like user onboarding, disk checks, service restarts, patch checks, and log snapshots. Document before-and-after time savings.",
+      why: "Automation is how sysadmins scale their work. This project signals initiative and practical thinking rather than just checklist knowledge."
+    },
+    {
+      title: "Backup and Recovery Drill",
+      skills: ["Backup & Recovery", "Virtualization (VMware/Hyper-V)", "Monitoring & Troubleshooting"],
+      build: "Design a backup routine for a small lab environment, simulate a failure, and perform a full recovery test. Record recovery steps, downtime, and improvements for the next iteration.",
+      why: "Employers trust administrators who think about recovery before failure happens. A tested recovery drill is a strong operational signal."
+    }
+  ],
+  "Network Engineer": [
+    {
+      title: "Enterprise Network Topology Lab",
+      skills: ["TCP/IP & Subnetting", "Routing & Switching", "DNS / DHCP", "Cisco / Juniper Basics"],
+      build: "Create an enterprise-style topology in Packet Tracer, GNS3, or EVE-NG with multiple VLANs, inter-VLAN routing, DHCP scopes, DNS services, and segmented subnets. Include diagrams and troubleshooting notes.",
+      why: "This shows you can design and reason about a full network instead of isolated commands, which is what interviewers want to see."
+    },
+    {
+      title: "Network Monitoring Dashboard",
+      skills: ["Network Monitoring & Troubleshooting", "Firewall Configuration", "VPN / Remote Access"],
+      build: "Build a monitoring setup that tracks device health, interface utilization, latency, and remote connectivity. Simulate an outage and document how you identified and resolved it.",
+      why: "Operations and troubleshooting are the heart of many network roles. A monitoring project gives you realistic examples of how you think under pressure."
+    },
+    {
+      title: "Basic Network Automation Toolkit",
+      skills: ["Network Automation Basics", "Python / Scripting", "Security Best Practices"],
+      build: "Use Python or automation tooling to back up configs, validate interface states, or generate simple reports across multiple devices in a lab. Document how automation reduces manual risk.",
+      why: "Modern networking increasingly values automation. Even a small automation toolkit makes you stand out from purely manual candidates."
+    }
+  ],
+  "Database Administrator": [
+    {
+      title: "Database Performance Tuning Case Study",
+      skills: ["SQL", "Performance Tuning", "Indexing & Query Optimization", "Monitoring & Troubleshooting"],
+      build: "Create a database workload with slow queries, identify bottlenecks, add indexes, rewrite queries, and compare before-and-after performance. Present your findings in a short technical report.",
+      why: "DBA interviews often revolve around diagnosing slow systems. A tuning case study proves you can turn analysis into measurable improvements."
+    },
+    {
+      title: "Backup, Restore, and HA Drill",
+      skills: ["Backup & Recovery", "Replication / High Availability", "MySQL / PostgreSQL / SQL Server"],
+      build: "Set up a primary database with replica or recovery workflow, simulate failure conditions, and perform restores. Document the recovery process, risks, and improvements.",
+      why: "Reliability is one of the most trusted DBA skills. A hands-on recovery drill shows you understand how to protect critical data in real environments."
+    },
+    {
+      title: "Access Control and Audit Project",
+      skills: ["User Roles & Access Control", "Database Design", "Scripting for Automation"],
+      build: "Design role-based database access for a sample business app, create users and permissions, automate recurring admin checks, and document how least-privilege is enforced.",
+      why: "Security and governance matter as much as performance for DBAs. This project shows you can manage data access responsibly."
+    }
+  ],
+  "Blockchain Developer": [
+    {
+      title: "Token + Wallet DApp",
+      skills: ["Solidity", "Ethereum / EVM Basics", "Web3 Libraries (ethers.js/web3.js)", "DApp Frontend Integration"],
+      build: "Create a token contract with a simple wallet-connected frontend that lets users view balances and transfer tokens. Add deployment scripts and a clear README for setup and testing.",
+      why: "A simple but complete DApp proves you understand contracts, wallets, and frontend integration together rather than as disconnected concepts."
+    },
+    {
+      title: "Smart Contract Security Review",
+      skills: ["Smart Contract Security", "Testing & Deployment Frameworks", "Gas Optimization"],
+      build: "Write or fork a small contract system, test it with Foundry or Hardhat, identify potential vulnerabilities, and optimize gas costs. Document the tradeoffs and fixes you made.",
+      why: "Security is one of the most important filters in blockchain hiring. Showing you can reason about risk and efficiency makes your work feel much more serious."
+    },
+    {
+      title: "NFT or Marketplace Prototype",
+      skills: ["Token Standards (ERC-20/ERC-721)", "JavaScript / TypeScript", "Cryptography Basics"],
+      build: "Build a minimal NFT minting flow or marketplace prototype that demonstrates metadata handling, wallet signing, and contract interaction. Keep the scope small but well-documented.",
+      why: "This is a recognizable Web3 use case that lets you demonstrate practical contract interaction and product thinking in one project."
     }
   ],
   "Cloud Architect": [
