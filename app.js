@@ -884,6 +884,7 @@ document.addEventListener('keydown', (event) => {
 window.PathwiseApp = {
   hydrateProgress: async function () {
     await loadState();
+    renderIntroRoleShowcase();
     renderRoles();
     renderRoleScope();
     renderRequiredSkills();
@@ -1236,12 +1237,7 @@ const UI_STORAGE_KEYS = {
   step: 'pw_last_step',
   activeSection: 'activeSection'
 };
-const ROLE_LABELS = {
-  "Cybersecurity": "Cybersecurity Analyst",
-  "Software Developer": "Network Administrator",
-  "Data Engineer": "Network Administrator",
-  "Business Analyst": "SAP Consultant"
-};
+const ROLE_LABELS = {};
 const SECTION_IDS = [
   'setup-instruction-banner',
   'role-selection-card',
@@ -1581,10 +1577,53 @@ function renderRoles() {
   Object.entries(ROLES).forEach(([name, data]) => {
     const btn = document.createElement('button');
     btn.className = 'role-btn' + (selectedRole === name ? ' active' : '');
-    btn.innerHTML = '<div class="role-name">' + getDisplayRoleName(name) + '</div><div class="role-count">' + data.skills.length + ' skills</div>';
+    const scopePreview = escapeHTML((data.scope || '').split('. ')[0] || '');
+    btn.innerHTML = `
+      <div class="role-btn-top">
+        <div class="role-btn-meta">
+          <span class="role-btn-icon">${escapeHTML(data.icon || '•')}</span>
+          <div>
+            <div class="role-name">${escapeHTML(getDisplayRoleName(name))}</div>
+            <div class="role-count">${data.skills.length} skills</div>
+          </div>
+        </div>
+      </div>
+      <div class="role-mini-scope">${scopePreview}</div>
+    `;
     btn.onclick = () => { selectedRole = name; renderRoles(); renderRoleScope(); renderRequiredSkills(); resetResults(); saveState(); };
     grid.appendChild(btn);
   });
+}
+
+function renderIntroRoleShowcase() {
+  const mount = document.getElementById('intro-role-showcase');
+  const count = document.getElementById('intro-role-count');
+  if (count) count.textContent = `${Object.keys(ROLES).length}+`;
+  if (!mount) return;
+
+  const featuredRoles = [
+    'Frontend Developer',
+    'Backend Developer',
+    'Cybersecurity',
+    'SAP Consultant'
+  ].filter((roleName) => ROLES[roleName]);
+
+  mount.innerHTML = featuredRoles.map((roleName) => {
+    const role = ROLES[roleName];
+    const copy = escapeHTML((role.scope || '').split('. ')[0] || '');
+    return `
+      <div class="intro-role-card">
+        <div class="intro-role-top">
+          <div class="role-btn-meta">
+            <span class="intro-role-badge">${escapeHTML(role.icon || '•')}</span>
+            <div class="intro-role-name">${escapeHTML(getDisplayRoleName(roleName))}</div>
+          </div>
+          <div class="intro-role-count">${role.skills.length} skills</div>
+        </div>
+        <div class="intro-role-copy">${copy}</div>
+      </div>
+    `;
+  }).join('');
 }
 
 function renderRoleScope() {
@@ -2322,6 +2361,7 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 renderRoles();
+renderIntroRoleShowcase();
 renderRoleScope();
 renderRequiredSkills();
 renderSkillList();
