@@ -1177,38 +1177,6 @@ const ROLES = {
       { name: "Compliance & Frameworks (NIST/ISO)", weight: 3, category: "Governance" },
     ]
   },
-  "System Administrator": {
-    scope: "System administrators keep servers, user accounts, operating systems, and core business services healthy and reliable. The role is centered on uptime, troubleshooting, automation, access control, and day-to-day infrastructure maintenance.",
-    outlook: "Best fit for IT infrastructure, enterprise operations, support escalation, and on-prem or hybrid systems administration roles.",
-    skills: [
-      { name: "Windows Server Administration", weight: 5, category: "Systems" },
-      { name: "Linux Administration", weight: 5, category: "Systems" },
-      { name: "Active Directory & Group Policy", weight: 4, category: "Identity" },
-      { name: "PowerShell / Bash Scripting", weight: 4, category: "Automation" },
-      { name: "User & Access Management", weight: 4, category: "Operations" },
-      { name: "Backup & Recovery", weight: 4, category: "Reliability" },
-      { name: "Virtualization (VMware/Hyper-V)", weight: 3, category: "Infrastructure" },
-      { name: "Patch Management", weight: 3, category: "Operations" },
-      { name: "Monitoring & Troubleshooting", weight: 4, category: "Operations" },
-      { name: "Networking Basics", weight: 3, category: "Networking" }
-    ]
-  },
-  "Network Engineer": {
-    scope: "Network engineers design, configure, and support the connectivity layer that keeps systems talking to each other. The work focuses on routing, switching, access, security, monitoring, and designing stable enterprise network environments.",
-    outlook: "Strong fit for NOC teams, infrastructure engineering, enterprise networking, telecom support, and cloud-connectivity roles.",
-    skills: [
-      { name: "TCP/IP & Subnetting", weight: 5, category: "Networking Core" },
-      { name: "Routing & Switching", weight: 5, category: "Networking Core" },
-      { name: "DNS / DHCP", weight: 4, category: "Infrastructure Services" },
-      { name: "Firewall Configuration", weight: 4, category: "Security" },
-      { name: "VPN / Remote Access", weight: 4, category: "Connectivity" },
-      { name: "Network Monitoring & Troubleshooting", weight: 5, category: "Operations" },
-      { name: "Wireless Networking", weight: 3, category: "Connectivity" },
-      { name: "Cisco / Juniper Basics", weight: 4, category: "Vendors" },
-      { name: "Network Automation Basics", weight: 3, category: "Automation" },
-      { name: "Security Best Practices", weight: 3, category: "Security" }
-    ]
-  },
   "Database Administrator": {
     scope: "Database administrators manage the performance, reliability, security, and recovery of critical data systems. The role centers on tuning queries, backups, user access, monitoring, and keeping databases fast and available.",
     outlook: "Best suited for enterprise data operations, managed database teams, backend-heavy products, and business-critical systems support.",
@@ -1223,22 +1191,6 @@ const ROLES = {
       { name: "Monitoring & Troubleshooting", weight: 4, category: "Operations" },
       { name: "MySQL / PostgreSQL / SQL Server", weight: 4, category: "Platforms" },
       { name: "Scripting for Automation", weight: 3, category: "Automation" }
-    ]
-  },
-  "Blockchain Developer": {
-    scope: "Blockchain developers build decentralized applications, smart contracts, and token-driven systems on distributed ledgers. The role combines programming, security awareness, protocol understanding, and careful contract design.",
-    outlook: "Good fit for Web3 product teams, smart-contract engineering, blockchain tooling, and distributed application development.",
-    skills: [
-      { name: "Solidity", weight: 5, category: "Smart Contracts" },
-      { name: "Ethereum / EVM Basics", weight: 5, category: "Blockchain Core" },
-      { name: "JavaScript / TypeScript", weight: 4, category: "Programming" },
-      { name: "Smart Contract Security", weight: 5, category: "Security" },
-      { name: "Web3 Libraries (ethers.js/web3.js)", weight: 4, category: "Tools" },
-      { name: "Testing & Deployment Frameworks", weight: 4, category: "Tooling" },
-      { name: "Token Standards (ERC-20/ERC-721)", weight: 4, category: "Blockchain Core" },
-      { name: "Cryptography Basics", weight: 3, category: "Security" },
-      { name: "DApp Frontend Integration", weight: 3, category: "Frontend" },
-      { name: "Gas Optimization", weight: 3, category: "Optimization" }
     ]
   },
   "Cloud Architect": {
@@ -2652,46 +2604,6 @@ const PORTFOLIO_PROJECTS = {
       why: "IR planning is a core competency tested in every blue-team interview. A published playbook signals structured thinking and preparation — exactly what security teams want."
     }
   ],
-  "System Administrator": [
-    {
-      title: "Windows and Linux Admin Lab",
-      skills: ["Windows Server Administration", "Linux Administration", "User & Access Management"],
-      build: "Set up a mixed lab with Windows Server and Linux VMs. Configure users, services, scheduled tasks, permissions, file shares, and admin documentation for routine operations.",
-      why: "System administration roles reward candidates who can handle real maintenance work. A mixed lab proves you can support day-to-day infrastructure reliably."
-    },
-    {
-      title: "Automation for Routine Admin Tasks",
-      skills: ["PowerShell / Bash Scripting", "Patch Management", "Monitoring & Troubleshooting"],
-      build: "Build a small automation toolkit for common admin jobs like user onboarding, disk checks, service restarts, patch checks, and log snapshots. Document before-and-after time savings.",
-      why: "Automation is how sysadmins scale their work. This project signals initiative and practical thinking rather than just checklist knowledge."
-    },
-    {
-      title: "Backup and Recovery Drill",
-      skills: ["Backup & Recovery", "Virtualization (VMware/Hyper-V)", "Monitoring & Troubleshooting"],
-      build: "Design a backup routine for a small lab environment, simulate a failure, and perform a full recovery test. Record recovery steps, downtime, and improvements for the next iteration.",
-      why: "Employers trust administrators who think about recovery before failure happens. A tested recovery drill is a strong operational signal."
-    }
-  ],
-  "Network Engineer": [
-    {
-      title: "Enterprise Network Topology Lab",
-      skills: ["TCP/IP & Subnetting", "Routing & Switching", "DNS / DHCP", "Cisco / Juniper Basics"],
-      build: "Create an enterprise-style topology in Packet Tracer, GNS3, or EVE-NG with multiple VLANs, inter-VLAN routing, DHCP scopes, DNS services, and segmented subnets. Include diagrams and troubleshooting notes.",
-      why: "This shows you can design and reason about a full network instead of isolated commands, which is what interviewers want to see."
-    },
-    {
-      title: "Network Monitoring Dashboard",
-      skills: ["Network Monitoring & Troubleshooting", "Firewall Configuration", "VPN / Remote Access"],
-      build: "Build a monitoring setup that tracks device health, interface utilization, latency, and remote connectivity. Simulate an outage and document how you identified and resolved it.",
-      why: "Operations and troubleshooting are the heart of many network roles. A monitoring project gives you realistic examples of how you think under pressure."
-    },
-    {
-      title: "Basic Network Automation Toolkit",
-      skills: ["Network Automation Basics", "Python / Scripting", "Security Best Practices"],
-      build: "Use Python or automation tooling to back up configs, validate interface states, or generate simple reports across multiple devices in a lab. Document how automation reduces manual risk.",
-      why: "Modern networking increasingly values automation. Even a small automation toolkit makes you stand out from purely manual candidates."
-    }
-  ],
   "Database Administrator": [
     {
       title: "Database Performance Tuning Case Study",
@@ -2710,26 +2622,6 @@ const PORTFOLIO_PROJECTS = {
       skills: ["User Roles & Access Control", "Database Design", "Scripting for Automation"],
       build: "Design role-based database access for a sample business app, create users and permissions, automate recurring admin checks, and document how least-privilege is enforced.",
       why: "Security and governance matter as much as performance for DBAs. This project shows you can manage data access responsibly."
-    }
-  ],
-  "Blockchain Developer": [
-    {
-      title: "Token + Wallet DApp",
-      skills: ["Solidity", "Ethereum / EVM Basics", "Web3 Libraries (ethers.js/web3.js)", "DApp Frontend Integration"],
-      build: "Create a token contract with a simple wallet-connected frontend that lets users view balances and transfer tokens. Add deployment scripts and a clear README for setup and testing.",
-      why: "A simple but complete DApp proves you understand contracts, wallets, and frontend integration together rather than as disconnected concepts."
-    },
-    {
-      title: "Smart Contract Security Review",
-      skills: ["Smart Contract Security", "Testing & Deployment Frameworks", "Gas Optimization"],
-      build: "Write or fork a small contract system, test it with Foundry or Hardhat, identify potential vulnerabilities, and optimize gas costs. Document the tradeoffs and fixes you made.",
-      why: "Security is one of the most important filters in blockchain hiring. Showing you can reason about risk and efficiency makes your work feel much more serious."
-    },
-    {
-      title: "NFT or Marketplace Prototype",
-      skills: ["Token Standards (ERC-20/ERC-721)", "JavaScript / TypeScript", "Cryptography Basics"],
-      build: "Build a minimal NFT minting flow or marketplace prototype that demonstrates metadata handling, wallet signing, and contract interaction. Keep the scope small but well-documented.",
-      why: "This is a recognizable Web3 use case that lets you demonstrate practical contract interaction and product thinking in one project."
     }
   ],
   "Cloud Architect": [
