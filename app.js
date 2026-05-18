@@ -991,7 +991,7 @@ async function buildProfilePage() {
 ═══════════════════════════════════════════ */
 const ROLES = {
   "Data Analyst": {
-    scope: "Data analysts turn raw business data into clear answers. The role usually focuses on querying datasets, cleaning messy inputs, spotting trends, and presenting insights that help teams make better decisions.",
+    scope: "Turn raw data into clear insights using queries, dashboards, statistics, and concise communication for business decisions.",
     outlook: "Strong fit for reporting, operations, product, and business decision support roles.",
     skills: [
       { name: "SQL", weight: 5, category: "Databases" },
@@ -1005,7 +1005,7 @@ const ROLES = {
     ]
   },
   "SAP Consultant": {
-    scope: "SAP consultants help organizations implement and optimize enterprise workflows inside SAP systems. The role centers on business process understanding, SAP module configuration, stakeholder alignment, and guiding digital transformation projects from requirement to rollout.",
+    scope: "Implement and improve SAP business processes through configuration, analysis, migration, integration, and stakeholder coordination.",
     outlook: "Strong fit for enterprise consulting, ERP implementation teams, process transformation, and large-scale business systems roles.",
     skills: [
       { name: "SAP ERP Modules (FI/CO/MM/SD)", weight: 5, category: "SAP Core" },
@@ -1021,7 +1021,7 @@ const ROLES = {
     ]
   },
   "Frontend Developer": {
-    scope: "Frontend developers build the part of the product users see and interact with. The work centers on interface quality, responsiveness, accessibility, performance, and turning designs into polished web experiences.",
+    scope: "Build polished user interfaces with responsive layouts, accessibility, strong performance, and clean interactions across modern web products.",
     outlook: "Best suited for product UI, design-heavy web apps, and user-facing engineering teams.",
     skills: [
       { name: "HTML & CSS", weight: 5, category: "Core Web" },
@@ -1036,7 +1036,7 @@ const ROLES = {
     ]
   },
   "Software Developer": {
-    scope: "Software developers solve broader engineering problems across features, systems, and internal tools. This path leans on programming fundamentals, clean code, testing, and the ability to build reliable software end to end.",
+    scope: "Solve software problems with strong coding fundamentals, testing, APIs, system design, and reliable end-to-end implementation.",
     outlook: "Good general path for product engineering, application development, and broad software engineering roles.",
     skills: [
       { name: "Data Structures & Algorithms", weight: 5, category: "CS Fundamentals" },
@@ -1052,7 +1052,7 @@ const ROLES = {
     ]
   },
   "Backend Developer": {
-    scope: "Backend developers build the services, APIs, and data layers behind applications. The role focuses on server-side logic, security, database design, reliability, and how systems behave under real usage.",
+    scope: "Build APIs, services, and data layers with secure architecture, reliable logic, strong databases, and scalable backend systems.",
     outlook: "Strong path for API platforms, SaaS products, internal systems, and service-heavy apps.",
     skills: [
       { name: "Python / Node.js / Java", weight: 5, category: "Programming" },
@@ -1067,7 +1067,7 @@ const ROLES = {
     ]
   },
   "Product Manager": {
-    scope: "Product managers decide what to build, why it matters, and how to align teams around delivery. The role focuses on customer problems, prioritization, roadmapping, metrics, and balancing business goals with user needs.",
+    scope: "Guide product direction through user research, prioritization, roadmaps, metrics, and alignment across design, engineering, and stakeholders.",
     outlook: "Great fit for product teams, startups, digital platforms, and strategy-heavy tech roles that need clear ownership of product direction.",
     skills: [
       { name: "Roadmapping", weight: 5, category: "Strategy" },
@@ -1083,7 +1083,7 @@ const ROLES = {
     ]
   },
   "Machine Learning Engineer": {
-    scope: "Machine learning engineers build models that solve prediction, classification, and recommendation problems in production. The role combines math, experimentation, data handling, and deployment discipline.",
+    scope: "Build production machine learning systems using math, experimentation, feature engineering, model evaluation, and deployment discipline.",
     outlook: "Best for data-driven product teams building predictive or intelligent features at scale.",
     skills: [
       { name: "Python", weight: 5, category: "Programming" },
@@ -1098,7 +1098,7 @@ const ROLES = {
     ]
   },
   "QA Engineer": {
-    scope: "QA engineers protect product quality through structured testing, bug discovery, and release confidence. The role spans manual validation, automation, API checks, and clear defect communication.",
+    scope: "Protect product quality through manual testing, automation, API validation, bug reporting, and release confidence.",
     outlook: "Great fit for teams that ship fast and need strong quality gates across web and API releases.",
     skills: [
       { name: "Manual Testing", weight: 5, category: "Testing" },
@@ -1113,7 +1113,7 @@ const ROLES = {
     ]
   },
   "Full Stack Developer": {
-    scope: "Full stack developers work across both user interfaces and backend systems. This path is about building complete features, connecting frontend to APIs, and understanding the full request-to-database flow.",
+    scope: "Build complete product features across frontend, backend, APIs, databases, authentication, and deployment-ready application flows.",
     outlook: "Ideal for startups, product teams, and builders who like owning features from UI to backend.",
     skills: [
       { name: "HTML & CSS", weight: 5, category: "Frontend" },
@@ -1129,7 +1129,7 @@ const ROLES = {
     ]
   },
   "Game Developer": {
-    scope: "Game developers build interactive real-time experiences with gameplay systems, engines, and performance constraints. The work often mixes programming, math, iteration, and a strong sense of player experience.",
+    scope: "Create interactive game experiences using engines, programming, performance optimization, gameplay systems, and player-focused design.",
     outlook: "Best suited for gameplay, tools, indie projects, and interactive media teams.",
     skills: [
       { name: "C++ / C#", weight: 5, category: "Programming" },
@@ -1145,7 +1145,7 @@ const ROLES = {
     ]
   },
   "DevOps Engineer": {
-    scope: "DevOps engineers improve how software is built, deployed, monitored, and maintained. The role is centered on automation, infrastructure, reliability, and helping engineering teams ship faster with less friction.",
+    scope: "Improve delivery with automation, cloud infrastructure, CI/CD, containers, monitoring, reliability, and secure engineering workflows.",
     outlook: "High-value path for platform teams, cloud-heavy products, and reliability-focused engineering orgs.",
     skills: [
       { name: "Linux / Shell Scripting", weight: 5, category: "Systems" },
@@ -1160,7 +1160,7 @@ const ROLES = {
     ]
   },
   "Cybersecurity": {
-    scope: "Cybersecurity roles focus on protecting systems, identities, networks, and data from misuse or attack. The work can span defense, monitoring, vulnerability management, incident response, and security operations.",
+    scope: "Protect systems, networks, identities, and data through monitoring, defense, vulnerability management, incident response, and security operations.",
     outlook: "Strong path for SOC, blue-team, risk, and infrastructure security roles across many industries.",
     skills: [
       { name: "Network Security", weight: 5, category: "Security" },
@@ -1178,7 +1178,7 @@ const ROLES = {
     ]
   },
   "Database Administrator": {
-    scope: "Database administrators manage the performance, reliability, security, and recovery of critical data systems. The role centers on tuning queries, backups, user access, monitoring, and keeping databases fast and available.",
+    scope: "Keep databases fast, available, secure, and recoverable through tuning, backups, monitoring, access control, and reliability planning.",
     outlook: "Best suited for enterprise data operations, managed database teams, backend-heavy products, and business-critical systems support.",
     skills: [
       { name: "SQL", weight: 5, category: "Databases" },
@@ -1194,7 +1194,7 @@ const ROLES = {
     ]
   },
   "Cloud Architect": {
-    scope: "Cloud architects design scalable, secure, and cost-aware cloud systems. The role emphasizes high-level system design, platform choices, networking, identity, and infrastructure patterns for long-term growth.",
+    scope: "Design scalable cloud systems with strong architecture, networking, security, cost control, infrastructure patterns, and long-term platform planning.",
     outlook: "Best fit for senior cloud design, platform strategy, and enterprise architecture tracks.",
     skills: [
       { name: "AWS / Azure / GCP (Advanced)", weight: 5, category: "Cloud Platforms" },
@@ -1209,7 +1209,7 @@ const ROLES = {
     ]
   },
   "Gen AI Developer": {
-    scope: "Gen AI developers build applications powered by large language models and related tooling. The role blends prompting, model APIs, retrieval systems, backend integration, evaluation, and product thinking around AI behavior.",
+    scope: "Build AI applications with LLM APIs, prompting, retrieval, evaluation, vector databases, and practical backend integration.",
     outlook: "Great fit for AI product teams, internal copilots, knowledge tools, and AI-powered workflows.",
     skills: [
       { name: "Python", weight: 5, category: "Programming" },
@@ -4966,6 +4966,21 @@ function getChatPortfolioIdeas(roleName) {
   return (PORTFOLIO_PROJECTS[roleName] || []).slice(0, 2).map((project) => project.title);
 }
 
+function getTopAlternativeRoles(limit = 3) {
+  return Object.keys(ROLES)
+    .filter((roleName) => roleName !== selectedRole)
+    .map((roleName) => ({
+      name: roleName,
+      score: computeResultsForRole(roleName, skills).score
+    }))
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit);
+}
+
+function formatBulletList(items) {
+  return items.map((item, index) => `${index + 1}. ${item}`).join('\n');
+}
+
 function buildCareerChatReply(input) {
   const prompt = String(input || '').trim();
   const lower = prompt.toLowerCase();
@@ -4974,6 +4989,7 @@ function buildCareerChatReply(input) {
   const hasResults = context.score !== null;
   const topMissing = context.priorities.slice(0, 3);
   const strongest = context.matched.slice().sort((a, b) => b.contribution - a.contribution).slice(0, 3);
+  const alternatives = getTopAlternativeRoles(3);
 
   if (!hasRole) {
     return `Select a target role first, then I can help with readiness, missing skills, certifications, and a learning plan. Right now you can start by choosing the role you want to aim for on the Setup page.`;
@@ -4992,11 +5008,25 @@ function buildCareerChatReply(input) {
     return `You are currently at ${context.score}% readiness for ${context.roleLabel}.\n\nYour strongest signal right now is ${strongestArea}. The biggest gap to close next is ${biggestGap}.`;
   }
 
+  if (lower.includes('strength') || lower.includes('strongest') || lower.includes('what am i good at')) {
+    if (!strongest.length) {
+      return `You have not added enough skills yet for me to identify strengths. Add a few skills or run Analyze Readiness first.`;
+    }
+    return `Your strongest areas for ${context.roleLabel} right now are:\n\n${formatBulletList(strongest.map((skill) => `${skill.name} (${LEVEL_LABELS[skill.userLevel] || 'Mapped'})`))}\n\nThese are the skills you should demonstrate clearly in projects and interviews.`;
+  }
+
   if (lower.includes('learn next') || lower.includes('missing') || lower.includes('gap') || lower.includes('next step')) {
     if (!topMissing.length) {
       return `You have already covered the critical skills for ${context.roleLabel}. At this stage, focus on deeper project work, better documentation, and stronger portfolio proof.`;
     }
     return `For ${context.roleLabel}, the best next skills to focus on are:\n\n${topMissing.map((skill, index) => `${index + 1}. ${skill.name}`).join('\n')}\n\nStart with ${topMissing[0].name}, then move to ${topMissing[1] ? topMissing[1].name : 'project practice'}.`;
+  }
+
+  if (lower.includes('compare') || lower.includes('other role') || lower.includes('alternative') || lower.includes('similar role')) {
+    if (!alternatives.length) {
+      return `Right now ${context.roleLabel} is the only role I can score meaningfully from your current skill set. Add more skills if you want stronger comparisons.`;
+    }
+    return `Based on the skills you already added, these nearby roles could also fit you:\n\n${formatBulletList(alternatives.map((role) => `${getDisplayRoleName(role.name)} — ${role.score}% readiness`))}\n\nYour current target is still ${context.roleLabel}, but these can be useful backup or adjacent paths.`;
   }
 
   if (lower.includes('cert') || lower.includes('course') || lower.includes('resource') || lower.includes('practice')) {
@@ -5020,6 +5050,24 @@ function buildCareerChatReply(input) {
       return `For ${context.roleLabel}, build one small project that shows your top missing skill in action, then document the problem, architecture, and what you learned.`;
     }
     return `For ${context.roleLabel}, these portfolio ideas would be strong starting points:\n\n${projects.map((project, index) => `${index + 1}. ${project}`).join('\n')}`;
+  }
+
+  if (lower.includes('interview') || lower.includes('how should i present') || lower.includes('resume')) {
+    const focusSkill = topMissing[0]?.name || strongest[0]?.name || context.role.skills[0]?.name;
+    return `For interviews and resume points, lead with your target role, your current readiness evidence, and one concrete project.\n\nTalk about:\n1. The role you are targeting: ${context.roleLabel}\n2. The strongest skill you already have: ${strongest[0]?.name || 'your current foundation'}\n3. The next gap you are actively closing: ${focusSkill}\n\nThat makes your story sound focused and honest.`;
+  }
+
+  if (lower.includes('summary') || lower.includes('overall') || lower.includes('tell me about my profile')) {
+    const readinessLine = hasResults
+      ? `You are at ${context.score}% readiness for ${context.roleLabel}.`
+      : `You have selected ${context.roleLabel} and added ${context.savedSkills.length} skills so far.`;
+    const gapLine = topMissing.length
+      ? `Your next priority is ${topMissing[0].name}.`
+      : `You have no critical gaps left in the current mapping.`;
+    const altLine = alternatives.length
+      ? `Closest adjacent path: ${getDisplayRoleName(alternatives[0].name)} at ${alternatives[0].score}%.`
+      : `Your current role is still the clearest fit right now.`;
+    return `${readinessLine}\n\n${gapLine}\n\n${altLine}`;
   }
 
   return `For ${context.roleLabel}, the best move right now is to focus on ${topMissing[0]?.name || context.role.skills[0]?.name}, keep building proof through projects, and use the Action Plan as your weekly roadmap.\n\nIf you want, ask me about readiness, missing skills, certifications, or a 30-day plan.`;
