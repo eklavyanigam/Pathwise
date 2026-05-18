@@ -1576,7 +1576,6 @@ function renderRoles() {
     btn.innerHTML = `
       <div class="role-btn-top">
         <div class="role-btn-meta">
-          <span class="role-btn-icon">${escapeHTML(getRoleBadgeLabel(name))}</span>
           <div>
             <div class="role-name">${escapeHTML(getDisplayRoleName(name))}</div>
             <div class="role-count">${data.skills.length} skills</div>
