@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pathwise Project Report</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 18mm 16mm;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Montserrat", Arial, sans-serif;
+      font-size: 12pt;
+      line-height: 1.45;
+      color: #111827;
+      background: #ffffff;
+    }
+    .page {
+      max-width: 190mm;
+      margin: 0 auto;
+      padding: 8mm 0;
+    }
+    .page-break {
+      page-break-before: always;
+      break-before: page;
+    }
+    h1, h2, h3, h4 {
+      margin: 0 0 8px 0;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    h1 { font-size: 14pt; }
+    h2 { font-size: 14pt; margin-top: 18px; }
+    h3 { font-size: 13pt; margin-top: 14px; }
+    h4 { font-size: 12.5pt; margin-top: 12px; }
+    p { margin: 0 0 10px 0; }
+    ul, ol { margin: 0 0 10px 22px; }
+    li { margin-bottom: 4px; }
+    .title-page {
+      min-height: 250mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      gap: 10px;
+    }
+    .muted { color: #475569; }
+    .small { font-size: 10.5pt; }
+    .cover-line {
+      width: 120px;
+      height: 2px;
+      background: #1d4ed8;
+      margin: 8px auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 8px 0 14px 0;
+    }
+    th, td {
+      border: 1px solid #cbd5e1;
+      padding: 6px 8px;
+      vertical-align: top;
+      text-align: left;
+      font-size: 11pt;
+    }
+    th {
+      background: #eff6ff;
+      color: #0f172a;
+      font-weight: 700;
+    }
+    .section-box {
+      border: 1px solid #cbd5e1;
+      padding: 10px 12px;
+      margin: 10px 0 14px 0;
+      border-radius: 6px;
+      background: #f8fafc;
+    }
+    .toc a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .diagram {
+      white-space: pre-wrap;
+      font-family: "Courier New", monospace;
+      font-size: 10pt;
+      line-height: 1.35;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      padding: 10px 12px;
+      margin: 10px 0 14px 0;
+      border-radius: 6px;
+    }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border: 1px solid #93c5fd;
+      background: #eff6ff;
+      border-radius: 999px;
+      font-size: 10pt;
+      color: #1d4ed8;
+      margin-right: 4px;
+      margin-bottom: 4px;
+    }
+    .footer-note {
+      margin-top: 18px;
+      font-size: 10.5pt;
+      color: #64748b;
+    }
+  </style>
+</head>
+<body>
+  <div class="page title-page">
+    <div class="small muted">FULL PROJECT DOCUMENTATION REPORT</div>
+    <h1>Pathwise</h1>
+    <div class="cover-line"></div>
+    <p>Career Readiness Analyzer</p>
+    <p class="muted">Comprehensive technical, functional, testing, database, and design report</p>
+    <p class="muted">Prepared for final project submission and presentation</p>
+    <div style="height:24px"></div>
+    <p><strong>Technology Stack:</strong> HTML, CSS, JavaScript, Supabase, Vercel</p>
+    <p><strong>Project Type:</strong> Full-stack career readiness web application</p>
+    <p><strong>Document Format:</strong> Print-ready HTML report, 12pt body text, headings capped at 14pt</p>
+    <div style="height:24px"></div>
+    <p class="footer-note">This report documents the implemented version of Pathwise, including application structure, workflows, database integration, user journeys, testing strategy, UML diagrams, and deployment details.</p>
+  </div>
+
+  <div class="page page-break toc">
+    <h1>Table of Contents</h1>
+    <ol>
+      <li><a href="#abstract">Abstract</a></li>
+      <li><a href="#problem">Problem Statement and Need</a></li>
+      <li><a href="#objectives">Project Objectives</a></li>
+      <li><a href="#overview">System Overview</a></li>
+      <li><a href="#scope">Project Scope</a></li>
+      <li><a href="#pages">Detailed Web Page Breakdown</a></li>
+      <li><a href="#features">Functional Features</a></li>
+      <li><a href="#roles">Role Catalog and Skill Mapping</a></li>
+      <li><a href="#architecture">Architecture Overview</a></li>
+      <li><a href="#frontend">Frontend Architecture and UI Logic</a></li>
+      <li><a href="#auth">Authentication Design</a></li>
+      <li><a href="#database">Database Design and Connection</a></li>
+      <li><a href="#storage">Guest Storage and Data Merge Logic</a></li>
+      <li><a href="#analysis">Readiness Scoring Engine</a></li>
+      <li><a href="#recommendation">Recommendation, Roadmap, and Resource Engine</a></li>
+      <li><a href="#profile">Profile and Progress Summary Module</a></li>
+      <li><a href="#security">Security, Privacy, and Access Control</a></li>
+      <li><a href="#deployment">Deployment and Hosting</a></li>
+      <li><a href="#uml">UML Diagrams</a></li>
+      <li><a href="#testing">Testing Strategy</a></li>
+      <li><a href="#testcases">Detailed Test Cases</a></li>
+      <li><a href="#qa">Quality Assurance Findings</a></li>
+      <li><a href="#limitations">Limitations</a></li>
+      <li><a href="#future">Future Enhancements</a></li>
+      <li><a href="#conclusion">Conclusion</a></li>
+      <li><a href="#appendix-a">Appendix A: SQL Schema and Policies</a></li>
+      <li><a href="#appendix-b">Appendix B: Screen Inventory</a></li>
+      <li><a href="#appendix-c">Appendix C: Role-by-Role Skill Reference</a></li>
+      <li><a href="#appendix-d">Appendix D: Detailed UI Element Inventory</a></li>
+      <li><a href="#appendix-e">Appendix E: Runtime Keys and Data Dictionary</a></li>
+      <li><a href="#appendix-f">Appendix F: Extended Test Cases</a></li>
+      <li><a href="#appendix-g">Appendix G: Expanded Role Skill Catalog</a></li>
+    </ol>
+  </div>
+
+  <div class="page page-break" id="abstract">
+    <h1>1. Abstract</h1>
+    <p>
+      Pathwise is a full-stack web application designed to help students and early-career learners understand how ready they are for specific technology roles. The application solves a practical problem faced by many learners: people often know which role they are interested in, but they do not know whether their existing skills are enough, which gaps matter most, or what they should learn next in a structured way.
+    </p>
+    <p>
+      The system accepts a target role and a list of user-entered skills, compares those skills against role-specific expectations, calculates a readiness score, identifies matched and missing competencies, and generates a practical action plan. The action plan includes a final summary, category breakdown, missing-skill prioritization, “what if I learned” simulation, role insights, skill learning roadmap, learning resources, and suggested portfolio projects.
+    </p>
+    <p>
+      From a technical perspective, Pathwise combines a static frontend with backend-style capabilities through Supabase. Authentication is handled using Google OAuth and email/password methods, with support for guest mode. Signed-in users have persistent progress saved to the cloud, while guests store progress locally in the browser. If a guest later signs in, Pathwise merges guest progress into the user account.
+    </p>
+    <p>
+      The implemented version of Pathwise includes a dedicated intro page, a three-step analyzer flow, a profile page, progress persistence, session restoration, print-friendly architecture, and a focused user experience built with HTML, CSS, JavaScript, Supabase, and Vercel.
+    </p>
+  </div>
+
+  <div class="page" id="problem">
+    <h1>2. Problem Statement and Need</h1>
+    <p>
+      Students frequently struggle to answer four practical questions when planning for careers in technology:
+    </p>
+    <ol>
+      <li>Which role should I target?</li>
+      <li>How ready am I for that role right now?</li>
+      <li>Which skills matter most for that role?</li>
+      <li>What should I learn next in the right order?</li>
+    </ol>
+    <p>
+      Many platforms provide general career advice, articles, or course catalogs, but very few translate a student’s current skills into a concrete, role-specific readiness assessment. This creates confusion, wasted effort, and unstructured learning.
+    </p>
+    <p>
+      Pathwise addresses this gap by combining role-based skill mapping, scoring, prioritization, resource suggestion, and progress persistence in one guided workflow. Instead of only showing information, Pathwise aims to support a decision: where the learner stands and how to move forward.
+    </p>
+  </div>
+
+  <div class="page" id="objectives">
+    <h1>3. Project Objectives</h1>
+    <ul>
+      <li>Provide a clean and guided user experience for career readiness evaluation.</li>
+      <li>Allow users to choose a target role from a curated list of technology careers.</li>
+      <li>Collect current user skills and proficiency levels using a structured input flow.</li>
+      <li>Compute a readiness score using weighted role requirements and user skill levels.</li>
+      <li>Highlight missing skills and prioritize them according to role importance.</li>
+      <li>Generate an action plan showing what to learn, where to learn it, and what to build.</li>
+      <li>Support both authenticated users and guest users without breaking the experience.</li>
+      <li>Persist progress across reloads and restore the user’s last state.</li>
+      <li>Use secure cloud persistence with row-level access control.</li>
+      <li>Present the output in a way that is useful for students, internship applicants, and early-career candidates.</li>
+    </ul>
+  </div>
+
+  <div class="page page-break" id="overview">
+    <h1>4. System Overview</h1>
+    <p>
+      Pathwise is a browser-based career analysis platform with a lightweight client architecture and cloud-backed persistence. The project is intentionally implemented without a custom application server. Instead, the frontend communicates directly with Supabase for authentication and data persistence.
+    </p>
+    <div class="section-box">
+      <p><strong>Core user flow:</strong> Enter through intro page → authenticate or continue as guest → select a target role → add skills → analyze readiness → review analysis → review action plan → revisit through profile or restored session.</p>
+    </div>
+    <div class="two-col">
+      <div>
+        <h3>Major User-Facing Modules</h3>
+        <ul>
+          <li>Intro / login module</li>
+          <li>Setup module</li>
+          <li>Analysis module</li>
+          <li>Action plan module</li>
+          <li>Profile module</li>
+          <li>Notification and persistence module</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Major Technical Modules</h3>
+        <ul>
+          <li>Supabase bootstrap and auth client</li>
+          <li>Progress storage adapter</li>
+          <li>Role and skill data layer</li>
+          <li>Scoring engine</li>
+          <li>UI render functions</li>
+          <li>Resource and portfolio mapping engine</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="scope">
+    <h1>5. Project Scope</h1>
+    <h3>Included in the current implementation</h3>
+    <ul>
+      <li>Google sign-in</li>
+      <li>Email sign-in and create account flow</li>
+      <li>Guest access</li>
+      <li>Session persistence and resume mode</li>
+      <li>Target role selection</li>
+      <li>Role-specific required skills</li>
+      <li>User-entered skills with proficiency levels</li>
+      <li>Readiness score generation</li>
+      <li>Missing skills and matched skills display</li>
+      <li>Category breakdown and insights</li>
+      <li>Action plan with roadmap and learning resources</li>
+      <li>Suggested portfolio projects</li>
+      <li>User profile page</li>
+      <li>Supabase cloud save for authenticated users</li>
+      <li>Local browser save for guests</li>
+    </ul>
+    <h3>Explicitly out of scope in the current version</h3>
+    <ul>
+      <li>Admin dashboard</li>
+      <li>Real-time collaborative features</li>
+      <li>Custom backend API server</li>
+      <li>Role recommendation via machine learning</li>
+      <li>Multi-language support</li>
+      <li>Resume parser</li>
+      <li>Chatbot-based advising</li>
+    </ul>
+  </div>
+
+  <div class="page page-break" id="pages">
+    <h1>6. Detailed Web Page Breakdown</h1>
+    <h2>6.1 Intro Page</h2>
+    <p>
+      The intro page is the application’s public-facing landing and entry screen. It establishes the branding, explains the value of the product, and presents the initial authentication choices. The intro page is intentionally separate from the analyzer so the first impression feels like a product rather than a raw tool.
+    </p>
+    <h4>Visible content on Intro Page</h4>
+    <ul>
+      <li>Brand block: Pathwise + subtitle “Career Readiness Analyzer”</li>
+      <li>Main headline focused on identifying skill gaps before the job market does</li>
+      <li>Explanatory paragraph introducing the analyzer</li>
+      <li>Three value bullets describing the flow</li>
+      <li>Email and password inputs</li>
+      <li>Sign In button</li>
+      <li>Create Account button</li>
+      <li>Forgot password link</li>
+      <li>Google sign-in button</li>
+      <li>Continue as Guest button</li>
+      <li>Top notification area for auth success/error information</li>
+    </ul>
+
+    <h2>6.2 Setup Page</h2>
+    <p>
+      The setup page is the first analyzer step. It allows the user to choose a role, inspect the role scope, review required skills, add their own skills, and begin analysis.
+    </p>
+    <h4>Visible content on Setup Page</h4>
+    <ul>
+      <li>Header with brand, stepper, and profile menu</li>
+      <li>Instruction banner</li>
+      <li>Role selection card</li>
+      <li>Role Scope panel</li>
+      <li>Required Skills chips</li>
+      <li>Your Skills card</li>
+      <li>Skill name combobox</li>
+      <li>Proficiency selector</li>
+      <li>Add Skill button</li>
+      <li>Clear All button when appropriate</li>
+      <li>Skill list container</li>
+      <li>Analyze Readiness button</li>
+    </ul>
+
+    <h2>6.3 Analysis Page</h2>
+    <p>
+      The analysis page visualizes the calculated readiness result. It is unlocked after running the analyzer and persists across sessions.
+    </p>
+    <ul>
+      <li>Readiness score hero section</li>
+      <li>Role badge and readiness label</li>
+      <li>Matched skills summary</li>
+      <li>Missing skills summary</li>
+      <li>Category breakdown</li>
+      <li>Career path insights</li>
+      <li>Back to Setup and Continue to Action controls</li>
+    </ul>
+
+    <h2>6.4 Action Plan Page</h2>
+    <p>
+      The action plan page transforms analysis into next steps. It is the practical output page of the product.
+    </p>
+    <ul>
+      <li>Final Summary card</li>
+      <li>What If I Learned section</li>
+      <li>Skill Learning Roadmap</li>
+      <li>Where to Learn section</li>
+      <li>Suggested Portfolio Projects</li>
+      <li>Career advisor style guidance</li>
+    </ul>
+
+    <h2>6.5 Profile Page</h2>
+    <p>
+      The profile page is accessible via the top-right profile menu. It summarizes account mode, target role, skills added, readiness, and quick actions for reopening other parts of the app.
+    </p>
+  </div>
+
+  <div class="page" id="features">
+    <h1>7. Functional Features</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Description</th>
+          <th>Implementation Layer</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Role Selection</td><td>User selects one target role from a curated list.</td><td>Frontend UI + role data object</td></tr>
+        <tr><td>Skill Input</td><td>User adds current skills and a proficiency level.</td><td>Frontend UI + state management</td></tr>
+        <tr><td>Skill Suggestions</td><td>Autocomplete suggests skills from all supported role catalogs.</td><td>JavaScript data layer</td></tr>
+        <tr><td>Readiness Score</td><td>Weighted score compares user profile to role requirements.</td><td>Scoring engine</td></tr>
+        <tr><td>Category Breakdown</td><td>Shows performance across role categories.</td><td>Analysis renderer</td></tr>
+        <tr><td>Missing Skills</td><td>Highlights skill gaps as Critical, Supporting, or Optional.</td><td>Analysis renderer</td></tr>
+        <tr><td>Learning Roadmap</td><td>Creates ordered learning phases.</td><td>Action-plan engine</td></tr>
+        <tr><td>Portfolio Projects</td><td>Suggests practical projects aligned to the role.</td><td>Project mapping engine</td></tr>
+        <tr><td>Guest Mode</td><td>Allows usage without account creation.</td><td>Frontend + localStorage</td></tr>
+        <tr><td>Cloud Save</td><td>Stores progress for signed-in users in Supabase.</td><td>Supabase client</td></tr>
+        <tr><td>Profile Page</td><td>Summarizes current progress and quick actions.</td><td>Frontend render module</td></tr>
+        <tr><td>Session Restore</td><td>Returns the user to the right state after reload.</td><td>Auth/session persistence</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="page page-break" id="roles">
+    <h1>8. Role Catalog and Skill Mapping</h1>
+    <p>
+      Pathwise currently supports a focused set of technology roles. Each role is represented by a role scope statement, an outlook statement, and a curated list of weighted skills. The weighting system is central to score calculation because some skills matter more than others for employability within a role.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Role</th>
+          <th>Approx. Skill Count</th>
+          <th>Scope Summary</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Data Analyst</td><td>8</td><td>Turn raw data into insights for better business decisions.</td></tr>
+        <tr><td>Frontend Developer</td><td>9</td><td>Build fast, accessible interfaces for modern web products.</td></tr>
+        <tr><td>Software Developer</td><td>10</td><td>Build reliable software with clean code and strong fundamentals.</td></tr>
+        <tr><td>Backend Developer</td><td>9</td><td>Build APIs, services, and databases that scale reliably.</td></tr>
+        <tr><td>Product Manager</td><td>10</td><td>Guide product strategy, priorities, and execution across teams.</td></tr>
+        <tr><td>Machine Learning Engineer</td><td>9</td><td>Build and deploy machine learning systems in production.</td></tr>
+        <tr><td>QA Engineer</td><td>9</td><td>Ensure product quality through testing, automation, and validation.</td></tr>
+        <tr><td>Full Stack Developer</td><td>10</td><td>Build end-to-end applications across frontend and backend.</td></tr>
+        <tr><td>Game Developer</td><td>10</td><td>Create game systems, gameplay, and interactive experiences.</td></tr>
+        <tr><td>DevOps Engineer</td><td>9</td><td>Automate delivery, infrastructure, and reliability for engineering teams.</td></tr>
+        <tr><td>Cybersecurity</td><td>12</td><td>Protect systems, data, and identities from security threats.</td></tr>
+        <tr><td>Database Administrator</td><td>10</td><td>Maintain secure, high-performance, and reliable databases.</td></tr>
+        <tr><td>Cloud Architect</td><td>9</td><td>Design scalable cloud platforms with secure, cost-aware architecture.</td></tr>
+        <tr><td>Gen AI Developer</td><td>10</td><td>Build LLM applications with retrieval and backend integration.</td></tr>
+      </tbody>
+    </table>
+    <p>
+      Every role has skill records shaped like: skill name, weight, and category. The category is later used to compute the category breakdown in the analysis page.
+    </p>
+  </div>
+
+  <div class="page" id="architecture">
+    <h1>9. Architecture Overview</h1>
+    <p>
+      Pathwise follows a client-heavy web architecture. The frontend owns the user interface, state transitions, scoring presentation, and direct Supabase client integration. Supabase acts as the managed backend service for authentication and storage.
+    </p>
+    <div class="diagram">
+USER
+  |
+  v
+Browser (HTML + CSS + JavaScript)
+  |
+  +--> Intro / Auth Layer
+  |      |
+  |      +--> Google OAuth via Supabase
+  |      +--> Email auth via Supabase
+  |      +--> Guest local session
+  |
+  +--> Analyzer Layer
+  |      |
+  |      +--> Setup
+  |      +--> Analysis
+  |      +--> Action Plan
+  |      +--> Profile
+  |
+  +--> Persistence Layer
+         |
+         +--> localStorage (guest)
+         +--> Supabase Auth + Database (signed-in users)
+    </div>
+    <h3>Why this architecture was chosen</h3>
+    <ul>
+      <li>Fast MVP implementation without maintaining a custom server.</li>
+      <li>Supabase provides reliable auth and storage primitives out of the box.</li>
+      <li>The analyzer logic is mostly deterministic and can safely run on the client.</li>
+      <li>Direct database access is safe because Row Level Security constrains access per user.</li>
+    </ul>
+  </div>
+
+  <div class="page page-break" id="frontend">
+    <h1>10. Frontend Architecture and UI Logic</h1>
+    <p>
+      The frontend consists of three major files:
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>File</th>
+          <th>Purpose</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>index.html</td><td>Defines page structure, sections, stepper, forms, cards, and content containers.</td></tr>
+        <tr><td>styles.css</td><td>Controls visual theme, page layout, component styles, animations, responsiveness, and print-friendly structure.</td></tr>
+        <tr><td>app.js</td><td>Handles auth flow, state management, scoring logic, storage, rendering, page transitions, and interaction behavior.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Key frontend patterns</h3>
+    <ul>
+      <li>Single-page application behavior without a frontend framework</li>
+      <li>DOM-driven rendering using targeted update functions</li>
+      <li>Stateful navigation with page containers and active class switching</li>
+      <li>Async auth and persistence calls wrapped in user notifications</li>
+      <li>Role-driven rendering from a central data object</li>
+    </ul>
+
+    <h3>Main frontend functions</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Function</th>
+          <th>Responsibility</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>renderRoles()</td><td>Renders the role grid in setup.</td></tr>
+        <tr><td>renderRoleScope()</td><td>Updates the Role Scope panel using the selected role.</td></tr>
+        <tr><td>renderRequiredSkills()</td><td>Displays required skills chips for the selected role.</td></tr>
+        <tr><td>analyze()</td><td>Runs the readiness engine and moves the user to analysis.</td></tr>
+        <tr><td>buildResultsHTML()</td><td>Builds analysis UI sections after score generation.</td></tr>
+        <tr><td>renderActionSummary()</td><td>Builds the final summary on the action page.</td></tr>
+        <tr><td>buildProfilePage()</td><td>Builds the profile view using current session and saved progress.</td></tr>
+        <tr><td>goToStep()</td><td>Controls page transitions within the analyzer shell.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="page" id="auth">
+    <h1>11. Authentication Design</h1>
+    <p>
+      Pathwise supports three access paths:
+    </p>
+    <ul>
+      <li>Google sign-in</li>
+      <li>Email sign-in / account creation</li>
+      <li>Continue as Guest</li>
+    </ul>
+    <h3>Google authentication</h3>
+    <p>
+      Google authentication is implemented through Supabase OAuth. On click, the browser is redirected to Google through Supabase. After successful authentication, the application restores the session and transitions the user from the intro page into the analyzer.
+    </p>
+    <h3>Email authentication</h3>
+    <p>
+      Email sign-in and signup are implemented through direct Supabase auth endpoints. The system supports signing in with an existing email and creating a new account using the same UI. Password reset is also supported via Supabase email flow.
+    </p>
+    <h3>Guest access</h3>
+    <p>
+      Guest mode is a key usability feature. It removes friction for first-time users and allows the analyzer to be used instantly. Guest progress is stored locally and may later be merged into a signed-in account.
+    </p>
+    <h3>Session behavior</h3>
+    <ul>
+      <li>Sessions are persisted with Supabase client auth persistence.</li>
+      <li>Guest mode sets a local resume mode.</li>
+      <li>Reload attempts to restore the correct analyzer page and state.</li>
+      <li>Top notices communicate auth status without browser alerts.</li>
+    </ul>
+  </div>
+
+  <div class="page page-break" id="database">
+    <h1>12. Database Design and Connection</h1>
+    <h2>12.1 Database service used</h2>
+    <p>
+      Pathwise uses Supabase, which provides PostgreSQL database hosting, authentication services, and row-level security. The frontend initializes a Supabase client using the project URL and anon key.
+    </p>
+    <h2>12.2 Database connection model</h2>
+    <div class="diagram">
+Pathwise Frontend
+  |
+  +--> Supabase JS Client
+         |
+         +--> Supabase Auth
+         |
+         +--> user_progress table
+    </div>
+    <h2>12.3 Primary application table</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Column</th>
+          <th>Type</th>
+          <th>Purpose</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>id</td><td>bigint identity / primary key</td><td>Unique record identifier</td></tr>
+        <tr><td>user_id</td><td>uuid</td><td>Reference to Supabase auth user</td></tr>
+        <tr><td>selected_role</td><td>text</td><td>Current target role</td></tr>
+        <tr><td>skills</td><td>jsonb</td><td>Serialized array of user skills and levels</td></tr>
+        <tr><td>score</td><td>integer</td><td>Latest readiness score</td></tr>
+        <tr><td>created_at</td><td>timestamptz</td><td>Save timestamp</td></tr>
+      </tbody>
+    </table>
+    <h2>12.4 Database operations used by the app</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Function</th>
+          <th>Database Action</th>
+          <th>Behavior</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>getProgress()</td><td>SELECT latest row by user_id</td><td>Loads latest saved state for logged-in user</td></tr>
+        <tr><td>saveProgress()</td><td>INSERT or UPDATE</td><td>Saves new progress or updates current progress</td></tr>
+        <tr><td>updateProgress()</td><td>UPDATE</td><td>Updates current row with latest role, skills, score</td></tr>
+        <tr><td>mergeGuestProgressToDatabase()</td><td>INSERT/UPDATE after sign-in</td><td>Migrates guest-local data into the authenticated user’s cloud record</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="page" id="storage">
+    <h1>13. Guest Storage and Data Merge Logic</h1>
+    <p>
+      Supporting guest mode required a second persistence strategy in addition to cloud save. Pathwise uses browser localStorage for guests and Supabase for signed-in users.
+    </p>
+    <h3>Guest storage keys</h3>
+    <ul>
+      <li><strong>pw_guest_progress</strong> — serialized guest progress payload</li>
+      <li><strong>pw_resume_mode</strong> — determines whether the app should resume intro, guest analyzer, or signed-in account mode</li>
+      <li><strong>pw_auth_notice</strong> — temporary auth notice state for reload-based transitions</li>
+    </ul>
+    <h3>Merge strategy</h3>
+    <ol>
+      <li>User works as guest.</li>
+      <li>Progress is saved locally.</li>
+      <li>User signs in using Google or email.</li>
+      <li>Application checks for guest data.</li>
+      <li>If guest data exists, it is saved to the user’s Supabase row.</li>
+      <li>Guest local storage is cleared afterward.</li>
+    </ol>
+    <p>
+      This design keeps onboarding friction low while still enabling account-based persistence later.
+    </p>
+  </div>
+
+  <div class="page page-break" id="analysis">
+    <h1>14. Readiness Scoring Engine</h1>
+    <p>
+      The scoring model in Pathwise is a weighted rule-based engine. It does not guess readiness with a black box. Instead, it transparently compares the user’s declared skills to role requirements.
+    </p>
+    <h3>Inputs</h3>
+    <ul>
+      <li>Selected role</li>
+      <li>Required skills for that role</li>
+      <li>Weight for each required skill</li>
+      <li>Current user skills</li>
+      <li>User proficiency level per skill</li>
+    </ul>
+    <h3>Skill level multipliers</h3>
+    <table>
+      <thead>
+        <tr><th>Level</th><th>Multiplier</th><th>Reasoning</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Beginner</td><td>0.30</td><td>Counts as exposure but not role-ready mastery</td></tr>
+        <tr><td>Intermediate</td><td>0.65</td><td>Strong partial readiness</td></tr>
+        <tr><td>Expert</td><td>1.00</td><td>Full skill contribution</td></tr>
+      </tbody>
+    </table>
+    <h3>Tier handling</h3>
+    <ul>
+      <li>Critical skills carry the highest importance.</li>
+      <li>Supporting skills matter but are not weighted as high as critical gaps in decision impact.</li>
+      <li>Optional skills add value but should not artificially inflate readiness.</li>
+    </ul>
+    <h3>Outputs</h3>
+    <ul>
+      <li>Total readiness score</li>
+      <li>Matched skills list</li>
+      <li>Missing skills list</li>
+      <li>Category breakdown percentages</li>
+      <li>Priority order for improvement</li>
+    </ul>
+  </div>
+
+  <div class="page" id="recommendation">
+    <h1>15. Recommendation, Roadmap, and Resource Engine</h1>
+    <p>
+      The action page is built from multiple recommendation layers, not just the score itself. These layers transform a static score into an actionable roadmap.
+    </p>
+    <h3>Recommendation layers</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Layer</th>
+          <th>Purpose</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Final Summary</td><td>Condenses the main decision points for the user</td></tr>
+        <tr><td>What If I Learned</td><td>Simulates score gains from skill improvements</td></tr>
+        <tr><td>Skill Learning Roadmap</td><td>Groups learning into phases</td></tr>
+        <tr><td>Where to Learn</td><td>Maps missing skills to relevant learning resources and certifications</td></tr>
+        <tr><td>Suggested Portfolio Projects</td><td>Converts role readiness into project-building advice</td></tr>
+      </tbody>
+    </table>
+    <p>
+      This layered structure is one of the strongest differentiators of Pathwise because it prevents the system from stopping at a diagnostic result. Instead, it continues into action.
+    </p>
+  </div>
+
+  <div class="page page-break" id="profile">
+    <h1>16. Profile and Progress Summary Module</h1>
+    <p>
+      The profile page acts as a lightweight account dashboard. It is intentionally simple, but useful.
+    </p>
+    <h3>Information shown on the profile page</h3>
+    <ul>
+      <li>Current mode: guest or signed-in user</li>
+      <li>Target role</li>
+      <li>Number of skills added</li>
+      <li>Readiness score</li>
+      <li>Progress summary text</li>
+      <li>Quick-action buttons to reopen setup, analysis, or action plan</li>
+    </ul>
+    <h3>Why the profile page matters</h3>
+    <ul>
+      <li>It makes the app feel more like a product rather than a single-use calculator.</li>
+      <li>It gives signed-in users a sense of saved state and ownership.</li>
+      <li>It provides a predictable place for account-related actions.</li>
+    </ul>
+  </div>
+
+  <div class="page" id="security">
+    <h1>17. Security, Privacy, and Access Control</h1>
+    <h3>Security measures implemented</h3>
+    <ul>
+      <li>Authentication managed by Supabase instead of custom password handling</li>
+      <li>Frontend uses Supabase anon key only</li>
+      <li>Per-user row protection using Row Level Security policies</li>
+      <li>No service_role key exposed in the browser</li>
+      <li>Guest progress restricted to local browser storage</li>
+      <li>Signed-in persistence tied to user_id</li>
+    </ul>
+    <h3>Security limitations of the current MVP</h3>
+    <ul>
+      <li>The app depends on Supabase configuration correctness.</li>
+      <li>Guest data in localStorage is convenient but not sensitive-data hardened.</li>
+      <li>Email flows depend on provider reliability and template configuration.</li>
+      <li>There is no custom server-side validation layer because the architecture is serverless-client-centric.</li>
+    </ul>
+    <h3>Risk posture</h3>
+    <p>
+      For a student or hackathon-level deployment, the current security posture is strong enough because access control is delegated to a well-supported backend platform and data scope is limited. For large-scale production, additional audit logging, server-side abstractions, and centralized configuration management would be recommended.
+    </p>
+  </div>
+
+  <div class="page" id="deployment">
+    <h1>18. Deployment and Hosting</h1>
+    <p>
+      Pathwise is deployed on Vercel as a static frontend experience backed by Supabase services.
+    </p>
+    <h3>Deployment characteristics</h3>
+    <ul>
+      <li>Frontend files are version-controlled in GitHub.</li>
+      <li>Vercel automatically redeploys from the main branch.</li>
+      <li>Supabase provides authentication and data persistence externally.</li>
+      <li>No custom Node.js or Express server is required to run the current application.</li>
+    </ul>
+    <h3>Benefits of this deployment model</h3>
+    <ul>
+      <li>Fast iteration and redeployment</li>
+      <li>Low operational overhead</li>
+      <li>Easy collaboration through GitHub</li>
+      <li>Simple rollback through commit history</li>
+    </ul>
+  </div>
+
+  <div class="page page-break" id="uml">
+    <h1>19. UML Diagrams</h1>
+
+    <h2>19.1 Use Case Diagram</h2>
+    <div class="diagram">
+Actor: Student / User
+
+  +------------------------------------------------------+
+  |                      PATHWISE                        |
+  |------------------------------------------------------|
+  |  (Select Role)                                       |
+  |  (Add Skills)                                        |
+  |  (Analyze Readiness)                                 |
+  |  (View Analysis)                                     |
+  |  (View Action Plan)                                  |
+  |  (Access Profile)                                    |
+  |  (Continue as Guest)                                 |
+  |  (Sign In with Google)                               |
+  |  (Sign In with Email)                                |
+  |  (Create Account)                                    |
+  |  (Reset Password)                                    |
+  |  (Save Progress)                                     |
+  |  (Restore Progress)                                  |
+  +------------------------------------------------------+
+
+Student/User --> Select Role
+Student/User --> Add Skills
+Student/User --> Analyze Readiness
+Student/User --> View Analysis
+Student/User --> View Action Plan
+Student/User --> Access Profile
+Student/User --> Continue as Guest
+Student/User --> Sign In with Google
+Student/User --> Sign In with Email
+Student/User --> Create Account
+Student/User --> Reset Password
+    </div>
+
+    <h2>19.2 Activity Diagram: Guest Flow</h2>
+    <div class="diagram">
+Start
+  |
+Open Intro Page
+  |
+Click Continue as Guest
+  |
+Set guest mode + local resume state
+  |
+Enter Setup Page
+  |
+Select Role
+  |
+Add Skills
+  |
+Click Analyze Readiness
+  |
+Compute Score
+  |
+Show Analysis
+  |
+Move to Action Plan
+  |
+Save guest progress in browser
+  |
+Reload?
+  |-- Yes --> Restore guest progress + last step
+  |-- No --> End
+    </div>
+
+    <h2>19.3 Activity Diagram: Signed-In User Flow</h2>
+    <div class="diagram">
+Start
+  |
+Open Intro Page
+  |
+Choose Google or Email
+  |
+Authenticate through Supabase
+  |
+Session restored
+  |
+Merge guest data if present
+  |
+Enter Setup Page
+  |
+Select Role + Add Skills
+  |
+Analyze
+  |
+Save progress to Supabase
+  |
+View Analysis / Action / Profile
+  |
+Reload?
+  |-- Yes --> Restore session + load latest progress
+  |-- No --> End
+    </div>
+
+    <h2>19.4 Sequence Diagram: Analyze Readiness</h2>
+    <div class="diagram">
+User -> UI: Click Analyze Readiness
+UI -> Loader: Show terminal-style loading overlay
+UI -> Role Data: Fetch selected role requirements
+UI -> Skill State: Fetch user-entered skills
+UI -> Scoring Engine: Compare role skills with user skills
+Scoring Engine -> UI: Return score, matched, missing, categories, priorities
+UI -> Analysis Renderer: Build score hero and breakdown
+UI -> Action Renderer: Build roadmap, resources, and projects
+UI -> Persistence Layer: Save results
+Persistence Layer -> localStorage/Supabase: Write progress
+UI -> User: Show analysis page
+    </div>
+
+    <h2>19.5 Component Diagram</h2>
+    <div class="diagram">
++------------------+      +---------------------+      +------------------+
+|    index.html    | ---> |      styles.css     |      |      app.js      |
++------------------+      +---------------------+      +------------------+
+         |                           |                           |
+         |                           |                           +--> Auth module
+         |                           |                           +--> Storage module
+         |                           |                           +--> Scoring module
+         |                           |                           +--> Render module
+         |                           |                           +--> Profile module
+         v                           v
+   User Interface            Visual System
+
+app.js ---> Supabase Auth
+app.js ---> Supabase Database
+app.js ---> localStorage
+    </div>
+
+    <h2>19.6 Deployment Diagram</h2>
+    <div class="diagram">
++------------------------+      HTTPS      +------------------------+
+|   User Browser         | <-------------> |   Vercel Hosted App    |
+|   HTML/CSS/JS Runtime  |                 |   Static Frontend      |
++------------------------+                 +------------------------+
+           |
+           | HTTPS / API
+           v
++------------------------+
+|   Supabase Project     |
+| - Auth                 |
+| - PostgreSQL           |
+| - Row Level Security   |
++------------------------+
+    </div>
+  </div>
+
+  <div class="page page-break" id="testing">
+    <h1>20. Testing Strategy</h1>
+    <p>
+      The testing approach for Pathwise is focused on practical product QA rather than only isolated code-level assertions. Since the application is a flow-based interface, the most important validation areas are navigation, auth, persistence, calculation correctness, and state restoration.
+    </p>
+    <h3>Testing categories</h3>
+    <ul>
+      <li>Functional testing</li>
+      <li>UI/UX testing</li>
+      <li>Authentication testing</li>
+      <li>Persistence testing</li>
+      <li>Negative testing</li>
+      <li>Cross-state testing</li>
+      <li>Security testing</li>
+      <li>Regression testing</li>
+    </ul>
+    <h3>Primary QA focus areas</h3>
+    <ul>
+      <li>Does every authentication route actually lead into the analyzer?</li>
+      <li>Does reload preserve the correct page and data?</li>
+      <li>Do guest and signed-in flows remain consistent?</li>
+      <li>Do role cards, scope, and required skills stay synchronized?</li>
+      <li>Are results and action-plan sections built from the current role and skills only?</li>
+    </ul>
+  </div>
+
+  <div class="page page-break" id="testcases">
+    <h1>21. Detailed Test Cases</h1>
+    <p>
+      The following test cases cover the current implemented product. They are intentionally detailed so the report can be used for QA review, viva discussion, or future regression testing.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Test Case</th>
+          <th>Precondition</th>
+          <th>Expected Result</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>TC-01</td><td>Load intro page</td><td>Open deployed URL</td><td>Intro page loads with branding and auth card</td></tr>
+        <tr><td>TC-02</td><td>Continue as Guest</td><td>Intro page visible</td><td>User enters setup page after notice delay</td></tr>
+        <tr><td>TC-03</td><td>Guest profile access</td><td>Guest mode active</td><td>Profile page opens and shows guest mode</td></tr>
+        <tr><td>TC-04</td><td>Google sign-in entry</td><td>Google auth configured</td><td>Redirect begins correctly</td></tr>
+        <tr><td>TC-05</td><td>Google sign-in return</td><td>Successful Google account selection</td><td>User lands in analyzer, not intro page</td></tr>
+        <tr><td>TC-06</td><td>Email sign-in with valid credentials</td><td>Existing account</td><td>User enters analyzer</td></tr>
+        <tr><td>TC-07</td><td>Create account with valid email/password</td><td>Email provider enabled</td><td>User account is created through Supabase</td></tr>
+        <tr><td>TC-08</td><td>Forgot password</td><td>Known email entered</td><td>Password reset request sent notice appears</td></tr>
+        <tr><td>TC-09</td><td>Invalid email sign-in</td><td>Wrong password or unknown email</td><td>Error notice appears</td></tr>
+        <tr><td>TC-10</td><td>Password toggle</td><td>Password field visible</td><td>Password visibility toggles with eye icon</td></tr>
+        <tr><td>TC-11</td><td>Keyboard Enter on login</td><td>Email and password filled</td><td>Sign In action triggers</td></tr>
+        <tr><td>TC-12</td><td>Profile dropdown open</td><td>User signed in or guest mode active</td><td>Dropdown opens below profile icon</td></tr>
+        <tr><td>TC-13</td><td>Guest profile dropdown action</td><td>Guest mode active</td><td>Dropdown shows Login instead of Logout</td></tr>
+        <tr><td>TC-14</td><td>Signed-in dropdown action</td><td>User signed in</td><td>Dropdown shows Logout</td></tr>
+        <tr><td>TC-15</td><td>Role selection changes Role Scope</td><td>Setup page visible</td><td>Role scope title, copy, and outlook update</td></tr>
+        <tr><td>TC-16</td><td>Role selection changes required skills</td><td>Setup page visible</td><td>Required skills chips refresh</td></tr>
+        <tr><td>TC-17</td><td>Add one skill</td><td>Setup page visible</td><td>Skill appears in skill list</td></tr>
+        <tr><td>TC-18</td><td>Add duplicate skill</td><td>Skill already present</td><td>App prevents duplicate or handles cleanly</td></tr>
+        <tr><td>TC-19</td><td>Change proficiency</td><td>Skill entry form active</td><td>Selected level persists with skill</td></tr>
+        <tr><td>TC-20</td><td>Clear all skills</td><td>Skills already added</td><td>Skill list resets and results clear</td></tr>
+        <tr><td>TC-21</td><td>Analyze button disabled with no skills</td><td>Empty skill list</td><td>Analyze button remains disabled</td></tr>
+        <tr><td>TC-22</td><td>Analyze button with valid skills</td><td>Role selected and skills added</td><td>Terminal loader appears</td></tr>
+        <tr><td>TC-23</td><td>Analyze transition</td><td>Analysis complete</td><td>User lands on analysis page</td></tr>
+        <tr><td>TC-24</td><td>Score hero display</td><td>Analysis available</td><td>Score, label, and color render correctly</td></tr>
+        <tr><td>TC-25</td><td>Matched skills list</td><td>Analysis available</td><td>Matched skill count displays correctly</td></tr>
+        <tr><td>TC-26</td><td>Missing skills list</td><td>Analysis available</td><td>Missing skills appear with Critical/Supporting/Optional badges</td></tr>
+        <tr><td>TC-27</td><td>Category breakdown section</td><td>Analysis available</td><td>Category bars and percentages render</td></tr>
+        <tr><td>TC-28</td><td>Action plan navigation</td><td>Analysis complete</td><td>Action Plan step opens</td></tr>
+        <tr><td>TC-29</td><td>Final summary renders</td><td>Action plan available</td><td>Summary card displays score, gap, next move</td></tr>
+        <tr><td>TC-30</td><td>What If I Learned section renders</td><td>Action plan available</td><td>Simulator section loads</td></tr>
+        <tr><td>TC-31</td><td>Roadmap section renders</td><td>Action plan available</td><td>Learning roadmap appears smoothly</td></tr>
+        <tr><td>TC-32</td><td>Where to Learn section renders</td><td>Missing skills available</td><td>Learning links show role-relevant resources</td></tr>
+        <tr><td>TC-33</td><td>Suggested projects render</td><td>Action plan available</td><td>Project cards appear for selected role</td></tr>
+        <tr><td>TC-34</td><td>Guest local save</td><td>Guest mode active</td><td>Progress stores in browser localStorage</td></tr>
+        <tr><td>TC-35</td><td>Signed-in cloud save</td><td>User signed in</td><td>Progress writes to Supabase user_progress table</td></tr>
+        <tr><td>TC-36</td><td>Guest merge to account</td><td>Guest progress exists, then user signs in</td><td>Guest progress is merged into cloud record</td></tr>
+        <tr><td>TC-37</td><td>Reload on setup</td><td>Setup page open with saved data</td><td>User returns to setup with restored role/skills</td></tr>
+        <tr><td>TC-38</td><td>Reload on analysis</td><td>Analysis page open</td><td>User returns to analysis with results intact</td></tr>
+        <tr><td>TC-39</td><td>Reload on action plan</td><td>Action plan open</td><td>User returns to action plan with data intact</td></tr>
+        <tr><td>TC-40</td><td>Profile page after reload</td><td>Saved progress exists</td><td>Profile summary values remain accurate</td></tr>
+        <tr><td>TC-41</td><td>Sign out</td><td>User signed in</td><td>Session clears and app returns to intro</td></tr>
+        <tr><td>TC-42</td><td>Signed-in email shown in dropdown</td><td>User signed in</td><td>Email/identity display is visible in dropdown</td></tr>
+        <tr><td>TC-43</td><td>Guest login prompt shown in dropdown</td><td>Guest mode active</td><td>Dropdown action switches to Login</td></tr>
+        <tr><td>TC-44</td><td>Top notice auto-dismiss</td><td>Notice triggered</td><td>Notice disappears after configured duration</td></tr>
+        <tr><td>TC-45</td><td>No browser alerts remain</td><td>Run auth and save flows</td><td>In-app notices replace raw alert popups</td></tr>
+        <tr><td>TC-46</td><td>Role card selection state</td><td>Switch roles in setup</td><td>Active styling moves correctly to selected role</td></tr>
+        <tr><td>TC-47</td><td>Role scope only on setup</td><td>Navigate between steps</td><td>Role scope remains a setup concern only</td></tr>
+        <tr><td>TC-48</td><td>Header profile visible across analyzer</td><td>Any analyzer step active</td><td>Profile icon visible on setup, analysis, action, and profile pages</td></tr>
+        <tr><td>TC-49</td><td>Database row isolation</td><td>Two different users exist</td><td>Each user can only access own progress rows</td></tr>
+        <tr><td>TC-50</td><td>Broken auth fallback handling</td><td>Supabase auth unavailable</td><td>UI surfaces failure cleanly without hard crash</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="page page-break" id="qa">
+    <h1>22. Quality Assurance Findings</h1>
+    <p>
+      During iterative QA, the most fragile parts of the application were not the scoring rules or the UI rendering, but the transitions around authentication, profile navigation, reload restoration, and email-based auth. Several bugs in these areas are typical for session-driven browser applications and were addressed during refinement.
+    </p>
+    <h3>Examples of areas that required hardening</h3>
+    <ul>
+      <li>Google sign-in returning to intro instead of opening the analyzer</li>
+      <li>Guest profile page not immediately reflecting current in-memory state</li>
+      <li>Analysis action redirecting back to setup after the loading animation</li>
+      <li>Header and dropdown visibility leaking onto screens where they were not expected</li>
+      <li>Animation overlap causing unwanted blinking in setup and action sections</li>
+    </ul>
+    <p>
+      The current build is significantly more stable because transitions now rely on explicit resume-state handling rather than only implicit UI state.
+    </p>
+  </div>
+
+  <div class="page" id="limitations">
+    <h1>23. Limitations</h1>
+    <ul>
+      <li>The readiness score is rule-based and curated; it is not validated against hiring-market data at scale.</li>
+      <li>Email provider reliability depends on external configuration and template behavior.</li>
+      <li>Guest data remains browser-local and device-specific.</li>
+      <li>The role library is curated rather than exhaustive.</li>
+      <li>The application does not currently support resume upload or automated skill extraction.</li>
+      <li>The analyzer assumes self-reported skill accuracy from users.</li>
+    </ul>
+  </div>
+
+  <div class="page" id="future">
+    <h1>24. Future Enhancements</h1>
+    <ul>
+      <li>Resume parser and skill extraction</li>
+      <li>Role recommendation engine based on user skill clusters</li>
+      <li>Saved history of multiple analyses per user</li>
+      <li>Expanded role library with search and filters</li>
+      <li>Admin dashboard for role/skill data maintenance</li>
+      <li>Analytics layer for usage and outcome insights</li>
+      <li>Export to PDF for analysis report</li>
+      <li>Multi-language support</li>
+      <li>Accessibility audit and ARIA expansion</li>
+      <li>Automated end-to-end regression suite</li>
+    </ul>
+  </div>
+
+  <div class="page page-break" id="conclusion">
+    <h1>25. Conclusion</h1>
+    <p>
+      Pathwise is more than a static career information page. It is a guided readiness platform that takes a user from uncertainty to action. Its strongest value lies in the combination of practical role selection, weighted skill analysis, personalized scoring, and next-step planning.
+    </p>
+    <p>
+      Technically, the project demonstrates frontend engineering, browser-state management, auth integration, cloud persistence, interface design, recommendation logic, and structured testing. Functionally, it focuses on a real student problem and provides output that is immediately useful.
+    </p>
+    <p>
+      For academic submission and project presentation, Pathwise represents a strong example of building a problem-focused product with clear workflows, real persistence, and a polished user experience.
+    </p>
+  </div>
+
+  <div class="page page-break" id="appendix-a">
+    <h1>Appendix A: SQL Schema and Policies</h1>
+    <p>The following schema reflects the intended Supabase persistence model used by Pathwise.</p>
+    <div class="diagram">
+create table if not exists public.user_progress (
+  id bigint generated always as identity primary key,
+  user_id uuid not null references auth.users (id) on delete cascade,
+  selected_role text not null,
+  skills jsonb not null default '[]'::jsonb,
+  score integer,
+  created_at timestamptz not null default now()
+);
+
+create index if not exists user_progress_user_id_created_at_idx
+  on public.user_progress (user_id, created_at desc);
+
+alter table public.user_progress enable row level security;
+
+create policy "user_progress_select_own"
+on public.user_progress
+for select
+to authenticated
+using (auth.uid() = user_id);
+
+create policy "user_progress_insert_own"
+on public.user_progress
+for insert
+to authenticated
+with check (auth.uid() = user_id);
+
+create policy "user_progress_update_own"
+on public.user_progress
+for update
+to authenticated
+using (auth.uid() = user_id)
+with check (auth.uid() = user_id);
+
+create policy "user_progress_delete_own"
+on public.user_progress
+for delete
+to authenticated
+using (auth.uid() = user_id);
+    </div>
+  </div>
+
+  <div class="page" id="appendix-b">
+    <h1>Appendix B: Screen Inventory</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Screen</th>
+          <th>Main Purpose</th>
+          <th>Key Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Intro</td><td>Branding and access entry</td><td>Sign In, Create Account, Forgot Password, Google, Guest</td></tr>
+        <tr><td>Setup</td><td>Role and skill input</td><td>Select role, add skills, analyze</td></tr>
+        <tr><td>Analysis</td><td>Readiness evaluation</td><td>Review score, matched skills, missing skills, category breakdown</td></tr>
+        <tr><td>Action Plan</td><td>Practical next steps</td><td>Review roadmap, resources, portfolio suggestions</td></tr>
+        <tr><td>Profile</td><td>Progress overview</td><td>Review mode, readiness, quick navigation, logout/login</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="page page-break" id="appendix-c">
+    <h1>Appendix C: Role-by-Role Skill Reference</h1>
+    <p>
+      This appendix lists the high-level role coverage present in the current build. The app itself contains weighted skills under each role, grouped by categories such as programming, databases, tools, cloud, testing, security, and strategy.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Role</th>
+          <th>Representative Skills</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Data Analyst</td><td>SQL, Excel/Sheets, Data Visualization, Statistics, Tableau/Power BI, Data Cleaning</td></tr>
+        <tr><td>Frontend Developer</td><td>HTML/CSS, JavaScript, React, TypeScript, Responsive Design, Testing, Accessibility</td></tr>
+        <tr><td>Software Developer</td><td>DSA, OOP, Python/Java/C++, REST APIs, Unit Testing, SQL, System Design</td></tr>
+        <tr><td>Backend Developer</td><td>Python/Node/Java, REST APIs, SQL, Auth/Security, Docker, NoSQL, Cloud</td></tr>
+        <tr><td>Product Manager</td><td>Roadmapping, Stakeholder Management, Metrics, User Research, Prioritization, PRD Writing</td></tr>
+        <tr><td>Machine Learning Engineer</td><td>Python, Statistics, Linear Algebra, Scikit-learn, Deep Learning, Model Evaluation</td></tr>
+        <tr><td>QA Engineer</td><td>Manual Testing, Test Cases, Selenium/Playwright, API Testing, Jira, Database Testing</td></tr>
+        <tr><td>Full Stack Developer</td><td>HTML/CSS, JavaScript, React, Node/Python/Java, REST APIs, SQL, Auth, Docker</td></tr>
+        <tr><td>Game Developer</td><td>C++/C#, Unity/Unreal, Game Design, Physics, Blender Basics, Multiplayer Basics</td></tr>
+        <tr><td>DevOps Engineer</td><td>Linux/Shell, Docker/Kubernetes, CI/CD, Cloud Platforms, Terraform, Monitoring</td></tr>
+        <tr><td>Cybersecurity</td><td>Network Security, Threat Analysis, SIEM, Vulnerability Assessment, Incident Response, IAM</td></tr>
+        <tr><td>Database Administrator</td><td>SQL, Database Design, Backup/Recovery, Performance Tuning, Access Control, Replication</td></tr>
+        <tr><td>Cloud Architect</td><td>AWS/Azure/GCP, Cloud Design, IaC, Networking, Security/IAM, Cost Optimization</td></tr>
+        <tr><td>Gen AI Developer</td><td>Python, LLM APIs, Prompt Engineering, RAG, LangChain/LlamaIndex, Vector Databases</td></tr>
+      </tbody>
+    </table>
+    <p class="footer-note">
+      The next appendices expand the UI inventory, runtime storage model, QA matrix, and full role-skill catalog so the report can be used as a technical submission document.
+    </p>
+  </div>
+
+  <div class="page page-break" id="appendix-d">
+    <h1>Appendix D: Detailed UI Element Inventory</h1>
+    <p>
+      This appendix lists the most visible interactive and informational elements on the Pathwise interface. The goal is to document not just major screens, but the main controls and content regions that a tester, reviewer, or viva panel may ask about.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Page</th>
+          <th>Element</th>
+          <th>Type</th>
+          <th>Purpose</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Intro</td><td>Pathwise brand block</td><td>Identity</td><td>Establishes product branding and subtitle</td></tr>
+        <tr><td>Intro</td><td>Main headline</td><td>Text</td><td>Communicates value proposition</td></tr>
+        <tr><td>Intro</td><td>Supporting paragraph</td><td>Text</td><td>Explains product purpose</td></tr>
+        <tr><td>Intro</td><td>Three value bullets</td><td>Content list</td><td>Summarize journey from role selection to roadmap</td></tr>
+        <tr><td>Intro</td><td>Email input</td><td>Form field</td><td>Used for email account access</td></tr>
+        <tr><td>Intro</td><td>Password input</td><td>Form field</td><td>Accepts password securely</td></tr>
+        <tr><td>Intro</td><td>Password eye button</td><td>Utility button</td><td>Toggles password visibility</td></tr>
+        <tr><td>Intro</td><td>Sign In button</td><td>Primary action</td><td>Starts email login flow</td></tr>
+        <tr><td>Intro</td><td>Create Account button</td><td>Secondary action</td><td>Starts account creation flow</td></tr>
+        <tr><td>Intro</td><td>Forgot password link</td><td>Support action</td><td>Triggers reset password flow</td></tr>
+        <tr><td>Intro</td><td>Google button</td><td>Auth action</td><td>Starts Google OAuth</td></tr>
+        <tr><td>Intro</td><td>Continue as Guest button</td><td>Auth action</td><td>Bypasses auth and enters analyzer locally</td></tr>
+        <tr><td>Global</td><td>Top notice bar</td><td>Notification</td><td>Shows auth/save/error messages</td></tr>
+        <tr><td>Global</td><td>Terminal loader overlay</td><td>Loading UI</td><td>Shows animated analysis process</td></tr>
+        <tr><td>Header</td><td>Brand mini block</td><td>Identity</td><td>Anchors the shell identity</td></tr>
+        <tr><td>Header</td><td>Stepper</td><td>Navigation</td><td>Shows setup, analysis, and action-plan steps</td></tr>
+        <tr><td>Header</td><td>Profile icon</td><td>Account control</td><td>Opens account dropdown</td></tr>
+        <tr><td>Header</td><td>Account dropdown</td><td>Menu</td><td>Shows identity and login/logout action</td></tr>
+        <tr><td>Setup</td><td>Instruction banner</td><td>Guidance</td><td>Explains the order of actions</td></tr>
+        <tr><td>Setup</td><td>Role grid</td><td>Selection area</td><td>Lists available target roles</td></tr>
+        <tr><td>Setup</td><td>Role card</td><td>Selector</td><td>Shows role name and skill count</td></tr>
+        <tr><td>Setup</td><td>Role Scope title</td><td>Text</td><td>Displays selected role name</td></tr>
+        <tr><td>Setup</td><td>Role Scope copy</td><td>Text</td><td>Explains what the selected role involves</td></tr>
+        <tr><td>Setup</td><td>Role Scope outlook</td><td>Text</td><td>Explains where the role fits in the market</td></tr>
+        <tr><td>Setup</td><td>Required skills cluster</td><td>Chip list</td><td>Shows expected skills for selected role</td></tr>
+        <tr><td>Setup</td><td>Skill name input</td><td>Combobox</td><td>Accepts typed skill names</td></tr>
+        <tr><td>Setup</td><td>Skill suggestion dropdown</td><td>Autocomplete list</td><td>Suggests predefined skills</td></tr>
+        <tr><td>Setup</td><td>Level trigger</td><td>Dropdown</td><td>Chooses beginner/intermediate/expert</td></tr>
+        <tr><td>Setup</td><td>Add Skill button</td><td>Primary action</td><td>Adds selected skill to user list</td></tr>
+        <tr><td>Setup</td><td>Clear All button</td><td>Reset action</td><td>Removes all entered skills</td></tr>
+        <tr><td>Setup</td><td>Skill list container</td><td>Content region</td><td>Shows added skills</td></tr>
+        <tr><td>Setup</td><td>Analyze Readiness button</td><td>Primary action</td><td>Starts readiness calculation</td></tr>
+        <tr><td>Analysis</td><td>Results header</td><td>Page heading</td><td>Frames analysis screen</td></tr>
+        <tr><td>Analysis</td><td>Readiness score hero</td><td>Insight component</td><td>Shows final score and message</td></tr>
+        <tr><td>Analysis</td><td>Matched skills section</td><td>List section</td><td>Highlights skills already covered</td></tr>
+        <tr><td>Analysis</td><td>Missing skills section</td><td>List section</td><td>Highlights gaps to close</td></tr>
+        <tr><td>Analysis</td><td>Category breakdown</td><td>Chart-like section</td><td>Shows readiness by category</td></tr>
+        <tr><td>Analysis</td><td>Career path insights</td><td>Narrative section</td><td>Explains implications of the score</td></tr>
+        <tr><td>Action</td><td>Final summary</td><td>Summary card</td><td>Condenses readiness, gap, and next move</td></tr>
+        <tr><td>Action</td><td>What If I Learned</td><td>Simulation section</td><td>Predicts score movement from learning skills</td></tr>
+        <tr><td>Action</td><td>Skill Learning Roadmap</td><td>Timeline section</td><td>Phases the learning journey</td></tr>
+        <tr><td>Action</td><td>Where to Learn</td><td>Resource section</td><td>Maps missing skills to relevant learning sources</td></tr>
+        <tr><td>Action</td><td>Suggested Portfolio Projects</td><td>Project section</td><td>Suggests practical projects to prove skills</td></tr>
+        <tr><td>Profile</td><td>Profile hero card</td><td>Summary area</td><td>Shows account identity and sign-out access</td></tr>
+        <tr><td>Profile</td><td>Snapshot card</td><td>Status summary</td><td>Shows mode, role, skills added, readiness</td></tr>
+        <tr><td>Profile</td><td>Quick actions card</td><td>Navigation card</td><td>Reopens setup, analysis, or action plan</td></tr>
+        <tr><td>Profile</td><td>Progress summary copy</td><td>Narrative text</td><td>Summarizes current progress in plain language</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="page page-break" id="appendix-e">
+    <h1>Appendix E: Runtime Keys and Data Dictionary</h1>
+    <h2>E.1 Browser Storage Keys</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Key</th>
+          <th>Type</th>
+          <th>Purpose</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>pw_guest_progress</td><td>JSON payload</td><td>Stores guest role, skills, and score</td></tr>
+        <tr><td>pw_resume_mode</td><td>String</td><td>Stores whether resume should open intro, guest analyzer, or account analyzer</td></tr>
+        <tr><td>pw_auth_notice</td><td>JSON payload</td><td>Stores delayed notice messages across auth reload flow</td></tr>
+        <tr><td>pw_identity_profiles</td><td>JSON payload</td><td>Stores greeting names and return-state identity hints</td></tr>
+        <tr><td>pw_last_step</td><td>String</td><td>Stores last analyzer page for restore</td></tr>
+        <tr><td>activeSection</td><td>String</td><td>Stores last tracked section anchor</td></tr>
+      </tbody>
+    </table>
+
+    <h2>E.2 Main Runtime Variables</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>selectedRole</td><td>Currently selected target role</td></tr>
+        <tr><td>skills</td><td>User-entered skills with levels</td></tr>
+        <tr><td>lastResults</td><td>Most recent computed analysis object</td></tr>
+        <tr><td>state.currentProgressId</td><td>Current cloud progress row ID for update flow</td></tr>
+        <tr><td>state.guestMode</td><td>Whether current session is guest</td></tr>
+        <tr><td>state.session</td><td>Current Supabase session object</td></tr>
+        <tr><td>state.pendingStep</td><td>Preferred step to restore after auth or reload</td></tr>
+      </tbody>
+    </table>
+
+    <h2>E.3 Progress Payload Shape</h2>
+    <div class="diagram">
+{
+  selected_role: "Frontend Developer",
+  skills: [
+    { name: "HTML & CSS", level: 3 },
+    { name: "JavaScript", level: 2 }
+  ],
+  score: 74
+}
+    </div>
+  </div>
+
+  <div class="page page-break" id="appendix-f">
+    <h1>Appendix F: Extended Test Cases</h1>
+    <p>
+      This appendix extends the main QA matrix with additional edge cases, visual checks, keyboard checks, persistence cases, and negative scenarios.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Test Case</th>
+          <th>Expected Result</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>TC-51</td><td>Top notice close button</td><td>Notice dismisses immediately</td></tr>
+        <tr><td>TC-52</td><td>Escape closes top notice</td><td>Notice disappears via keyboard</td></tr>
+        <tr><td>TC-53</td><td>Escape closes profile dropdown</td><td>Dropdown closes without navigation</td></tr>
+        <tr><td>TC-54</td><td>Tab order on intro page</td><td>Focus moves logically through auth controls</td></tr>
+        <tr><td>TC-55</td><td>Role cards keyboard focus</td><td>Focus ring is visible and usable</td></tr>
+        <tr><td>TC-56</td><td>Skill combobox arrow interaction</td><td>Dropdown opens and suggestions are accessible</td></tr>
+        <tr><td>TC-57</td><td>Skill level dropdown selection</td><td>Selected level updates trigger label</td></tr>
+        <tr><td>TC-58</td><td>Very long skill name handling</td><td>Layout remains stable</td></tr>
+        <tr><td>TC-59</td><td>Very long email in dropdown</td><td>Email wraps without breaking card</td></tr>
+        <tr><td>TC-60</td><td>Profile dropdown placement</td><td>Dropdown appears below icon, centered</td></tr>
+        <tr><td>TC-61</td><td>Signed-in dropdown action color</td><td>Logout displays in destructive styling</td></tr>
+        <tr><td>TC-62</td><td>Guest dropdown action color</td><td>Login displays in neutral styling</td></tr>
+        <tr><td>TC-63</td><td>Guest login action</td><td>Returns guest user to intro page cleanly</td></tr>
+        <tr><td>TC-64</td><td>Back button from profile</td><td>Returns to setup or analysis based on available results</td></tr>
+        <tr><td>TC-65</td><td>Stepper disabled behavior</td><td>Analysis and Action remain disabled before analysis exists</td></tr>
+        <tr><td>TC-66</td><td>Score badge display</td><td>Badge appears after analysis only</td></tr>
+        <tr><td>TC-67</td><td>Reload immediately after guest login</td><td>Setup restores rather than intro</td></tr>
+        <tr><td>TC-68</td><td>Reload immediately after Google login</td><td>Analyzer restores for signed-in user</td></tr>
+        <tr><td>TC-69</td><td>Cloud save after skill edit</td><td>Progress row updates rather than duplicating incorrectly</td></tr>
+        <tr><td>TC-70</td><td>Cloud save after analysis</td><td>Score persists in latest row</td></tr>
+        <tr><td>TC-71</td><td>Signed-out state after reload</td><td>Intro page appears when session removed</td></tr>
+        <tr><td>TC-72</td><td>Guest storage clear after merge</td><td>Guest local payload is removed</td></tr>
+        <tr><td>TC-73</td><td>Readiness score color thresholds</td><td>Different score bands use correct visual tiering</td></tr>
+        <tr><td>TC-74</td><td>Critical badge color</td><td>Critical shows darker red</td></tr>
+        <tr><td>TC-75</td><td>Supporting badge color</td><td>Supporting shows darker yellow</td></tr>
+        <tr><td>TC-76</td><td>Missing skills no emoji check</td><td>No emoji remain in role cards or result labels</td></tr>
+        <tr><td>TC-77</td><td>UTF-8 text integrity</td><td>No mojibake characters appear</td></tr>
+        <tr><td>TC-78</td><td>Login to analyzer transition</td><td>Transition feels smooth and not abrupt</td></tr>
+        <tr><td>TC-79</td><td>Setup role cards no flash</td><td>Cards do not blink on analyzer entry</td></tr>
+        <tr><td>TC-80</td><td>Action page spotlight regression</td><td>Final Summary and What If I Learned do not blink</td></tr>
+        <tr><td>TC-81</td><td>Roadmap smooth reveal</td><td>Roadmap appears with same reveal rhythm as other sections</td></tr>
+        <tr><td>TC-82</td><td>Action gap spacing consistency</td><td>Section spacing remains visually even</td></tr>
+        <tr><td>TC-83</td><td>Role scope hidden from other steps</td><td>Only setup shows role scope panel</td></tr>
+        <tr><td>TC-84</td><td>Role cards clean layout</td><td>No initials, only role name and skill count</td></tr>
+        <tr><td>TC-85</td><td>Role scope word limit usability</td><td>Scope remains compact and readable</td></tr>
+        <tr><td>TC-86</td><td>Profile summary for guest</td><td>Role, skills, and readiness show without sign-in</td></tr>
+        <tr><td>TC-87</td><td>Profile summary for signed-in user</td><td>Profile values match saved cloud progress</td></tr>
+        <tr><td>TC-88</td><td>Loading overlay closeout</td><td>Loader disappears after compute and does not persist</td></tr>
+        <tr><td>TC-89</td><td>Action plan on low-skill profile</td><td>Roadmap and learn sections still render meaningfully</td></tr>
+        <tr><td>TC-90</td><td>Action plan on strong profile</td><td>Recommendation tone adjusts to stronger readiness</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="page page-break" id="appendix-g">
+    <h1>Appendix G: Expanded Role Skill Catalog</h1>
+    <p>
+      The following catalog expands the role inventory by listing the main skill groups that define each target role in the app. This appendix is useful for academic review because it shows that the scoring system is grounded in explicit role expectations rather than abstract labels.
+    </p>
+    <h2>G.1 Data Analyst</h2>
+    <p><strong>Core skill coverage:</strong> SQL, Excel / Google Sheets, Data Visualization, Statistics, Tableau / Power BI, Data Cleaning, Communication.</p>
+
+    <h2>G.2 Frontend Developer</h2>
+    <p><strong>Core skill coverage:</strong> HTML &amp; CSS, JavaScript, React, TypeScript, Responsive Design, Git / Version Control, Testing, Performance Optimization, Accessibility.</p>
+
+    <h2>G.3 Software Developer</h2>
+    <p><strong>Core skill coverage:</strong> Data Structures &amp; Algorithms, Object-Oriented Programming, Python / Java / C++, Git, REST APIs, Unit Testing, SQL / Databases, CI/CD, System Design, Code Review.</p>
+
+    <h2>G.4 Backend Developer</h2>
+    <p><strong>Core skill coverage:</strong> Python / Node.js / Java, REST APIs, SQL Databases, Authentication &amp; Security, Git, Docker, NoSQL, Cloud Platforms, System Design.</p>
+
+    <h2>G.5 Product Manager</h2>
+    <p><strong>Core skill coverage:</strong> Roadmapping, Stakeholder Management, Metrics, Agile / Scrum, User Research, Product Sense, Prioritization, A/B Testing, Competitive Research, Documentation.</p>
+
+    <h2>G.6 Machine Learning Engineer</h2>
+    <p><strong>Core skill coverage:</strong> Python, Statistics &amp; Probability, Linear Algebra, Scikit-learn, Deep Learning, Feature Engineering, Model Evaluation, SQL / Data Processing, MLOps / Deployment.</p>
+
+    <h2>G.7 QA Engineer</h2>
+    <p><strong>Core skill coverage:</strong> Manual Testing, Test Case Writing, Selenium / Playwright, API Testing, Bug Reporting / Jira, SQL Testing, Performance Testing, Agile, Test Automation Scripting.</p>
+
+    <h2>G.8 Full Stack Developer</h2>
+    <p><strong>Core skill coverage:</strong> HTML &amp; CSS, JavaScript, React / Vue / Angular, Node.js / Python / Java, REST APIs, SQL, NoSQL, Git, Docker, Authentication &amp; Security.</p>
+
+    <h2>G.9 Game Developer</h2>
+    <p><strong>Core skill coverage:</strong> C++ / C#, Unity / Unreal, Game Design Principles, Linear Algebra &amp; Maths, Physics Simulation, Blender Basics, Version Control, Shader Programming, Multiplayer Basics, Performance Optimization.</p>
+
+    <h2>G.10 DevOps Engineer</h2>
+    <p><strong>Core skill coverage:</strong> Linux / Shell Scripting, Docker / Kubernetes, CI/CD, Cloud Platforms, Infrastructure as Code, Monitoring, Git, Networking Basics, Security Best Practices.</p>
+
+    <h2>G.11 Cybersecurity</h2>
+    <p><strong>Core skill coverage:</strong> Network Security, Threat Detection, SIEM Tools, Vulnerability Assessment, Incident Response, Linux / Windows Administration, IAM, Ethical Hacking Basics, Scripting, Security Tools, Cryptography, Compliance Frameworks.</p>
+
+    <h2>G.12 Database Administrator</h2>
+    <p><strong>Core skill coverage:</strong> SQL, Database Design, Backup &amp; Recovery, Performance Tuning, Query Optimization, Access Control, Replication / HA, Monitoring, Platform Knowledge, Automation Scripting.</p>
+
+    <h2>G.13 Cloud Architect</h2>
+    <p><strong>Core skill coverage:</strong> AWS / Azure / GCP, Cloud Architecture Design, Infrastructure as Code, Networking, Security &amp; IAM, Kubernetes, Cost Optimization, Serverless, DevOps Integration.</p>
+
+    <h2>G.14 Gen AI Developer</h2>
+    <p><strong>Core skill coverage:</strong> Python, LLM APIs, Prompt Engineering, RAG, LangChain / LlamaIndex, Vector Databases, Fine-tuning, FastAPI / REST, Git, LLM Evaluation.</p>
+
+    <p class="footer-note">
+      For PDF export, open [C:\Users\eklav\pathwise-v1\Pathwise_Project_Report.html](C:\Users\eklav\pathwise-v1\Pathwise_Project_Report.html) in a browser and print to PDF. The document is designed around 12pt body text and headings not exceeding 14pt, as requested.
+    </p>
+  </div>
+</body>
+</html>
