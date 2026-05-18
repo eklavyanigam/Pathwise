@@ -996,22 +996,6 @@ const ROLES = {
       { name: "Communication", weight: 3, category: "Soft Skills" },
     ]
   },
-  "SAP Consultant": {
-    scope: "Improve enterprise processes through SAP configuration and delivery.",
-    outlook: "Strong fit for enterprise consulting, ERP implementation teams, process transformation, and large-scale business systems roles.",
-    skills: [
-      { name: "SAP ERP Modules (FI/CO/MM/SD)", weight: 5, category: "SAP Core" },
-      { name: "SAP S/4HANA", weight: 5, category: "SAP Core" },
-      { name: "SAP Configuration & Customising", weight: 5, category: "Implementation" },
-      { name: "Business Process Analysis", weight: 5, category: "Analysis" },
-      { name: "SAP ABAP (Basics)", weight: 3, category: "Technical" },
-      { name: "SAP Fiori / UI5", weight: 3, category: "User Experience" },
-      { name: "Data Migration (LSMW/BAPI)", weight: 4, category: "Implementation" },
-      { name: "Integration (SAP PI/PO / BTP)", weight: 4, category: "Integration" },
-      { name: "Project Management", weight: 3, category: "Delivery" },
-      { name: "Stakeholder Communication", weight: 4, category: "Communication" }
-    ]
-  },
   "Frontend Developer": {
     scope: "Build fast, accessible interfaces for modern web products.",
     outlook: "Best suited for product UI, design-heavy web apps, and user-facing engineering teams.",
@@ -1589,7 +1573,6 @@ function renderRoles() {
   Object.entries(ROLES).forEach(([name, data]) => {
     const btn = document.createElement('button');
     btn.className = 'role-btn' + (selectedRole === name ? ' active' : '');
-    const scopePreview = escapeHTML(data.scope || '');
     btn.innerHTML = `
       <div class="role-btn-top">
         <div class="role-btn-meta">
@@ -1600,7 +1583,6 @@ function renderRoles() {
           </div>
         </div>
       </div>
-      <div class="role-mini-scope">${scopePreview}</div>
     `;
     btn.onclick = () => { selectedRole = name; renderRoles(); renderRoleScope(); renderRequiredSkills(); resetResults(); saveState(); };
     grid.appendChild(btn);
@@ -2369,26 +2351,6 @@ const PORTFOLIO_PROJECTS = {
       skills: ["SQL", "Business Intelligence", "Communication"],
       build: "Use a public database (e.g. the Northwind DB or a public e-commerce dataset). Write 10–15 progressively complex SQL queries that answer real business questions. Publish them on GitHub with explanations.",
       why: "SQL proficiency is tested in virtually every data analyst interview. A public GitHub repo of well-commented SQL shows both technical and communication skills."
-    }
-  ],
-  "SAP Consultant": [
-    {
-      title: "SAP Business Process Implementation Blueprint",
-      skills: ["SAP ERP Modules (FI/CO/MM/SD)", "Business Process Analysis", "SAP Configuration & Customising", "Stakeholder Communication"],
-      build: "Pick one real business flow such as procure-to-pay or order-to-cash and document the full SAP solution blueprint. Map business requirements, module fit, configuration decisions, user roles, test cases, and rollout considerations in a consultant-style deck or PDF.",
-      why: "SAP consulting interviews often test process clarity more than raw coding. A polished blueprint shows you can think like a consultant, connect business needs to SAP modules, and communicate implementation decisions clearly."
-    },
-    {
-      title: "Mini SAP Migration and Data Mapping Case Study",
-      skills: ["SAP S/4HANA", "Data Migration (LSMW/BAPI)", "Integration (SAP PI/PO / BTP)", "Project Management"],
-      build: "Create a case study around migrating legacy master data into SAP S/4HANA. Define source-to-target mappings, mock migration templates, validation checks, integration touchpoints, risk logs, and a simple project timeline.",
-      why: "Migration work is common in SAP projects. Showing that you understand cutover planning, mapping, and validation makes you look far more industry-ready than just listing SAP terms on a resume."
-    },
-    {
-      title: "SAP Fiori Workflow Prototype",
-      skills: ["SAP Fiori / UI5", "SAP ABAP (Basics)", "Stakeholder Communication"],
-      build: "Design a simple approval workflow interface such as leave approval, purchase request, or invoice validation. Mock the screens, explain the backend data flow, and document how the UI improves process efficiency for business users.",
-      why: "Enterprise teams value consultants who can bridge business users and system behavior. A Fiori-style workflow prototype proves you understand usability, process pain points, and SAP solution design together."
     }
   ],
   "Frontend Developer": [
